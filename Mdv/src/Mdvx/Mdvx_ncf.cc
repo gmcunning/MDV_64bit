@@ -968,9 +968,10 @@ int Mdvx::_readAllHeadersNcf(const string &path)
 
   Ncf2MdvTrans trans;
   trans.setDebug(_debug);
+  trans.setReadData(false);
   Mdvx mdvx;
   if (trans.readCf(path, mdvx)) {
-    _errStr += "ERROR - Mdvx::_readNcf\n";
+    _errStr += "ERROR - Mdvx::_readAllHeadersNcf\n";
     TaStr::AddStr(_errStr, "  Path ", path);
     TaStr::AddStr(_errStr, "  Cannot translate file to MDV");
     TaStr::AddStr(_errStr, trans.getErrStr());
@@ -994,7 +995,7 @@ int Mdvx::_readAllHeadersNcf(const string &path)
     MdvxField *field = mdvx.getField(ii);
     Mdvx::field_header_t fhdr = field->getFieldHeader();
     Mdvx::vlevel_header_t vhdr = field->getVlevelHeader();
-    addField(new MdvxField(fhdr, vhdr));
+    addField(new MdvxField(fhdr, vhdr, NULL, false, false, false));
     _fhdrsFile.push_back(fhdr);
     _vhdrsFile.push_back(vhdr);
   }
@@ -1055,7 +1056,7 @@ int Mdvx::_readNcf(const string &path)
   _internalFormat = FORMAT_MDV;
 
   // convert the output fields appropriately
-  
+
   for (int ii = 0; ii < (int) _fields.size(); ii++) {
     _fields[ii]->convertType(readEncodingType,
                              readCompressionType,
@@ -1221,7 +1222,7 @@ int Mdvx::_readAllHeadersRadx(const string &path)
     
     _fhdrsFile.push_back(fhdr);
     _vhdrsFile.push_back(vhdr);
-    addField(new MdvxField(fhdr, vhdr));
+    addField(new MdvxField(fhdr, vhdr, NULL, false, false, false));
     
   } // ifield
   
