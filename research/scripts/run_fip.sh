@@ -2,6 +2,7 @@
 
 # simple script to run the FIP process chain for the MDV 64-bit research
 
+# this is a usage statement
 general_usage="usage: build_apps.sh [debug|opt] [lrose|cvs] [hrrr|wrf-rr]"
 
 # argument #1 is build type
