@@ -1,0 +1,406 @@
+/**********************************************************************
+ * TDRP params for MdvBlender
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: MdvBlender.
+//
+// MdvBlender offers advanced methods for combining similar datasets.  
+//   Initially it will support a dithering like probabilistic combination.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+// The options are DEBUG_OFF, DEBUG_NORM and DEBUG_VERBOSE. If set, 
+//   debug messages will be printed appropriately.
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//     DEBUG_GARRULOUS
+//
+
+debug = DEBUG_NORM;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "metar";
+
+///////////// run_mode ////////////////////////////////
+//
+// Operating mode.
+//
+// Type: enum
+// Options:
+//     REALTIME
+//     ARCHIVE
+//     RUNTIME
+//
+
+run_mode = ARCHIVE;
+
+///////////// start_time //////////////////////////////
+//
+// Start time.
+// run time is in the form <YYYY MM DD HH MM SS>.
+// Type: string
+//
+
+start_time = "2005 01 19 18 00 00";
+
+///////////// end_time ////////////////////////////////
+//
+// Run time.
+// run time is in the form <YYYY MM DD HH MM SS>.
+// Type: string
+//
+
+end_time = "2005 01 19 18 00 00";
+
+///////////// run_time ////////////////////////////////
+//
+// Run time.
+// run time is in the form <YYYY MM DD HH MM SS>.
+// Type: string
+//
+
+run_time = "2005 01 19 18 00 00";
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+
+///////////// trigger_url /////////////////////////////
+//
+// Trigger URL.
+// This is the URL to use to trigger processing.  The valid time of the 
+//   new data is used as the runtime for
+// ARCHIVE mode, but not for realtime mode where the current time is 
+//   used as the runtime.
+// Type: string
+//
+
+trigger_url = "/d1/cunning/data/64-bit_mdv/cip/mdv/metar_mapper";
+
+///////////// trigger_max_valid_age ///////////////////
+//
+// Trigger maximum valid age.
+// units are seconds.
+// Type: int
+//
+
+trigger_max_valid_age = 1800;
+
+///////////// trigger_sleep ///////////////////////////
+//
+// Sleep after Trigger.
+// units are seconds.
+// Type: int
+//
+
+trigger_sleep = 300;
+
+//======================================================================
+//
+// OUTPUT DATA.
+//
+//======================================================================
+ 
+///////////// encoding_type ///////////////////////////
+//
+// Set encoding type.
+//
+// Type: enum
+// Options:
+//     ENCODING_ASIS
+//     ENCODING_INT8
+//     ENCODING_INT16
+//     ENCODING_FLOAT32
+//
+
+encoding_type = ENCODING_FLOAT32;
+
+///////////// compression_type ////////////////////////
+//
+// Set compression type.
+//
+// Type: enum
+// Options:
+//     COMPRESSION_ASIS
+//     COMPRESSION_NONE
+//     COMPRESSION_RLE
+//     COMPRESSION_LZO
+//     COMPRESSION_ZLIB
+//     COMPRESSION_BZIP
+//     COMPRESSION_GZIP
+//
+
+compression_type = COMPRESSION_GZIP;
+
+///////////// expire_offset ///////////////////////////
+//
+// Expire Offset.
+// This many seconds will be added to the write time to the run time to 
+//   calculate the expire time.
+// Generally this is 2 to 4 times the expected output interval.
+// Type: int
+//
+
+expire_offset = 3600;
+
+///////////// write_ldata /////////////////////////////
+//
+// Flag to turn on writing ldata information.
+// The default is true.
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// output_projection ///////////////////////
+//
+// Projection of output grid.
+// FLAT - (x,y) Cartesian data in km from a given origin. LATLON - 
+//   lat/lon grid with constant grid spacing. LAMBERT - Lambert conformal 
+//   projection. INPUT1 - use the same grid as the input1 data. INPUT1 
+//   only works for data on Lambert and Stereographic projections.
+//
+// Type: enum
+// Options:
+//     OUTPUT_PROJ_FLAT
+//     OUTPUT_PROJ_LATLON
+//     OUTPUT_PROJ_LAMBERT
+//     OUTPUT_PROJ_STEREOGRAPHIC
+//     OUTPUT_PROJ_MERCATOR
+//     OUTPUT_PROJ_INPUT1
+//
+
+output_projection = OUTPUT_PROJ_INPUT1;
+
+///////////// output_origin ///////////////////////////
+//
+// Origin of output grid.
+// Used with OUTPUT_PROJ_FLAT, OUTPUT_PROJ_LAMBERT, 
+//   OUTPUT_PROJ_STEREOGRAPHIC.
+//
+// Type: struct
+//   typedef struct {
+//      double lat;
+//      double lon;
+//   }
+//
+//
+
+output_origin = { 40, -104 };
+
+///////////// lambert_lat1 ////////////////////////////
+//
+// lat 1 value for Lambert conformal projection.
+// Type: double
+//
+
+lambert_lat1 = 10;
+
+///////////// lambert_lat2 ////////////////////////////
+//
+// lat 2 value for Lambert conformal projection.
+// Type: double
+//
+
+lambert_lat2 = 60;
+
+///////////// stereographic_tangent_lat ///////////////
+//
+// Tangent latitude for stereographic projection.
+// Type: double
+//
+
+stereographic_tangent_lat = 60;
+
+///////////// stereographic_tangent_lon ///////////////
+//
+// Tangent longitude for stereographic projection.
+// Type: double
+//
+
+stereographic_tangent_lon = 0;
+
+///////////// output_grid /////////////////////////////
+//
+// Output grid parameters.
+// The grid params for the output grid.
+//
+// Type: struct
+//   typedef struct {
+//      int nx;
+//      int ny;
+//      double minx;
+//      double miny;
+//      double dx;
+//      double dy;
+//   }
+//
+//
+
+output_grid = { 300, 300, -149.5, -149.5, 1, 1 };
+
+
+//======================================================================
+//
+// Blender Configuration.
+//
+// Parameters desfining the blender process.
+//
+//======================================================================
+ 
+///////////// inputs //////////////////////////////////
+//
+// Define the inputs to blend.
+//
+// fieldNames is a comma separated list & must have the same number of 
+//   elements.If a weight field is an empty string, the constant weight is 
+//   used instead.All fields in a single struct are tied together(i.e. one 
+//   probabilistic deicision is made and then applied to all fields in the 
+//   same blender_info element.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string url;
+//      int max_valid_age;
+//      string field_names;
+//      double constant_weight;
+//      string weight_field;
+//   }
+//
+// 1D array - variable length.
+//
+
+inputs = {
+  {
+    url = "/d1/cunning/data/64-bit_mdv/cip/mdv/metar_mapper",
+    max_valid_age = 3600,
+    field_names = "CLD_BASE_HGT,CLOUD_COVER",
+    constant_weight = 1.0,
+    weight_field = "CBH_CONF",
+    required = TRUE
+  }
+  ,
+  {
+    url = "/d1/cunning/data/64-bit_mdv/cip/mdv/model_metars",
+    max_valid_age = 3600,
+    field_names = "CLD_BASE_HGT,CLOUD_COVER",
+    constant_weight = 0.0,
+    weight_field = "",
+    required = TRUE
+  }
+};
+
+///////////// input_pass_throughs /////////////////////
+//
+// These fields from the inputs that will be passed through to the 
+//   output with only field names changed.
+//
+// Each comma separated list contains the input field name, output field 
+//   name, and output long field name.Each group of lists correspond to 
+//   each input from the inputs parameter.
+//
+//
+// Type: string
+// 2D array - variable size
+//
+
+input_pass_throughs = {
+  {
+    "CLD_BASE_HGT,CBH_METAR,Cloud Base Height from MetarMapper",
+    "DIST_TO_CC,DIST_TO_CC,Distance to CC",
+    "DIST_TO_ZL,DIST_TO_ZL,Distance to ZL",
+    "DIST_TO_ZR,DIST_TO_ZR,Distance to ZR",
+    "DIST_TO_IP,DIST_TO_IP,Distance to IP",
+    "DIST_TO_RN,DIST_TO_RN,Distance to RN",
+    "DIST_TO_SN,DIST_TO_SN,Distance to SN",
+    "DIST_TO_DZ,DIST_TO_DZ,Distance to DZ"
+  },
+  {
+    "CLD_BASE_HGT,CBH_MODEL,Cloud Base Height from createModelMetar",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""    
+  }
+};
+
+output_url = "/d1/cunning/data/64-bit_mdv/cip/mdv/metar_blend";
+
+
+///////////// output //////////////////////////////////
+//
+// Define the output.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string field_names;
+//      string field_long_names;
+//      string field_units;
+//      string rounding;
+//   }
+//
+//
+
+output = {
+    field_names = "CLD_BASE_HGT,CLOUD_COVER",
+    field_long_names = "Cloud Base Height,Cloud Cover",
+    field_units = "m MSL,max for GP",
+    rounding = "ROUND_NONE,ROUND_UP",
+    blend_methods = "BLEND_DITHER,BLEND_DITHER"
+};
+
+///////////// grid_delta_tol //////////////////////////
+//
+// Grid delta tolerance.
+// Threshold when comparing grid dimensions.
+// Type: double
+//
+
+grid_delta_tol = 1e-02;
+
+///////////// output_decision /////////////////////////
+//
+// Flag to output dither decision field.
+// The default is false.
+// Type: boolean
+//
+
+output_decision = TRUE;

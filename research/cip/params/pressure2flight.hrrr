@@ -1,0 +1,349 @@
+/**********************************************************************
+ * TDRP params for ./pressure2flight2
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: pressure2flight2.
+//
+// pressure2flight2 is used to remap fields from pressure levels to 
+//   flight levels. The usage is 'pressure2flight2 -params params_file'.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+//
+// If set, debug messages will be printed with the appropriate level of 
+//   detail.
+//
+//
+// Type: boolean
+//
+
+debug = TRUE;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// run_mode ////////////////////////////////
+//
+// Process running mode.
+//
+// Can be either ARCHIVE, REALTIME or FILELIST.
+//
+//
+// Type: enum
+// Options:
+//     ARCHIVE
+//     REALTIME
+//     FILELIST
+//
+
+run_mode = ARCHIVE;
+
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+//
+// Used for registration with procmap.
+//
+//
+// Type: string
+//
+
+instance = "fip";
+
+///////////// procmap_register_interval_secs //////////
+//
+// Interval for procmap registration.
+//
+// Set to a high value if processing takes a long time. This will 
+//   prevent the auto_restarter from killing and restarting the app. If 
+//   left at -1, the default, PROCMAP_REGISTER_INTERVAL (60) will be used.
+//
+//
+// Type: int
+//
+
+procmap_register_interval_secs = -1;
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+ 
+///////////// input_url ///////////////////////////////
+//
+// input URL.
+//
+// For data on local disk, this can just be the directory containing the 
+//   input MDV data files.  For data retrieved from a server, it is the 
+//   URL for the server.  A server URL looks like the following:
+// 	mdvp://host:port:directory_path
+// This URL specifies a DsMdvServer process running on the specified 
+//   host and using the specified port.  The data would reside on the 
+//   specified host under $RAP_DATA_DIR/directory_path.
+//
+//
+// Type: string
+//
+
+input_url = ".";
+
+///////////// max_valid_age ///////////////////////////
+//
+// maximum age of valid input data.
+//
+// The units are seconds.
+//
+//
+// Type: int
+//
+
+max_valid_age = 3600;
+
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+//
+// For data on local disk, this can just be the directory containing the 
+//   input MDV data files.  For data retrieved from a server, it is the 
+//   URL for the server.  A server URL looks like the following:
+// 	mdvp://host:port:directory_path
+// This URL specifies a DsMdvServer process running on the specified 
+//   host and using the specified port.  The data would reside on the 
+//   specified host under $RAP_DATA_DIR/directory_path.
+//
+//
+// Type: string
+//
+
+output_url = "/d1/cunning/data/64-bit_mdv/cip/mdv/cip/flight";
+
+///////////// write_ldata /////////////////////////////
+//
+// Flag to turn on writing ldata information.
+//
+// The default is true.
+//
+//
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// write_as_forecast ///////////////////////
+//
+// Flag to turn on writing files out in the RAL forecast directory 
+//   structure.
+//
+// The default is false.
+//
+//
+// Type: boolean
+//
+
+write_as_forecast = FALSE;
+
+///////////// height_field_name ///////////////////////
+//
+// The name of the height field.
+//
+//
+// Type: string
+//
+
+height_field_name = "HGT";
+
+///////////// fields //////////////////////////////////
+//
+// The fields to be processed.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string field_name;
+//      interp_type interp;
+//        Options:
+//          CONTINUOUS
+//          CATEGORICAL
+//      encoding_type_t encoding;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//   }
+//
+// 1D array - variable length.
+//
+
+fields = {
+  {
+    field_name = "ICE_PROB",
+    interp = CONTINUOUS,
+    encoding = ENCODING_ASIS
+  },
+  {
+    field_name = "SLD",
+    interp = CONTINUOUS,
+    encoding = ENCODING_ASIS
+  },
+  {
+    field_name = "ICE_SEV",
+    interp = CONTINUOUS,
+    encoding = ENCODING_ASIS
+  }  
+};
+
+///////////// level_selection /////////////////////////
+//
+// Method to select flight levels.
+//
+// Choices are SELECT_LIST and SELECT_UNIFORM. With SELECT_LIST, a users 
+//   creates an explicit set of levels. With SELECT_UNIFORM, a user 
+//   creates a set of uniformly spaced pressure levels, using 
+//   num_flight_levels, start_flight_level and flight_level_dz.
+//
+//
+// Type: enum
+// Options:
+//     SELECT_LIST
+//     SELECT_UNIFORM
+//
+
+level_selection = SELECT_UNIFORM;
+
+///////////// flight_levels ///////////////////////////
+//
+// Array of output flight levels, in feet.
+//
+// Only used if output_levels is SELECT_LIST. The output grid has a 
+//   variable Z dimension, in flight levels. The flight levels in the 
+//   output are taken from this array.
+//
+//
+// Type: float
+// 1D array - variable length.
+//
+
+flight_levels = {
+ 1000,
+ 2000,
+ 3000,
+ 4000,
+ 5000,
+ 6000,
+ 7000,
+ 8000,
+ 9000,
+ 10000,
+ 11000,
+ 12000,
+ 13000,
+ 14000,
+ 15000,
+ 16000,
+ 17000,
+ 18000,
+ 19000,
+ 20000,
+ 21000,
+ 23000,
+ 25000,
+ 27000,
+ 29000,
+ 31000,
+ 33000,
+ 35000,
+ 37000,
+ 39000,
+ 41000,
+ 43000,
+ 45000
+};
+
+///////////// num_flight_levels ///////////////////////
+//
+// number of flight levels.
+//
+//
+// Type: int
+//
+
+num_flight_levels = 60;
+
+///////////// start_flight_level //////////////////////
+//
+// the starting altitude for the output.
+//
+// The units are feet.
+//
+//
+// Type: float
+//
+
+start_flight_level = 500;
+
+///////////// flight_level_dz /////////////////////////
+//
+// The separation between flight levels.
+//
+// The units are feet.
+//
+// Minimum val: 0
+//
+// Type: float
+//
+
+flight_level_dz = 500;
+
+///////////// data_extension //////////////////////////
+//
+// Method to use for extending the data outside of the limits of the 
+//   model.
+//
+// With EXTEND_MISSING, data that is below the lowest model level minus 
+//   data_extend_feet or above the highest model level plus 
+//   data_extend_feet will be set to missing.
+// With EXTEND_CLOSEST, data that is below the lowest model level or 
+//   above the highest model level will be set to the closest model value.
+//
+//
+// Type: enum
+// Options:
+//     EXTEND_MISSING
+//     EXTEND_CLOSEST
+//
+
+data_extension = EXTEND_MISSING;
+
+///////////// data_extend_feet ////////////////////////
+//
+// The distance in feet above and below the model grid where model 
+//   values will be used.
+//
+// Used only if data_extension is set to EXTEND_MISSING.
+//
+//
+// Type: double
+//
+
+data_extend_feet = 0;
+

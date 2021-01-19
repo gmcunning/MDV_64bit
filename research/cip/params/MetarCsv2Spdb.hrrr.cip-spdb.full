@@ -1,0 +1,452 @@
+/**********************************************************************
+ * TDRP params for MetarCsv2Spdb
+ **********************************************************************/
+
+//======================================================================
+//
+// Program MetarCsv2Spdb.
+//
+// This program reads metar data from ascii input and stores it in spdb 
+//   data base.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING AND PROCESS CONTROL.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+// If set, debug messages will be printed with the appropriate level of 
+//   detail.
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug = DEBUG_NORM;
+
+///////////// instance ////////////////////////////////
+//
+// Process instance for procmap.
+// This program uses this instance when registering with the process 
+//   mapper.
+// Type: string
+//
+
+instance = "cip";
+
+///////////// mode ////////////////////////////////////
+//
+// Operational mode: (REALTIME, ARCHIVE, FILELIST, or STDIN).
+// Realtime mode - waits for new data; archive mode runs on single file.
+//
+// Type: enum
+// Options:
+//     REALTIME
+//     ARCHIVE
+//     FILELIST
+//     STDIN
+//
+
+mode = REALTIME;
+
+//======================================================================
+//
+// DATA INPUT.
+//
+//======================================================================
+ 
+///////////// input_dir ///////////////////////////////
+//
+// Path for directory to the input files.
+// If possible, the file names should include date/time information. 
+//   Acceptable options are: yyyymmdd/hhmmss*, *yyyymmdd?hhmmss*, 
+//   *yyyymmddhhmmss*, *yyyymmddhhmm*, *yyyymddhh*, *yyyymmdd?hhmm, 
+//   *yyyymmdd?hh, *yyyymmdd*.
+// Type: string
+//
+
+input_dir = "raw/metars";
+
+///////////// latest_data_info_avail //////////////////
+//
+// Set to true if there is a latest_data_info file available in the 
+//   input directory.
+// REALTIME mode only.
+// Type: boolean
+//
+
+latest_data_info_avail = TRUE;
+
+///////////// max_realtime_valid_age //////////////////
+//
+// Max valid age of rdata input files in realtime mode (secs).
+// This the max valid age for an incoming file. The program will wait 
+//   for a data file more recent than this age.
+// Minimum val: 1
+// Type: int
+//
+
+max_realtime_valid_age = 3600;
+
+///////////// expire_seconds //////////////////////////
+//
+// Expire time in seconds for each metar.
+// This value will be added to the metar time to determine the expire 
+//   time for the metar.
+// Type: int
+//
+
+expire_seconds = 7200;
+
+//======================================================================
+//
+// DECODERS.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DATA OUTPUT.
+//
+//======================================================================
+ 
+///////////// decoded_spdb_url ////////////////////////
+//
+// Spdb URL for decoded pirep data.
+// The name of the URL which will be used as the destination for the 
+//   SPDB data. If the dir does not start with / or ., it is relative to 
+//   $DATA_DIR.  Leave an empty string to not write decoded PIREPs to 
+//   SPDB.
+// Type: string
+//
+
+decoded_spdb_url = "/d1/cunning/data/64-bit_mdv/cip/spdb/metar";
+
+///////////// ascii_spdb_url //////////////////////////
+//
+// Spdb URL for ASCII pirep data.
+// The name of the URL which will be used as the destination for the 
+//   ASCII SPDB data. If the dir does not start with / or ., it is 
+//   relative to $DATA_DIR.  Leave an empty string to not write ASCII 
+//   PIREPs to SPDB.
+// Type: string
+//
+
+ascii_spdb_url = "";
+
+///////////// output_compression //////////////////////
+//
+// Option to compress the chunks in the SPDB output.
+// Set desired output compression. Compression should only be done for 
+//   data in which the individual chunks are large.
+//
+// Type: enum
+// Options:
+//     COMPRESSION_NONE
+//     COMPRESSION_GZIP
+//     COMPRESSION_BZIP2
+//
+
+output_compression = COMPRESSION_NONE;
+
+///////////// expire_secs /////////////////////////////
+//
+// Data expire period - seconds.
+// In the SPDB data base, the data is set as expired after this period.
+// Type: int
+//
+
+expire_secs = 21600;
+
+///////////// field_names /////////////////////////////
+//
+// Names of CSV fields.
+//
+// Type: struct
+//   typedef struct {
+//      string icao_n;
+//      int icao_i;
+//      string lat_n;
+//      int lat_i;
+//      string lon_n;
+//      int lon_i;
+//      string altitude_n;
+//      int altitude_i;
+//      string obs_time_n;
+//      int obs_time_i;
+//      string report_time_n;
+//      int report_time_i;
+//      string surface_temp_n;
+//      int surface_temp_i;
+//      string dew_pt_temp_n;
+//      int dew_pt_temp_i;
+//      string wind_dir_n;
+//      int wind_dir_i;
+//      string wind_speed_n;
+//      int wind_speed_i;
+//      string wind_gust_n;
+//      int wind_gust_i;
+//      string horiz_visibility_n;
+//      int horiz_visibility_i;
+//      string altimeter_n;
+//      int altimeter_i;
+//      string sea_lvl_pressure_n;
+//      int sea_lvl_pressure_i;
+//      string qc_field_n;
+//      int qc_field_i;
+//      string corrected_n;
+//      int corrected_i;
+//      string auto_n;
+//      int auto_i;
+//      string auto_station_n;
+//      int auto_station_i;
+//      string maintenance_n;
+//      int maintenance_i;
+//      string no_signal_n;
+//      int no_signal_i;
+//      string lightning_off_n;
+//      int lightning_off_i;
+//      string freezing_rain_off_n;
+//      int freezing_rain_off_i;
+//      string present_weather_off_n;
+//      int present_weather_off_i;
+//      string present_weather_n;
+//      int present_weather_i;
+//      string cloud_coverage1_n;
+//      int cloud_coverage1_i;
+//      string cloud_coverage2_n;
+//      int cloud_coverage2_i;
+//      string cloud_coverage3_n;
+//      int cloud_coverage3_i;
+//      string cloud_coverage4_n;
+//      int cloud_coverage4_i;
+//      string cloud_coverage5_n;
+//      int cloud_coverage5_i;
+//      string cloud_coverage6_n;
+//      int cloud_coverage6_i;
+//      string cloud_base1_n;
+//      int cloud_base1_i;
+//      string cloud_base2_n;
+//      int cloud_base2_i;
+//      string cloud_base3_n;
+//      int cloud_base3_i;
+//      string cloud_base4_n;
+//      int cloud_base4_i;
+//      string pressure_tendency_n;
+//      int pressure_tendency_i;
+//      string maxT_n;
+//      int maxT_i;
+//      string minT_n;
+//      int minT_i;
+//      string maxT24hr_n;
+//      int maxT24hr_i;
+//      string minT24hr_n;
+//      int minT24hr_i;
+//      string precip_n;
+//      int precip_i;
+//      string precip3hr_n;
+//      int precip3hr_i;
+//      string precip6hr_n;
+//      int precip6hr_i;
+//      string precip24hr_n;
+//      int precip24hr_i;
+//      string snow_n;
+//      int snow_i;
+//      string vertical_visibility_n;
+//      int vertical_visibility_i;
+//      string metar_type_n;
+//      int metar_type_i;
+//      string raw_n;
+//      int raw_i;
+//      string remarks_n;
+//      int remarks_i;
+//   }
+//
+//
+
+field_names = { "icaoId", -1, "latitude", -1, "longitude", -1, "altitude_m", -1, "observationTime", -1, "timeReportReceived", -1, "surfaceTemperature(C)", -1, "dewpointTemperature(C)", -1, "windDirection(deg)", -1, "windSpeed(kts)", -1, "windGust(kts)", -1, "horizontalVisibility(mi)", -1, "altimeter(in)", -1, "seaLevelPressure(hPa)", -1, "qcField", -1, "", -1, "", -1, "", -1, "", -1, "", -1, "", -1, "", -1, "", -1, "presentWeather", -1, "cloudCoverage1", -1, "cloudCoverage2", -1, "cloudCoverage3", -1, "cloudCoverage4", -1, "cloudCoverage5", -1, "cloudCoverage6", -1, "cloudBase1(ft AGL)", -1, "cloudBase2(ft AGL)", -1, "cloudBase3(ft AGL)", -1, "cloudBase4(ft AGL)", -1, "cloudBase5(ft AGL)", -1, "cloudBase6(ft AGL)", -1, "pressureTendency(1/10 hPa)", -1, "maximumT(C)", -1, "minmumT(C)", -1, "maximumTemperature24hr(C)", -1, "minimumTemperature24hr(C)", -1, "precipitation(in)", -1, "precipitation3hr(in)", -1, "precipitation6hr(in)", -1, "precipitation24hr(in)", -1, "snow(in)", -1, "verticalVisibility(ft)", -1, "ceilingLow(ft AGL)", -1,"metarType", -1, "rawText", -1 };
+
+///////////// rejectedStations ////////////////////////
+//
+// List of rejected station IDs.
+// If a station is on this list, it is not stored.
+// Type: string
+// 1D array - variable length.
+//
+
+rejectedStations = { "FAKE", "K123", "K789" };
+
+///////////// acceptedStations ////////////////////////
+//
+// List of accepted station IDs.
+// If a station is on this list, it is stored.
+// Type: string
+// 1D array - variable length.
+//
+
+acceptedStations = { "FAKE", "K123", "K789" };
+
+///////////// output_report_type //////////////////////
+//
+// Type of station report to put in the output SPDB database.
+//
+// Type: enum
+// Options:
+//     REPORT_PLUS_METAR_XML
+//     REPORT_PLUS_FULL_XML
+//     XML_ONLY
+//
+
+output_report_type = REPORT_PLUS_FULL_XML;
+
+///////////// altitude_conversions ////////////////////
+//
+// The altitude fields are first multiplied by the scale and then the 
+//   result is added to the bias.
+// This is used for altitude, ice/turb/cloud top1/base1/top2/base2.
+//
+// Type: struct
+//   typedef struct {
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+altitude_conversions = { 1.0, 0 };
+
+///////////// temperature_conversion //////////////////
+//
+// The temperature field is first multiplied by the scale and the result 
+//   is added to the bias.
+//
+// Type: struct
+//   typedef struct {
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+temperature_conversion = { 1, 0 };
+
+///////////// wind_speed_conversion ///////////////////
+//
+// The wind speed field is first multiplied by the scale and the result 
+//   is added to the bias.
+//
+// Type: struct
+//   typedef struct {
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+wind_speed_conversion = { 1, 0 };
+
+///////////// wind_gust_conversion ////////////////////
+//
+// The wind gust field is first multiplied by the scale and the result 
+//   is added to the bias.
+// Default is knots to m/s.
+//
+// Type: struct
+//   typedef struct {
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+wind_gust_conversion = { 0.514444, 0 };
+
+///////////// visibility_conversion ///////////////////
+//
+// The visibility field is first multiplied by the scale and the result 
+//   is added to the bias.
+//
+// Type: struct
+//   typedef struct {
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+visibility_conversion = { 1, 0 };
+
+///////////// cloud_coverage_conversion ///////////////
+//
+// The cloud coverage field is first multiplied by the scale and the 
+//   result is added to the bias.
+// Default scale is feet to km.
+//
+// Type: struct
+//   typedef struct {
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+cloud_coverage_conversion = { 0.0003048, 0 };
+
+///////////// precip_conversion ///////////////////////
+//
+// The precipitation field is first multiplied by the scale and the 
+//   result is added to the bias.
+// Default scale is inches to mm.
+//
+// Type: struct
+//   typedef struct {
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+precip_conversion = { 25.4, 0 };
+
+///////////// pressure_conversion /////////////////////
+//
+// The pressure field is first multiplied by the scale and the result is 
+//   added to the bias.
+// Default scale is 1/10 hPa to mbar.
+//
+// Type: struct
+//   typedef struct {
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+pressure_conversion = { 0.1, 0 };
+
+///////////// include_all_heights_as_ceiling //////////
+//
+// Set to true if you wish to include cloud base heights from coverages 
+//   of FEW and SCT in the ceiling field.
+//
+// The meteorological definition of ceiling is the lowest BKN or OVC 
+//   layer. When a station report includes an SCT or FEW report, but no 
+//   BKN, OVC, CLR, or SKC, then the ceiling value in the SPDB will be set 
+//   to the height of the SCT or FEW layer if this is TRUE. If set to 
+//   FALSE, SCT and FEW are heights are not written to the ceiling field. 
+//   CLR and SKC remain as ceiling = -9999, and BKN/OVC still take 
+//   precedent when present with SCT/FEW.
+//
+//
+// Type: boolean
+//
+
+include_all_heights_as_ceiling = FALSE;

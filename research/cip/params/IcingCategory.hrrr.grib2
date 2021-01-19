@@ -1,0 +1,286 @@
+/* *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* */
+/* ** Copyright UCAR (c) 1992 - 2012 */
+/* ** University Corporation for Atmospheric Research(UCAR) */
+/* ** National Center for Atmospheric Research(NCAR) */
+/* ** Research Applications Laboratory(RAL) */
+/* ** P.O.Box 3000, Boulder, Colorado, 80307-3000, USA */
+/* ** 2012/10/31 17:24:47 */
+/* *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=* */
+/**********************************************************************
+ * TDRP params for IcingCategory
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: IcingCategory.
+//
+// IcingCategory is used to assign icing severity categories based on 
+//   continuous (i.e., 0.0-1.0) estimates of icing severity. .
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+// If set, debug messages will be printed with the appropriate level of 
+//   detail.
+// Type: boolean
+//
+
+debug = TRUE;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// run_mode ////////////////////////////////
+//
+// Process running mode.
+// Can be either ARCHIVE, REALTIME or FILELIST.
+//
+// Type: enum
+// Options:
+//     ARCHIVE
+//     REALTIME
+//     FILELIST
+//
+
+run_mode = ARCHIVE;
+
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "grib2";
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+ 
+///////////// input_url ///////////////////////////////
+//
+// input URL.
+// For data on local disk, this can just be the directory containing the 
+//   input MDV data files.  For data retrieved from a server, it is the 
+//   URL for the server.  A server URL looks like the following:
+// 	mdvp://host:port:directory_path
+// This URL specifies a DsMdvServer process running on the specified 
+//   host and using the specified port.  The data would reside on the 
+//   specified host under $RAP_DATA_DIR/directory_path.
+// Type: string
+//
+
+input_url = ".";
+
+///////////// max_valid_age ///////////////////////////
+//
+// maximum age of valid input data.
+// The units are seconds.
+// Type: int
+//
+
+max_valid_age = 0;
+
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+// For data on local disk, this can just be the directory containing the 
+//   input MDV data files.  For data retrieved from a server, it is the 
+//   URL for the server.  A server URL looks like the following:
+// 	mdvp://host:port:directory_path
+// This URL specifies a DsMdvServer process running on the specified 
+//   host and using the specified port.  The data would reside on the 
+//   specified host under $RAP_DATA_DIR/directory_path.
+// Type: string
+//
+
+output_url = "/d1/cunning/data/64-bit_mdv/cip/mdv/cip_hrrr_ice_cat";
+
+///////////// use_mdv_field_name //////////////////////
+//
+// Flag indicating whether to use the mdv_field_name or the 
+//   mdv_field_num to identify the output fields.
+// Type: boolean
+//
+
+use_mdv_field_name = TRUE;
+
+///////////// write_ldata /////////////////////////////
+//
+// Flag to turn on writing ldata information.
+// The default is true.
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// write_as_forecast ///////////////////////
+//
+// Flag to turn on writing files out in the RAL forecast directory 
+//   structure.
+// The default is false.
+// Type: boolean
+//
+
+write_as_forecast = FALSE;
+
+///////////// icing_field /////////////////////////////
+//
+// Icing Probability Field.
+//
+// Type: struct
+//   typedef struct {
+//      string mdv_field_name;
+//      int mdv_field_num;
+//   }
+//
+//
+
+icing_field = { "ICE_PROB", 0 };
+
+///////////// sld_field ///////////////////////////////
+//
+// SLD Field.
+//
+// Type: struct
+//   typedef struct {
+//      string mdv_field_name;
+//      int mdv_field_num;
+//   }
+//
+//
+
+sld_field = { "SLD", 0 };
+
+///////////// severity_field //////////////////////////
+//
+// Icing Severity Field.
+// This severity will be mapped to icing categories, ranging from 0 to 
+//   4.
+//
+// Type: struct
+//   typedef struct {
+//      string mdv_field_name;
+//      int mdv_field_num;
+//   }
+//
+//
+
+severity_field = { "ICE_SEV", 0 };
+
+///////////// remap_missing_and_bad_to_zero ///////////
+//
+// If true, missing and bad values in input are set to zero in output.
+//   Otherwise they are left as missing or bad.
+//
+//
+// Type: boolean
+//
+
+remap_missing_and_bad_to_zero = TRUE;
+
+///////////// data_set_info ///////////////////////////
+//
+// Dataset information string.
+// This parameter sets data_set_info in the master header.
+// Type: string
+//
+
+data_set_info = "4 = trace, 1 = light, 2 = moderate, 5 = heavy";
+
+///////////// severity_category_map ///////////////////
+//
+// The thresholds to map from continuous icing severity values to icing
+//   severity categories.
+//
+// Current CIP mapping is:
+// GRIB1 = 0, GRIB2 = 0: none (0.0)
+// GRIB1 = 1, GRIB2 = 4: trace (0 - 0.175)
+// GRIB1 = 2, GRIB2 = 1: light (0.175 - 0.375)
+// GRIB1 = 3, GRIB2 = 2: moderate (0.375 - 0.7)
+// GRIB1 = 4, GRIB2 = 5: heavy (0.7 - 1.0)
+//
+// Current FIP mapping is:
+// GRIB1 = 0, GRIB2 = 0: none (0.0)
+// GRIB1 = 1, GRIB2 = 4: trace (0 - 0.25)
+// GRIB1 = 2, GRIB2 = 1: light (0.25 - 0.425)
+// GRIB1 = 3, GRIB2 = 2: moderate (0.425 - 0.75)
+// GRIB1 = 4, GRIB2 = 5: heavy (0.75 - 1.0)
+//
+// PLEASE NOTE: Categories are different for GRIB1/GRIB2!!.
+//
+//
+// Type: struct
+//   typedef struct {
+//      float threshold_value;
+//      int category_number;
+//   }
+//
+// 1D array - variable length.
+//
+
+severity_category_map = {
+  {
+    threshold_value = 0,
+    category_number = 0
+  }
+  ,
+  {
+    threshold_value = 0.25,
+    category_number = 4
+  }
+  ,
+  {
+    threshold_value = 0.425,
+    category_number = 1
+  }
+  ,
+  {
+    threshold_value = 0.75,
+    category_number = 2
+  }
+  ,
+  {
+    threshold_value = 1,
+    category_number = 5
+  }
+};
+
+///////////// apply_sld_special_value /////////////////
+//
+// If true, SLD is set to sld_special_value when SLD == 0, but icing
+//   probability > 0.
+//
+//
+// Type: boolean
+//
+
+apply_sld_special_value = TRUE;
+
+///////////// sld_special_value ///////////////////////
+//
+// The special sld value that indicates no SLD found, but icing is still
+//   present.
+//
+//
+// Type: float
+//
+
+sld_special_value = -0.1;

@@ -1,0 +1,479 @@
+/**********************************************************************
+ * TDRP params for ./MdvDeriveModel
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: MdvDeriveModel.
+//
+// Calculates derived model fields.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug_mode //////////////////////////////
+//
+// Debug option.
+//
+// The options are DEBUG_OFF, DEBUG_NORM and DEBUG_VERBOSE. If set, 
+//   debug messages will be printed appropriately.
+//
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug_mode = DEBUG_NORM;
+
+//======================================================================
+//
+// PROCESS PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+//
+// Used for registration with procmap.
+//
+//
+// Type: string
+//
+
+instance = "wrf_rr_ncep";
+
+///////////// run_mode ////////////////////////////////
+//
+// Operating mode.
+//
+// If set to ARCHIVE, -start and -end MUST be included on the command 
+//   line.
+//
+//
+// Type: enum
+// Options:
+//     REALTIME
+//     ARCHIVE
+//     FILELIST
+//
+
+run_mode = REALTIME;
+
+//======================================================================
+//
+// PROCESS INPUT PARAMETERS.
+//
+// Parameters describing the input locations.
+//
+//======================================================================
+ 
+///////////// input_url ///////////////////////////////
+//
+// Input URL.
+//
+//
+// Type: string
+//
+
+input_url = "mdvp:://::mdv/model/pressure";
+
+///////////// max_valid_age ///////////////////////////
+//
+// Input URL maximum valid age in seconds.
+//
+//
+// Type: int
+//
+
+max_valid_age = 1800;
+
+///////////// topography_url //////////////////////////
+//
+// Topography URL.
+//
+//
+// Type: string
+//
+
+topography_url = "mdvp:://::static/algoHome/topo_WRF-RR-NEW/topo.mdv";
+
+///////////// topography_field_name ///////////////////
+//
+// Topography field name.
+//
+//
+// Type: string
+//
+
+topography_field_name = "HGT";
+
+///////////// input_fields ////////////////////////////
+//
+// Input fields with MDV name.
+//
+// Not all of these fields need to be in your input file.
+//
+//
+// Type: struct
+//   typedef struct {
+//      data_field_t data_field;
+//        Options:
+//          HEIGHT_FIELD
+//          TEMP_FIELD
+//          SPECH_FIELD
+//          VVEL_FIELD
+//          CWMR_FIELD
+//          RWMR_FIELD
+//          ICMR_FIELD
+//          SNMR_FIELD
+//          GRMR_FIELD
+//          CAPE_FIELD
+//          CIN_FIELD
+//          ACPCP_1HR_FIELD
+//          ACPCP_2HR_FIELD
+//          ACPCP_3HR_FIELD
+//          NCPCP_1HR_FIELD
+//          NCPCP_2HR_FIELD
+//          NCPCP_3HR_FIELD
+//          DEW_PT_FIELD
+//          LIFTED_COND_TEMP_FIELD
+//          EQUIV_POT_FIELD
+//          WET_BULB_FIELD
+//          SLW_FIELD
+//          MODEL_PRECIP_FIELD
+//          ICE_COND_FIELD
+//          LIQ_COND_FIELD
+//          PRECIP_COND_FIELD
+//          TOT_WATER_PATH_FIELD
+//          K_INDEX_FIELD
+//          LIFTED_INDEX_FIELD
+//          TOTAL_TOTALS_FIELD
+//          REL_HUM_FIELD
+//      string mdv_name;
+//   }
+//
+// 1D array - variable length.
+//
+
+input_fields = {
+  {
+    data_field = HEIGHT_FIELD,
+    mdv_name = "HGT"
+  },
+  {
+    data_field = PRESSURE_FIELD,
+    mdv_name = "PRES"
+  }  
+  ,
+  {
+    data_field = TEMP_FIELD,
+    mdv_name = "TMP"
+  }
+  ,
+  {
+    data_field = SPECH_FIELD,
+    mdv_name = "MIXR"
+  }
+  ,
+  {
+    data_field = VVEL_FIELD,
+    mdv_name = "VVEL"
+  }
+  ,
+  {
+    data_field = CWMR_FIELD,
+    mdv_name = "CLWMR"
+  }
+  ,
+  {
+    data_field = RWMR_FIELD,
+    mdv_name = "RWMR"
+  }
+  ,
+  {
+    data_field = ICMR_FIELD,
+    mdv_name = "ICMR"
+  }
+  ,
+  {
+    data_field = SNMR_FIELD,
+    mdv_name = "SNMR"
+  }
+  ,
+  {
+    data_field = GRMR_FIELD,
+    mdv_name = "GRMR"
+  }
+  ,
+  {
+    data_field = CAPE_FIELD,
+    mdv_name = "CAPE"
+  }
+  ,
+  {
+    data_field = CIN_FIELD,
+    mdv_name = "CIN"
+  }
+  ,
+  {
+    data_field = ACPCP_1HR_FIELD,
+    mdv_name = "ACPCP1Hr"
+  }
+  ,
+  {
+    data_field = ACPCP_3HR_FIELD,
+    mdv_name = "ACPCP3Hr"
+  }
+  ,
+  {
+    data_field = NCPCP_1HR_FIELD,
+    mdv_name = "NCPCP1Hr"
+  }
+  ,
+  {
+    data_field = NCPCP_3HR_FIELD,
+    mdv_name = "NCPCP3Hr"
+  }
+};
+
+//======================================================================
+//
+// PROCESS OUTPUT PARAMETERS.
+//
+// Parameters describing the output locations.
+//
+//======================================================================
+ 
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+//
+//
+// Type: string
+//
+
+output_url = "mdvp:://::mdv/model/derived-new";
+
+///////////// output_fields ///////////////////////////
+//
+// Output fields with MDV short name, long name, and encoding.
+//
+//
+// Type: struct
+//   typedef struct {
+//      data_field_t data_field;
+//        Options:
+//          HEIGHT_FIELD
+//          TEMP_FIELD
+//          SPECH_FIELD
+//          VVEL_FIELD
+//          CWMR_FIELD
+//          RWMR_FIELD
+//          ICMR_FIELD
+//          SNMR_FIELD
+//          GRMR_FIELD
+//          CAPE_FIELD
+//          CIN_FIELD
+//          ACPCP_1HR_FIELD
+//          ACPCP_2HR_FIELD
+//          ACPCP_3HR_FIELD
+//          NCPCP_1HR_FIELD
+//          NCPCP_2HR_FIELD
+//          NCPCP_3HR_FIELD
+//          DEW_PT_FIELD
+//          LIFTED_COND_TEMP_FIELD
+//          EQUIV_POT_FIELD
+//          WET_BULB_FIELD
+//          SLW_FIELD
+//          MODEL_PRECIP_FIELD
+//          ICE_COND_FIELD
+//          LIQ_COND_FIELD
+//          PRECIP_COND_FIELD
+//          TOT_WATER_PATH_FIELD
+//          K_INDEX_FIELD
+//          LIFTED_INDEX_FIELD
+//          TOTAL_TOTALS_FIELD
+//          REL_HUM_FIELD
+//      string mdv_short_name;
+//      string mdv_long_name;
+//      encoding_type_t encoding;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//   }
+//
+// 1D array - variable length.
+//
+
+output_fields = {
+  {
+    data_field = HEIGHT_FIELD,
+    mdv_short_name = "HGT",
+    mdv_long_name = "height",
+    encoding = ENCODING_FLOAT32
+  },
+  {
+    data_field = PRESSURE_FIELD,
+    mdv_short_name = "PRES",
+    mdv_long_name = "pressure",
+    encoding = ENCODING_FLOAT32
+  }  
+  ,
+  {
+    data_field = EQUIV_POT_FIELD,
+    mdv_short_name = "THETA_E",
+    mdv_long_name = "equivalent potential temperature",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = ICE_COND_FIELD,
+    mdv_short_name = "ICE_COND",
+    mdv_long_name = "ice condensate",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = LIQ_COND_FIELD,
+    mdv_short_name = "LIQ_COND",
+    mdv_long_name = "liquid water condensate",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = REL_HUM_FIELD,
+    mdv_short_name = "RH",
+    mdv_long_name = "relative humidity",
+    encoding = ENCODING_FLOAT32
+  }
+  , // Pass through fields
+  {
+    data_field = VVEL_FIELD,
+    mdv_short_name = "VVEL",
+    mdv_long_name = "vertical velocity",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = TEMP_FIELD,
+    mdv_short_name = "TMP",
+    mdv_long_name = "Temperature",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = CWMR_FIELD,
+    mdv_short_name = "CLWMR",
+    mdv_long_name = "Cloud water mixing ratio",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = RWMR_FIELD,
+    mdv_short_name = "RWMR",
+    mdv_long_name = "Rain water mixing ratio",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = ICMR_FIELD,
+    mdv_short_name = "ICMR",
+    mdv_long_name = "Ice mixing ratio",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = SNMR_FIELD,
+    mdv_short_name = "SNMR",
+    mdv_long_name = "Snow mixing ratio",
+    encoding = ENCODING_FLOAT32
+  }
+  ,
+  {
+    data_field = GRMR_FIELD,
+    mdv_short_name = "GRMR",
+    mdv_long_name = "Graupel mixing ratio",
+    encoding = ENCODING_FLOAT32
+  }
+};
+
+///////////// write_ldata /////////////////////////////
+//
+// Flag to turn on writing ldata information.
+//
+// The default is true.
+//
+//
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// write_as_forecast ///////////////////////
+//
+// Flag to turn on writing files out in the RAL forecast directory 
+//   structure.
+//
+// The default is false.
+//
+//
+// Type: boolean
+//
+
+write_as_forecast = FALSE;
+
+///////////// compression_type ////////////////////////
+//
+// Set compression type.
+//
+//
+// Type: enum
+// Options:
+//     COMPRESSION_ASIS
+//     COMPRESSION_NONE
+//     COMPRESSION_RLE
+//     COMPRESSION_LZO
+//     COMPRESSION_ZLIB
+//     COMPRESSION_BZIP
+//     COMPRESSION_GZIP
+//
+
+compression_type = COMPRESSION_GZIP;
+
+
+//======================================================================
+//
+// PRECIP CONDENSATE PARAMETERS.
+//
+// These parameters only pertain to precipitation condensate
+//   calculations.
+//
+//======================================================================
+
+///////////// precip_condensate_num_levels ////////////
+//
+// The number of levels to sum over when calculating precipitable
+//   condensate.
+//
+// The starting level is at or above the surface height.  Only levels
+//   with valid data are counted.  If not enough valid levels are found,
+//   the output is set to missing.
+//
+//
+// Type: int
+//
+
+precip_condensate_num_levels = 3;

@@ -1,0 +1,228 @@
+/**********************************************************************
+ * TDRP params for MetarMapper
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: MetarMapper.
+//
+// r.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+// If set, debug messages will be printed with the appropriate level of
+//   detail.
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug = DEBUG_OFF;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "cip";
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+ 
+///////////// metarStationPath ////////////////////////
+//
+// Metar station file path.
+// Path to to file containing a list of metar stations to consider.
+// Type: string
+//
+
+metarStationPath = "$(CIP_STATIC_DATA_DIR)/surface/stations.txt";
+
+///////////// outputUrl ///////////////////////////////
+//
+// Output URL.
+// URL to use for storing results.
+// Type: string
+//
+
+outputUrl = "$(CIP_DATA_DIR)/mdv/metar_mapper";
+
+///////////// metar_data_type /////////////////////////
+//
+// Metar data format (Netcdf or Spdb).
+//
+// Type: enum
+// Options:
+//     NETCDF_METAR
+//     SPDB_METAR
+//
+
+metar_data_type = NETCDF_METAR;
+
+///////////// mode ////////////////////////////////////
+//
+// Runtime mode - ARCHIVE or REALTIME.
+//
+// Type: enum
+// Options:
+//     ARCHIVE
+//     REALTIME
+//
+
+mode = ARCHIVE;
+
+//======================================================================
+//
+// OUTPUT PROJECTION PARAMETERS.
+//
+//======================================================================
+ 
+///////////// outputProjection ////////////////////////
+//
+// This is the user defined projection.
+// userProjection is the output projection definition. The statellite 
+//   and model input grid are remapped by userProjection as they are read. 
+//   The choice of projections are PROJ_LATLON, PROJ_LAMBERT_CONF and 
+//   PROJ_FLAT. PROJ_LATLON is a latitude/longitude projection, and if it 
+//   is chosen the remaining parameters can be ignored. PROJ_FLAT is a 
+//   flat projection, and if it is chosen the parameters rotation, 
+//   origin_lat, origin_lon must be set. PROJ_LAMBERT_CONF is a Lambert 
+//   conformal projection, and if it is chosen the parameters origin_lat, 
+//   origin_lon, ref_lat_1 and ref_lat_2 must be set.
+//
+// Type: struct
+//   typedef struct {
+//      projection_t type;
+//        Options:
+//          PROJ_LATLON
+//          PROJ_LAMBERT_CONF
+//          PROJ_FLAT
+//      double rotation;
+//      double origin_lat;
+//      double origin_lon;
+//      double ref_lat_1;
+//      double ref_lat_2;
+//   }
+//
+//
+
+outputProjection = {
+    type = PROJ_LAMBERT_CONF,
+    rotation = 0,
+    origin_lat = 25,
+    origin_lon = -95,
+    ref_lat_1 = 25,
+    ref_lat_2 = 25
+};
+
+///////////// outputGrid //////////////////////////////
+//
+// This is the user defined grid.
+// userGrid is the output grid definition. The statellite and modelinput 
+//   grid are remapped by userGrid as they are read.
+//
+// Type: struct
+//   typedef struct {
+//      int nx;
+//      int ny;
+//      double minx;
+//      double miny;
+//      double dx;
+//      double dy;
+//   }
+//
+//
+
+outputGrid = {
+    nx = 451,
+    ny = 337,
+    minx = -3332.14,
+    miny = -588.89,
+    dx = 13.545,
+    dy = 13.545
+};
+
+//======================================================================
+//
+// ALGORITHM PARAMETERS.
+//
+//======================================================================
+ 
+///////////// radiusOfInfluence ///////////////////////
+//
+// Metar station radius of influence (km).
+// Radius in km.
+// Type: float
+//
+
+radiusOfInfluence = 125;
+
+///////////// weatherProcessingLimits /////////////////
+//
+// Processing limits (km) for cloud algorithms.Processing begins with 
+//   distances between the first pair,proceeds with the second pair, and 
+//   so on. This approacheffectively treats all Metars within a given 
+//   processingbin equally with respect to distance. This was 
+//   implementedto reproduce Ben Bernstein's logic in metar_ncd2mdv.
+// Processing range bounds in km.
+// Type: float
+// 1D array - variable length.
+//
+
+weatherProcessingLimits = {
+ 0,
+ 40,
+ 60,
+ 80,
+ 100,
+ 125
+};
+
+///////////// lastMetarOnly ///////////////////////////
+//
+// Flag specifying whether all Metar observations reported fora specific 
+//   station should be processed, or only the most recentobservation for 
+//   this station.
+// Last Observation Flag.
+// Type: boolean
+//
+
+lastMetarOnly = FALSE;
+
+////////////// minNumMetars ////////////////////////////
+//
+// minimum number of metar reports needed to produce results.
+// The units are seconds.
+// Minimum val: 1
+// Type: int
+//
+
+minNumMetars = 800;
+

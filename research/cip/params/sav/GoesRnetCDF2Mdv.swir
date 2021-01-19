@@ -1,0 +1,1258 @@
+/**********************************************************************
+ * TDRP params for /home/cip-dev/CIP/bin/GoesRnetCDF2Mdv
+ **********************************************************************/
+
+//======================================================================
+//
+// GoesRnetCDF2Mdv.
+//
+// This program reads a set of GOES-R netCDF-formatted files             
+//   and writes the data to an MDV file.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+//
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug = DEBUG_NORM;
+
+//======================================================================
+//
+// PROCESS PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Instance.
+//
+// Used for process registration.
+//
+//
+// Type: string
+//
+
+instance = "swir";
+
+///////////// no_heat_pipe_vars ///////////////////////
+//
+// Flag to suppress reading variables and attribites related to the 
+//   heatpipe issue.
+//
+// This flag is should be used when the NetCDF file does not have the 
+//   heatpipe variables and atttibutes that were added after the G-17 
+//   problem.
+//
+//
+// Type: boolean
+//
+
+no_heat_pipe_vars = FALSE;
+
+///////////// procmap_register_interval_secs //////////
+//
+// Interval for procmap registration.
+//
+// Set to a high value if processing takes a long time. This will 
+//   prevent the auto_restarter from killing and restarting the app. If 
+//   left at 60, the default, will be the same as 
+//   PROCMAP_REGISTER_INTERVAL (60) will be used.
+//
+// Minimum val: 60
+//
+// Type: int
+//
+
+procmap_register_interval_secs = 60;
+
+//======================================================================
+//
+// INPUT PARAMETERS.
+//
+//======================================================================
+ 
+///////////// trigger_mode ////////////////////////////
+//
+// Input triggering mode.
+//
+// In LATEST_DATA mode, the program will trigger whenever a new ldata 
+//   file in the input_dir indicates that there is a new file ready to be 
+//   processed.
+// In REALTIME mode, the program will trigger whenever a new file 
+//   appears in the specified input directories that is ready to be 
+//   processed.In FILE_LIST mode, the program operates on the input files 
+//   specified on the command line.
+//
+//
+// Type: enum
+// Options:
+//     LATEST_DATA
+//     REALTIME
+//     FILE_LIST
+//
+
+trigger_mode = FILE_LIST;
+
+///////////// input_dir ///////////////////////////////
+//
+// List of Input directories to watch.
+//
+// There can be one directory that is watched and recursed. It may be 
+//   that there is a directory for each channel, band, or derived product.
+//
+//
+// Type: string
+//
+
+input_dir = "../g16";
+
+///////////// max_valid_secs //////////////////////////
+//
+// Maximum age of input data that will be processed in realtime, in 
+//   seconds.
+//
+//
+// Type: long
+//
+
+max_valid_secs = 3600;
+
+///////////// perform_path_filtering //////////////////
+//
+// Option to turn on or off filtering the file path.
+//
+// If true, then filter based on scene_sub_str and channel_sub_str will 
+//   be performed.It is important to note that there is a dependence on 
+//   the file naming to be the original form, which is like 
+//   OR_ABI-L1b-RadF-M6C02_G17_s20192321200341_e20192321209408_c20192321209
+//   453.nc.
+//
+//
+// Type: boolean
+//
+
+perform_path_filtering = FALSE;
+
+///////////// scene_sub_str ///////////////////////////
+//
+// Sub-string used in filename that identifies the scene or scan.
+//
+// For files named following the G-16 PUG, the names are: RadC, RadF, 
+//   RadM1, and RadM2. An empty string signals not to apply the test.
+//
+//
+// Type: string
+//
+
+scene_sub_str = "";
+
+///////////// channel_sub_str /////////////////////////
+//
+// Sub-string used in filename that identifies the band or channel.
+//
+// For files named following the G-16 PUG, the level-1 names are: C01 
+//   through C16. An empty string signals not to apply the test.
+//
+//
+// Type: string
+//
+
+channel_sub_str = "";
+
+//======================================================================
+//
+// OUTPUT PARAMETERS.
+//
+//======================================================================
+ 
+///////////// output_timestamp ////////////////////////
+//
+// Flag indicating how to time stamp the output file.
+//
+// For TIMESTAMP_BEGIN, the time of the first line in the image will be 
+//   used. For TIMESTAMP_END, the time of the last line in the image will 
+//   be used. For TIMESTAMP_MIDDLE, the timestamp will be the average of 
+//   the times of the first and last lines in the file.
+//
+//
+// Type: enum
+// Options:
+//     TIMESTAMP_BEGIN
+//     TIMESTAMP_MIDDLE
+//     TIMESTAMP_END
+//
+
+output_timestamp = TIMESTAMP_BEGIN;
+
+///////////// expire_offset ///////////////////////////
+//
+//
+// Type: int
+//
+
+expire_offset = 900;
+
+///////////// output_vlevel_type //////////////////////
+//
+// Vertical level type to use for the output fields.
+//
+// By default, we use the satellite image vertical type, but some 
+//   applications need a different vertical level type for the data. Note 
+//   that the vertical level is set to 0.0, no matter what vertical type 
+//   is chosen.
+//
+//
+// Type: enum
+// Options:
+//     VERT_TYPE_SURFACE
+//     VERT_TYPE_Z
+//     VERT_SATELLITE_IMAGE
+//     VERT_FLIGHT_LEVEL
+//
+
+output_vlevel_type = VERT_SATELLITE_IMAGE;
+
+//======================================================================
+//
+// DATA OUTPUT.
+//
+//======================================================================
+ 
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+//
+// Output data is written to this URL.
+//
+//
+// Type: string
+//
+
+output_url = "./output";
+
+///////////// init_zero ///////////////////////////////
+//
+// Option to output data with zero rather than MISSING_DATA_VALUE.
+//
+//
+// Type: boolean
+//
+
+init_zero = FALSE;
+
+//======================================================================
+//
+// OUTPUT DOMAIN PARAMETERS.
+//
+//======================================================================
+ 
+///////////// out_projection //////////////////////////
+//
+// Projection for mapping in x,y. See projection param below.
+//
+// 	PROJ_LATLON: simple lat/lon grid (Equidistant Cylindrical)
+// 	PROJ_FLAT: Azimuthal Equidistant (Radar)
+// 	PROJ_LAMBERT_CONF: Lambert Conformal Conic
+// 	PROJ_LAMBERT_AZIM: Lambert Azimuthal Equal Area
+// 	PROJ_MERCATOR: Mercator - EW orientation
+// 	PROJ_TRANS_MERCATOR: Tranverse Mercator - NS orientation
+// 	PROJ_POLAR_STEREO: Stereographic- polar aspect
+// 	PROJ_OBLIQUE_STEREO: Stereographic - oblique aspect
+// 	PROJ_ALBERS: Albers Equal Area Conic.
+//
+//
+// Type: enum
+// Options:
+//     PROJ_LATLON
+//     PROJ_LAMBERT_CONF
+//     PROJ_MERCATOR
+//     PROJ_POLAR_STEREO
+//     PROJ_FLAT
+//     PROJ_OBLIQUE_STEREO
+//     PROJ_TRANS_MERCATOR
+//     PROJ_ALBERS
+//     PROJ_LAMBERT_AZIM
+//
+
+out_projection = PROJ_LAMBERT_CONF;
+
+///////////// out_grid ////////////////////////////////
+//
+// Grid parameters for remapping in x,y.
+//
+// Units in km, except for LATLON, which is in degrees.
+//
+//
+// Type: struct
+//   typedef struct {
+//      int nx;
+//      int ny;
+//      double minx;
+//      double miny;
+//      double dx;
+//      double dy;
+//   }
+//
+//
+
+out_grid = {
+    nx = 3060,
+    ny = 2290,
+    minx = -3340.0,
+    miny = -600.0,
+    dx = 2.0,
+    dy = 2.0
+};
+
+///////////// out_rotation ////////////////////////////
+//
+// Grid rotation.
+//
+// This applies only to PROJ_FLAT projections.
+//
+//
+// Type: double
+//
+
+out_rotation = 0;
+
+///////////// out_origin_lat //////////////////////////
+//
+// Grid origin latitude.
+//
+// This applies to all projections except LATLON.
+//
+//
+// Type: double
+//
+
+out_origin_lat = 25.0;
+
+///////////// out_origin_lon //////////////////////////
+//
+// Grid origin longitude.
+//
+// This applies to all projections except LATLON.
+//
+//
+// Type: double
+//
+
+out_origin_lon = -95.0;
+
+///////////// out_lat1 ////////////////////////////////
+//
+// Grid reference latitude 1.
+//
+// This applies to LAMBERT_CONF and ALBERS projections.
+//
+//
+// Type: double
+//
+
+out_lat1 = 25.0;
+
+///////////// out_lat2 ////////////////////////////////
+//
+// Grid reference latitude 2.
+//
+// This applies to LAMBERT_CONF and ALBERS projections.
+//
+//
+// Type: double
+//
+
+out_lat2 = 25.0;
+
+///////////// out_central_scale ///////////////////////
+//
+// Central scale for projections.
+//
+// This applies to POLAR_STEREO, OBLIQUE_STEREO and TRANSVERSE_MERCATOR 
+//   projections.
+//
+//
+// Type: double
+//
+
+out_central_scale = 1;
+
+///////////// out_tangent_lat /////////////////////////
+//
+// Tangent latitude (deg).
+//
+// This applies to OBLIQUE_STEREO only.
+//
+//
+// Type: double
+//
+
+out_tangent_lat = 0;
+
+///////////// out_tangent_lon /////////////////////////
+//
+// Tangent longitude (deg).
+//
+// This applies to OBLIQUE_STEREO and POLAR_STEREO.
+//
+//
+// Type: double
+//
+
+out_tangent_lon = 0;
+
+///////////// out_pole_is_north ///////////////////////
+//
+// Flag indicating stereogtraphic is over the NORTH pole.
+//
+// This applies to POLAR_STEREO. If false, the projection is over the 
+//   south pole.
+//
+//
+// Type: boolean
+//
+
+out_pole_is_north = TRUE;
+
+///////////// set_earth_radius ////////////////////////
+//
+// Flag indicating that earth radius should be taken from earth_radius 
+//   parameter.
+//
+// If true, the earth's radius is taken from EARTH_RADIUS in 
+//   toolsa_macros.h. radius is 6371.0 km.
+//
+//
+// Type: boolean
+//
+
+set_earth_radius = FALSE;
+
+///////////// earth_radius ////////////////////////////
+//
+// Alternate earth radius used in projective geometry caclulation.
+//
+// Use set_earth_radius parameter to set radius in km.
+//
+//
+// Type: double
+//
+
+earth_radius = 6371;
+
+//======================================================================
+//
+// UNITS CONVERSION PARAMETERS.
+//
+//======================================================================
+ 
+///////////// convert_output_units ////////////////////
+//
+// Flag indicating whether to convert the field units on output.
+//
+// The default outputs are as follows:
+// Bands 7-16 are brightness temperature in deg K.
+//  Band 1-6 are in reflectance factor.
+//
+//
+// Type: boolean
+//
+
+convert_output_units = TRUE;
+
+///////////// output_units_type ///////////////////////
+//
+// Type of units conversion to do on the data before putting it into the 
+//   MDV file.
+//
+// Used only if convert_units is set to true.
+//
+//
+// Type: enum
+// Options:
+//     OUTPUT_K_TO_C
+//     OUTPUT_REFLECTANCE_FACTOR_TO_ALBEDO
+//
+
+output_units_type = OUTPUT_K_TO_C;
+
+//======================================================================
+//
+// NORMALIZE VISIBLE ALBEDO.
+//
+//======================================================================
+ 
+///////////// normalize_albedo ////////////////////////
+//
+// Option to normalize visible albedo based solar zenith angle.
+//
+// If true, the albedo fields are corrected using the one of the 
+//   techniques avaliable in norm_albedo_technique_t.
+// Normalization will only to channles 1 through 6. In the angles, set 
+//   the longitude of the satellite.
+//
+//
+// Type: boolean
+//
+
+normalize_albedo = FALSE;
+
+///////////// norm_albedo_method //////////////////////
+//
+// Technique used to normalize the visible albedo.
+//
+// NORM_ALBEDO_COS_SOL_ZEN- normalize albedo by dividing by the cosine 
+//   of the solar zenith angle
+// NORM_ALBEDO_SQRT_COS_SOL_ZEN - normalize albedo by dividing by the 
+//   square rootcosine of the solar zenith angle.
+//
+//
+// Type: enum
+// Options:
+//     NORM_ALBEDO_COS_SOL_ZEN
+//     NORM_ALBEDO_SQRT_COS_SOL_ZEN
+//     NORM_ALBEDO_F3
+//
+
+norm_albedo_method = NORM_ALBEDO_COS_SOL_ZEN;
+
+//======================================================================
+//
+// QUALITY CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// check_quality_field /////////////////////
+//
+// Option to check quality field when filling output data field.
+//
+// If true, the output data field will masked using the quality field. 
+//   If false, the quality field will not be checked.
+//
+//
+// Type: boolean
+//
+
+check_quality_field = TRUE;
+
+///////////// quality_check_flag_list /////////////////
+//
+// List of quality flags that can be used to mask the data with the data 
+//   quality field.
+//
+// Use ncdump to view list flags and their values.
+//
+//
+// Type: enum
+// Options:
+//     QF_CONDITIONALLY_USABLE
+//     QF_OUT_OF_RANGE
+//     QF_NO_VALUE_PIXEL
+//     QF_EXCEEDED_FOCAL_PLANE_TEMP
+// 1D array - variable length.
+//
+
+quality_check_flag_list = {
+ QF_CONDITIONALLY_USABLE,
+ QF_OUT_OF_RANGE,
+ QF_NO_VALUE_PIXEL,
+ QF_EXCEEDED_FOCAL_PLANE_TEMP
+};
+
+///////////// bad_count_test //////////////////////////
+//
+// Threshold test for the count accumulated by checking flags from 
+//   quality_check_flag_list.
+//
+// Pass the test with a count less than the threshold value. For this 
+//   test to be effective the check_quality_field must be true. Set run to 
+//   true to perform the test.
+//
+//
+// Type: struct
+//   typedef struct {
+//      boolean run;
+//      float threshold;
+//   }
+//
+//
+
+bad_count_test = {
+    run = FALSE,
+    threshold = 0
+};
+
+///////////// missing_pixel_test //////////////////////
+//
+// Threshold test for the missing_pixel_count variable.
+//
+// Pass the test with a count less than the threshold value.
+//
+//
+// Type: struct
+//   typedef struct {
+//      boolean run;
+//      float threshold;
+//   }
+//
+//
+
+missing_pixel_test = {
+    run = FALSE,
+    threshold = 0
+};
+
+///////////// saturated_pixel_test ////////////////////
+//
+// Threshold test for the saturated_pixel_count variable.
+//
+// Pass the test with a count less than the threshold value.
+//
+//
+// Type: struct
+//   typedef struct {
+//      boolean run;
+//      float threshold;
+//   }
+//
+//
+
+saturated_pixel_test = {
+    run = FALSE,
+    threshold = 0
+};
+
+///////////// undersaturated_pixel_test ///////////////
+//
+// Threshold test for the undersaturated_pixel_count variable.
+//
+// Pass the test with a count less than the threshold value.
+//
+//
+// Type: struct
+//   typedef struct {
+//      boolean run;
+//      float threshold;
+//   }
+//
+//
+
+undersaturated_pixel_test = {
+    run = FALSE,
+    threshold = 0
+};
+
+///////////// focal_plane_temp_thresh_exceed_test /////
+//
+// Threshold test for the 
+//   focal_plane_temperature_threshold_exceeded_count variable.
+//
+// Pass the test with a count less than the threshold value.
+//
+//
+// Type: struct
+//   typedef struct {
+//      boolean run;
+//      float threshold;
+//   }
+//
+//
+
+focal_plane_temp_thresh_exceed_test = {
+    run = FALSE,
+    threshold = 0
+};
+
+///////////// focal_plane_max_temp_test ///////////////
+//
+// Threshold test for the 
+//   focal_plane_temperature_threshold_exceeded_count variable.
+//
+// Pass the test with a count less than the threshold value.
+//
+//
+// Type: struct
+//   typedef struct {
+//      boolean run;
+//      float threshold;
+//   }
+//
+//
+
+focal_plane_max_temp_test = {
+    run = FALSE,
+    threshold = 273
+};
+
+///////////// clip_negative_radiance //////////////////
+//
+// This is a flag that turns on clipping the radiance values at zero.
+//
+// It is possible to see negative radiance values, based on the number 
+//   of bits, scale and offset selected for the band.
+//
+//
+// Type: boolean
+//
+
+clip_negative_radiance = FALSE;
+
+//======================================================================
+//
+// PRINT INFORMATION PARAMETERS.
+//
+//======================================================================
+ 
+///////////// print_info //////////////////////////////
+//
+// Option to print information about the file contents.
+//
+// The infomation includes varibles, attributes, dimensions, and QC 
+//   related values.
+//
+//
+// Type: boolean
+//
+
+print_info = FALSE;
+
+//======================================================================
+//
+// ENCODING AND COMPRESSION CONVERSION.
+//
+//======================================================================
+ 
+///////////// out_data_prep ///////////////////////////
+//
+// Data prep for the output data.
+//
+// This is only relevant when converting from float32 to int8 or int16 
+//   or if force_scale_change is set.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string short_name;
+//      string long_name;
+//      string units;
+//      encoding_type_t encoding_type;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//      compression_type_t compression_type;
+//        Options:
+//          COMPRESSION_ASIS
+//          COMPRESSION_NONE
+//          COMPRESSION_RLE
+//          COMPRESSION_LZO
+//          COMPRESSION_ZLIB
+//          COMPRESSION_BZIP
+//          COMPRESSION_GZIP
+//          COMPRESSION_GZIP_VOL
+//          COMPRESSION_TYPES_N
+//      scaling_type_t scaling_type;
+//        Options:
+//          SCALING_ASIS
+//          SCALING_NONE
+//          SCALING_ROUNDED
+//          SCALING_INTEGRAL
+//          SCALING_DYNAMIC
+//          SCALING_SPECIFIED
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+out_data_prep = {
+    short_name = "SW_IR",
+    long_name = "short wave IR",
+    units = "C",
+    encoding_type = ENCODING_INT16,
+    compression_type = COMPRESSION_GZIP,
+    scaling_type = SCALING_DYNAMIC,
+    scale = 1,
+    bias = 0
+};
+
+///////////// include_qc_field ////////////////////////
+//
+// Flag to include the QC field in the MDV output.
+//
+//
+// Type: boolean
+//
+
+include_qc_field = FALSE;
+
+///////////// qc_data_prep ////////////////////////////
+//
+// Data prep for the QC data.
+//
+// This is only relevant when converting from float32 to int8 or int16 
+//   or if force_scale_change is set.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string short_name;
+//      string long_name;
+//      string units;
+//      encoding_type_t encoding_type;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//      compression_type_t compression_type;
+//        Options:
+//          COMPRESSION_ASIS
+//          COMPRESSION_NONE
+//          COMPRESSION_RLE
+//          COMPRESSION_LZO
+//          COMPRESSION_ZLIB
+//          COMPRESSION_BZIP
+//          COMPRESSION_GZIP
+//          COMPRESSION_GZIP_VOL
+//          COMPRESSION_TYPES_N
+//      scaling_type_t scaling_type;
+//        Options:
+//          SCALING_ASIS
+//          SCALING_NONE
+//          SCALING_ROUNDED
+//          SCALING_INTEGRAL
+//          SCALING_DYNAMIC
+//          SCALING_SPECIFIED
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+qc_data_prep = {
+    short_name = "QC",
+    long_name = "long_QC",
+    units = "units",
+    encoding_type = ENCODING_ASIS,
+    compression_type = COMPRESSION_ASIS,
+    scaling_type = SCALING_ASIS,
+    scale = 1,
+    bias = 0
+};
+
+///////////// include_radiance_field //////////////////
+//
+// Flag to include the radiance field in the MDV output.
+//
+//
+// Type: boolean
+//
+
+include_radiance_field = FALSE;
+
+///////////// radiance_data_prep //////////////////////
+//
+// Data prep for the radiance data.
+//
+// This is only relevant when converting from float32 to int8 or int16 
+//   or if force_scale_change is set.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string short_name;
+//      string long_name;
+//      string units;
+//      encoding_type_t encoding_type;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//      compression_type_t compression_type;
+//        Options:
+//          COMPRESSION_ASIS
+//          COMPRESSION_NONE
+//          COMPRESSION_RLE
+//          COMPRESSION_LZO
+//          COMPRESSION_ZLIB
+//          COMPRESSION_BZIP
+//          COMPRESSION_GZIP
+//          COMPRESSION_GZIP_VOL
+//          COMPRESSION_TYPES_N
+//      scaling_type_t scaling_type;
+//        Options:
+//          SCALING_ASIS
+//          SCALING_NONE
+//          SCALING_ROUNDED
+//          SCALING_INTEGRAL
+//          SCALING_DYNAMIC
+//          SCALING_SPECIFIED
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+radiance_data_prep = {
+    short_name = "radiance",
+    long_name = "long_radinace",
+    units = "units",
+    encoding_type = ENCODING_ASIS,
+    compression_type = COMPRESSION_ASIS,
+    scaling_type = SCALING_ASIS,
+    scale = 1,
+    bias = 0
+};
+
+//======================================================================
+//
+// SOLAR AND SATELLITE ANGLE PARAMETERS.
+//
+//======================================================================
+ 
+///////////// compute_angles //////////////////////////
+//
+// Option to compute and output solar and satellite angle.
+//
+// If true, the angles specified in ouput_angles will be written in 
+//   ouput files.
+//
+//
+// Type: boolean
+//
+
+compute_angles = FALSE;
+
+///////////// satellite_longitude /////////////////////
+//
+// Physical longitude of the satellite in degrees.
+//
+// Need this parameter, becasue the NetCDF files contain the projected 
+//   longitudes of the satellite. Longitudes for GOES-16 and GOES-17 are 
+//   -75.2 and -137.2.
+//
+//
+// Type: float
+//
+
+satellite_longitude = 0;
+
+///////////// ouput_angles ////////////////////////////
+//
+//
+// Type: enum
+// Options:
+//     ANGLE_SOLAR_ZENITH
+//     ANGLE_SOLAR_AZIMUTH
+//     ANGLE_SATELLITE_ZENITH
+//     ANGLE_SATELLITE_AZIMUTH
+//     ANGLE_RELATIVE_AZIMUTH
+// 1D array - variable length.
+//
+
+ouput_angles = {
+};
+
+///////////// angle_units /////////////////////////////
+//
+// Type of units to store the angles in the ouput.
+//
+//
+// Type: enum
+// Options:
+//     UNIT_ANGLE_DEGREES
+//     UNIT_ANGLE_RADIANS
+//
+
+angle_units = UNIT_ANGLE_DEGREES;
+
+///////////// solar_azimuth_prep //////////////////////
+//
+// Data prep for solar azimuth angle.
+//
+// The units string is set by angle units parameter.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string short_name;
+//      string long_name;
+//      string units;
+//      encoding_type_t encoding_type;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//      compression_type_t compression_type;
+//        Options:
+//          COMPRESSION_ASIS
+//          COMPRESSION_NONE
+//          COMPRESSION_RLE
+//          COMPRESSION_LZO
+//          COMPRESSION_ZLIB
+//          COMPRESSION_BZIP
+//          COMPRESSION_GZIP
+//          COMPRESSION_GZIP_VOL
+//          COMPRESSION_TYPES_N
+//      scaling_type_t scaling_type;
+//        Options:
+//          SCALING_ASIS
+//          SCALING_NONE
+//          SCALING_ROUNDED
+//          SCALING_INTEGRAL
+//          SCALING_DYNAMIC
+//          SCALING_SPECIFIED
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+solar_azimuth_prep = {
+    short_name = "SOL_AZM_ANG",
+    long_name = "solar azimuth angle",
+    units = "units",
+    encoding_type = ENCODING_ASIS,
+    compression_type = COMPRESSION_ASIS,
+    scaling_type = SCALING_ASIS,
+    scale = 1,
+    bias = 0
+};
+
+///////////// solar_zenith_prep ///////////////////////
+//
+// Data prep for solar zenith angle.
+//
+// The units string is set by angle units parameter.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string short_name;
+//      string long_name;
+//      string units;
+//      encoding_type_t encoding_type;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//      compression_type_t compression_type;
+//        Options:
+//          COMPRESSION_ASIS
+//          COMPRESSION_NONE
+//          COMPRESSION_RLE
+//          COMPRESSION_LZO
+//          COMPRESSION_ZLIB
+//          COMPRESSION_BZIP
+//          COMPRESSION_GZIP
+//          COMPRESSION_GZIP_VOL
+//          COMPRESSION_TYPES_N
+//      scaling_type_t scaling_type;
+//        Options:
+//          SCALING_ASIS
+//          SCALING_NONE
+//          SCALING_ROUNDED
+//          SCALING_INTEGRAL
+//          SCALING_DYNAMIC
+//          SCALING_SPECIFIED
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+solar_zenith_prep = {
+    short_name = "SOL_ZEN_ANG",
+    long_name = "solar zenith angle",
+    units = "units",
+    encoding_type = ENCODING_ASIS,
+    compression_type = COMPRESSION_ASIS,
+    scaling_type = SCALING_ASIS,
+    scale = 1,
+    bias = 0
+};
+
+///////////// satellite_azimuth_prep //////////////////
+//
+// Data prep for solar azimuth angle.
+//
+// The units string is set by angle units parameter.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string short_name;
+//      string long_name;
+//      string units;
+//      encoding_type_t encoding_type;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//      compression_type_t compression_type;
+//        Options:
+//          COMPRESSION_ASIS
+//          COMPRESSION_NONE
+//          COMPRESSION_RLE
+//          COMPRESSION_LZO
+//          COMPRESSION_ZLIB
+//          COMPRESSION_BZIP
+//          COMPRESSION_GZIP
+//          COMPRESSION_GZIP_VOL
+//          COMPRESSION_TYPES_N
+//      scaling_type_t scaling_type;
+//        Options:
+//          SCALING_ASIS
+//          SCALING_NONE
+//          SCALING_ROUNDED
+//          SCALING_INTEGRAL
+//          SCALING_DYNAMIC
+//          SCALING_SPECIFIED
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+satellite_azimuth_prep = {
+    short_name = "SAT_AZM_ANG",
+    long_name = "satellite azimuth angle",
+    units = "units",
+    encoding_type = ENCODING_ASIS,
+    compression_type = COMPRESSION_ASIS,
+    scaling_type = SCALING_ASIS,
+    scale = 1,
+    bias = 0
+};
+
+///////////// satellite_zenith_prep ///////////////////
+//
+// Data prep for satellite zenith angle.
+//
+// The units string is set by angle units parameter.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string short_name;
+//      string long_name;
+//      string units;
+//      encoding_type_t encoding_type;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//      compression_type_t compression_type;
+//        Options:
+//          COMPRESSION_ASIS
+//          COMPRESSION_NONE
+//          COMPRESSION_RLE
+//          COMPRESSION_LZO
+//          COMPRESSION_ZLIB
+//          COMPRESSION_BZIP
+//          COMPRESSION_GZIP
+//          COMPRESSION_GZIP_VOL
+//          COMPRESSION_TYPES_N
+//      scaling_type_t scaling_type;
+//        Options:
+//          SCALING_ASIS
+//          SCALING_NONE
+//          SCALING_ROUNDED
+//          SCALING_INTEGRAL
+//          SCALING_DYNAMIC
+//          SCALING_SPECIFIED
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+satellite_zenith_prep = {
+    short_name = "SAT_ZEN_ANG",
+    long_name = "satellite zenith angle",
+    units = "units",
+    encoding_type = ENCODING_ASIS,
+    compression_type = COMPRESSION_ASIS,
+    scaling_type = SCALING_ASIS,
+    scale = 1,
+    bias = 0
+};
+
+///////////// relative_azimuth_prep ///////////////////
+//
+// Data prep for relative azimuth angle.
+//
+// The units string is set by angle units parameter.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string short_name;
+//      string long_name;
+//      string units;
+//      encoding_type_t encoding_type;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//      compression_type_t compression_type;
+//        Options:
+//          COMPRESSION_ASIS
+//          COMPRESSION_NONE
+//          COMPRESSION_RLE
+//          COMPRESSION_LZO
+//          COMPRESSION_ZLIB
+//          COMPRESSION_BZIP
+//          COMPRESSION_GZIP
+//          COMPRESSION_GZIP_VOL
+//          COMPRESSION_TYPES_N
+//      scaling_type_t scaling_type;
+//        Options:
+//          SCALING_ASIS
+//          SCALING_NONE
+//          SCALING_ROUNDED
+//          SCALING_INTEGRAL
+//          SCALING_DYNAMIC
+//          SCALING_SPECIFIED
+//      float scale;
+//      float bias;
+//   }
+//
+//
+
+relative_azimuth_prep = {
+    short_name = "REL_AZM_ANG",
+    long_name = "relative azimuth angle",
+    units = "units",
+    encoding_type = ENCODING_ASIS,
+    compression_type = COMPRESSION_ASIS,
+    scaling_type = SCALING_ASIS,
+    scale = 1,
+    bias = 0
+};
+

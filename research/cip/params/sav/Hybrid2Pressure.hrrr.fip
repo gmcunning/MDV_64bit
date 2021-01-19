@@ -1,0 +1,383 @@
+/**********************************************************************
+ * TDRP params for Hybrid2Pressure
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: Hybrid2Pressure.
+//
+// Hybrid2Pressure maps RUC output on hybrid levels to pressurelevels. 
+//   The mapping technique is the same as the one used for RUC 
+//   post-processing, as it is a re-coding of the Fortran subroutine HB2P 
+//   in hy2pkg_40.code, written by Stan Benjamin at GSD.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug_mode //////////////////////////////
+//
+// Debug option.
+// The options are DEBUG_OFF, DEBUG_NORM and DEBUG_VERBOSE. If set, 
+//   debug messages will be printed appropriately.
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug_mode = DEBUG_VERBOSE;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "ruc";
+
+///////////// mode ////////////////////////////////////
+//
+// Process running mode.
+// Can be either ARCHIVE, REALTIME or FILELIST.
+//
+// Type: enum
+// Options:
+//     ARCHIVE
+//     REALTIME
+//     FILELIST
+//
+
+mode = ARCHIVE;
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+ 
+///////////// input_url ///////////////////////////////
+//
+// Input URL.
+// URL to use for input data.
+// Type: string
+//
+
+input_url = "mdvp:://localhost:43000:mdv/input";
+
+///////////// max_valid_age ///////////////////////////
+//
+// maximum age of valid of data.
+// The units are seconds.
+// Type: int
+//
+
+max_valid_age = 0;
+
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+// URL to use for storing results.
+// Type: string
+//
+
+output_url = "/d1/cunning/data/64-bit_mdv/mdv/fip/hrrr_pres";
+
+///////////// write_as_forecast ///////////////////////
+//
+// Set to TRUE to write data files with forecast naming convention.
+// Default is FALSE which may cause output file to be overwritten on 
+//   successive model runs.
+// Type: boolean
+//
+
+write_as_forecast = TRUE;
+
+///////////// write_ldata /////////////////////////////
+//
+// Local data info file flag.
+// TRUE to write ldata file.
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// encoding_type ///////////////////////////
+//
+// Set encoding type.
+//
+// Type: enum
+// Options:
+//     ENCODING_ASIS
+//     ENCODING_INT8
+//     ENCODING_INT16
+//     ENCODING_FLOAT32
+//
+
+encoding_type = ENCODING_FLOAT32;
+
+///////////// compression_type ////////////////////////
+//
+// Set compression type.
+//
+// Type: enum
+// Options:
+//     COMPRESSION_ASIS
+//     COMPRESSION_NONE
+//     COMPRESSION_RLE
+//     COMPRESSION_LZO
+//     COMPRESSION_ZLIB
+//     COMPRESSION_BZIP
+//     COMPRESSION_GZIP
+//
+
+compression_type = COMPRESSION_NONE;
+
+//======================================================================
+//
+// Pressure level Interpolation Parameters.
+//
+//======================================================================
+ 
+///////////// interpolate_type ////////////////////////
+//
+// Type of interpolation.
+// Can be either INTERP_LINEAR or INTERP_HERMITE.
+//
+// Type: enum
+// Options:
+//     INTERP_LINEAR
+//     INTERP_HERMITE
+//
+
+interpolate_type = INTERP_LINEAR;
+
+///////////// max_pressure_level //////////////////////
+//
+// Maximum pressure level.
+// This is the surface pressure. Units are mBars.
+// Type: float
+//
+
+max_pressure_level = 1000;
+
+///////////// pressure_level_step /////////////////////
+//
+// Pressure level step.
+// Units are mBars.
+// Type: float
+//
+
+pressure_level_step = -25;
+
+///////////// num_pressure_levels /////////////////////
+//
+// Number of pressure levels.
+// Type: int
+//
+
+num_pressure_levels = 39;
+
+//======================================================================
+//
+// Mandatory Input Fields.
+//
+//======================================================================
+ 
+///////////// pressure_name ///////////////////////////
+//
+// name of pressure field.
+// MDV field name.
+// Type: string
+//
+
+pressure_name = "PRES";
+
+///////////// height_info /////////////////////////////
+//
+// height information.
+//
+// Type: struct
+//   typedef struct {
+//      string field_name;
+//      boolean extrap_at_top;
+//      boolean smooth;
+//      string smooth_passes;
+//      float smooth_factor;
+//   }
+//
+//
+
+height_info = {
+    field_name = "HGT",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{3, 2, 2, 2, 2, 2, 2, 3}",
+    smooth_factor = 0.5
+};
+
+///////////// potential_temperature_info //////////////
+//
+// virtual potential temperature info.
+//
+// Type: struct
+//   typedef struct {
+//      string field_name;
+//      boolean extrap_at_top;
+//      boolean smooth;
+//      string smooth_passes;
+//      float smooth_factor;
+//   }
+//
+//
+
+potential_temperature_info = {
+    field_name = "TMP",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{2, 1, 1, 1, 1, 1, 1, 1}",
+    smooth_factor = 0.5
+};
+
+///////////// include_input_field_names ///////////////
+//
+// Namea of the input fields that should be passed through to the output.
+// These should be the two-dimensional fields.
+// Type: string
+// 1D array - variable length.
+//
+
+include_input_field_names = {
+  "CIN",
+  "APCP1Hr",
+  "CAPE",
+  "TOPO"
+};
+
+//======================================================================
+//
+// Interpolated Input Fields.
+//
+//======================================================================
+ 
+///////////// interp_field_names //////////////////////
+//
+// name of fields to interpolate.
+// these are the MDV field names.
+// Type: string
+// 1D array - variable length.
+//
+
+interp_info_list = {
+  {
+    field_name = "PRES",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{1, 1, 1, 1, 1, 1, 1, 1}",
+    smooth_factor = 0.5
+  },
+  {
+    field_name = "VVEL",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{1, 1, 1, 1, 1, 1, 1, 1}",
+    smooth_factor = 0.5
+  },
+  {
+  field_name = "MIXR",
+  extrap_at_top = TRUE,
+  smooth = TRUE,
+  smooth_passes = "{1, 1, 1, 1, 1, 1, 1, 1}",
+  smooth_factor = 0.5
+  },
+  {
+    field_name = "CLWMR",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{1, 1, 1, 1, 1, 1, 1, 1}",
+    smooth_factor = 0.5
+  },
+  {
+    field_name = "RWMR",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{1, 1, 1, 1, 1, 1, 1, 1}",
+    smooth_factor = 0.5
+  },
+  {
+    field_name = "ICMR",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{1, 1, 1, 1, 1, 1, 1, 1}",
+    smooth_factor = 0.5
+  }
+,
+  {
+    field_name = "SNMR",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{1, 1, 1, 1, 1, 1, 1, 1}",
+    smooth_factor = 0.5
+  }
+,
+  {
+    field_name = "GRMR",
+    extrap_at_top = TRUE,
+    smooth = TRUE,
+    smooth_passes = "{1, 1, 1, 1, 1, 1, 1, 1}",
+    smooth_factor = 0.5
+  }
+};
+
+//======================================================================
+//
+// Interpoatlion and extrapolation parameters.
+//
+//======================================================================
+ 
+///////////// below_ground_level_index ////////////////
+//
+// The vertical index to begin below surface extrapolation.
+// In the fortran routine the value is 4, make default 3 to account for 
+//   0-based arrays.
+// Type: int
+//
+
+below_ground_level_index = 3;
+
+///////////// lapse_rate_top_index ////////////////////
+//
+// The top level index for computing lapse rate.
+// In the fortran routine the value is 5, make default 4 to account for 
+//   0-based arrays.
+// Type: int
+//
+
+lapse_rate_top_index = 4;
+
+///////////// extrapolate_offset //////////////////////
+//
+// Number of levels from at top of atmosphere .
+// In the fortran routine the original value is 3.
+// Type: int
+//
+
+extrapolate_offset = 3;
+

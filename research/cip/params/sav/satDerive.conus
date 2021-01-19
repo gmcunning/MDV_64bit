@@ -1,0 +1,327 @@
+/**********************************************************************
+ * TDRP params for satDerive
+ **********************************************************************/
+
+//======================================================================
+//
+// satDerive is a small program that take as input
+// the basic set of fields that are available from
+// a satellite and outputs a set of derived fields
+// such as the difference between two fields or the variance
+// of a field. These are written to an output URL.
+
+// Niles Oien August 2000.
+//
+//======================================================================
+ 
+///////////// inputUrl ////////////////////////////////
+//
+// Input mdv URL, typically of the form
+// mdvp:://host.domain:[port]:dir/dir.
+// Basic satellite are read from here.
+// Type: string
+//
+
+inputUrl = "$(CIP_DATA_DIR)/mdv/satellite/cmbn";
+
+///////////// outputUrl ///////////////////////////////
+//
+// Output mdv URL, typically of the form
+// mdvp:://host.domain:[port]:dir/dir.
+// Derived satellite fields are written here.
+// Type: string
+//
+
+outputUrl = "$(CIP_DATA_DIR)/mdv/satellite/conus";
+
+///////////// instance ////////////////////////////////
+//
+// Instance to check in to Procmap with.
+// Set to something unique.
+// Type: string
+//
+
+instance = "conus";
+
+///////////// mode ////////////////////////////////////
+//
+// Operation mode.
+// Archive mode autoamtically invoked by -interval option.
+//
+// Type: enum
+// Options:
+//     ARCHIVE
+//     REALTIME
+//     FILELIST
+//
+
+mode = ARCHIVE;
+
+///////////// maxRealtimeValidAge /////////////////////
+//
+// Maximum valid age for files.
+// REALTIME mode only.
+// Type: int
+//
+
+maxRealtimeValidAge = 3600;
+
+///////////// debug ///////////////////////////////////
+//
+// Set to print debugging messages.
+// Defaults to FALSE.
+// Type: boolean
+//
+
+debug = TRUE;
+
+///////////// forceWriteLdata /////////////////////////
+//
+// Set to force writing of Ldata info file.
+// Defaults to FALSE.
+// Type: boolean
+//
+
+forceWriteLdata = TRUE;
+
+///////////// satelliteLongitude //////////////////////
+//
+// Satellite Longitude in degrees.
+// GOES-8 longitude is -75.0 degrees; GOES-10 longitude is -135.0 
+//   degrees.
+// Type: float
+//
+
+satelliteLongitude = -75.2;
+//satelliteLongitude = -89.5;
+
+///////////// useFieldNames ///////////////////////////
+//
+// If FALSE, then use field numbers (starting at 0) not names.
+// Useful for MDV input with multiple instances of the
+// same field name.
+// Type: boolean
+//
+
+useFieldNames = TRUE;
+
+///////////// visibleChannel //////////////////////////
+//
+// field identifier for the visible satellite channel.
+// set either the name or number based on useFieldNames.
+//
+// Type: struct
+//   typedef struct {
+//      string name;
+//      int num;
+//   }
+//
+//
+
+visibleChannel = {
+    name = "VISIBLE",
+    num = 0
+};
+
+///////////// ir_110micronChannel /////////////////////
+//
+// field identifier for the visible satellite channel.
+// set either the name or number based on useFieldNames.
+//
+// Type: struct
+//   typedef struct {
+//      string name;
+//      int num;
+//   }
+//
+//
+
+ir_110micronChannel = {
+    name = "IR",
+    num = 1
+};
+
+///////////// ir_039micronChannel /////////////////////
+//
+// field identifier for the visible satellite channel.
+// set either the name or number based on useFieldNames.
+//
+// Type: struct
+//   typedef struct {
+//      string name;
+//      int num;
+//   }
+//
+//
+
+ir_039micronChannel = {
+    name = "SW_IR",
+    num = 2
+};
+
+///////////// ir_067micronIncluded ////////////////////
+//
+// Type: boolean
+//
+
+ir_067micronIncluded = FALSE;
+
+///////////// ir_120micronIncluded ////////////////////
+//
+// Type: boolean
+//
+
+ir_120micronIncluded = FALSE;
+
+///////////// ir_133micronIncluded ////////////////////
+//
+// Type: boolean
+//
+
+ir_133micronIncluded = FALSE;
+
+///////////// desiredSTD //////////////////////////////
+//
+// Fields for which the standard deviation is to be calculated.
+// Format is : Input field name, output field name, and window
+// size N. Actual window is 2*N + 1 as pixels within +/- N
+// are considered.
+//
+// Type: struct
+//   typedef struct {
+//      satellite_channel_t inName;
+//        Options:
+//          VISIBLE
+//          MICRON_110
+//          MICRON_120
+//          MICRON_039
+//          MICRON_067
+//      string outName;
+//      int winSize;
+//   }
+//
+// 1D array - variable length.
+//
+
+desiredSTD = {
+};
+
+///////////// desiredSUB //////////////////////////////
+//
+// Fields for which a subtraction is to be calculated.
+// Format is : Input field name1, Input field name 2,
+// output field name. Output is 1 minus 2. Fields must be
+// the same size.
+//
+// Type: struct
+//   typedef struct {
+//      satellite_channel_t inName1;
+//        Options:
+//          VISIBLE
+//          MICRON_110
+//          MICRON_120
+//          MICRON_039
+//          MICRON_067
+//      satellite_channel_t inName2;
+//        Options:
+//          VISIBLE
+//          MICRON_110
+//          MICRON_120
+//          MICRON_039
+//          MICRON_067
+//      string outName;
+//   }
+//
+// 1D array - variable length.
+//
+
+desiredSUB = {
+  {
+    inName1 = MICRON_039,
+    inName2 = MICRON_110,
+    outName = "IR2-IR4"
+  }
+};
+
+///////////// calculateShortwaveReflectance ///////////
+//
+// calculate shortwave reflectance.
+// Defaults to FALSE.
+// Type: boolean
+//
+
+calculateShortwaveReflectance = TRUE;
+
+///////////// micron_039ShortwaveReflThreshold ////////
+//
+// Threshold on the 3.9 micron channel data.
+// This threshold is used in the shortwave reflectance calculataions. 
+//   The units are degress Celsius.
+// Type: float
+//
+
+micron_110ShortwaveReflThreshold = -60.0;
+
+///////////// shortwaveARFOption //////////////////////
+//
+// Option for shortwave reflectance calculations. The option is to use a 
+//   constanst value of 1 for ARF or calculate a vavlue for ARF.
+// The options are 1 for constant ARF and 2 for calculated ARF.
+// Type: int
+//
+
+shortwaveARFOption = 2;
+
+///////////// shortwaveLUTPath ////////////////////////
+//
+// Path to the shortwave lookuyp table file.
+// Type: string
+//
+
+shortwaveLUTPath = "$(CIP_STATIC_DATA_DIR)/sat/near_ir_refl.table";
+
+///////////// outputAngles ////////////////////////////
+//
+// flag to include satellite angles in output.
+// The angles are satellite zenith, solare zenith and relative azimuth. 
+//   The angles are in degrees.
+// Type: boolean
+//
+
+outputAngles = TRUE;
+
+///////////// calculateSatelliteIcingIndex ////////////
+//
+// flag to calculate a satellite based icing index.
+// The icing index is derived from Greg Thompson's icing algorithm.
+// Type: boolean
+//
+
+calculateSatelliteIcingIndex = TRUE;
+
+///////////// calculateNormalizedAlbedo ///////////////
+//
+// flag to calculate a normalized albedo/visible.
+// Albedo is normalized by division by cosine of the the solar zenith.
+// Type: boolean
+//
+
+calculateNormalizedAlbedo = TRUE;
+
+///////////// solarAngleMax ///////////////////////////
+//
+// Maximum solar angle allowed in normalized albedo calulations.
+// The units are degress.
+// Type: float
+//
+
+solarAngleMax = 80;
+
+///////////// prependInputFields //////////////////////
+//
+// flag to prepend the input fields in the output file.
+// Type: boolean
+//
+
+prependInputFields = TRUE;
+

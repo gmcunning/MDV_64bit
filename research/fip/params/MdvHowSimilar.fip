@@ -1,0 +1,142 @@
+/**********************************************************************
+ * TDRP params for MdvHowSimilar
+ **********************************************************************/
+
+//======================================================================
+//
+// MdvHowSimilar is a simple program that compares two files and 
+//   displays statistical
+// differences between the two files in a well structured/defined format 
+//   to make it easy
+// for parsing by other programs.  It is used by the ACES (Automated 
+//   Comparison and Evaluation
+// System) developed by the Inflight Icing Group.
+//
+// If you are not part of the IFI group, please consult with someone on 
+//   that project before
+// making changes to this application that affect the structure of its 
+//   output.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+//
+// The options are DEBUG_OFF, DEBUG_NORM and DEBUG_VERBOSE. If set, 
+//   debug messages will be printed appropriately.
+//
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//     DEBUG_GARRULOUS
+//
+
+debug = DEBUG_VERBOSE;
+
+///////////// field_comparison_info ///////////////////
+//
+// Define which fields to be compared and how the comparison is done.
+//
+// Significant_differences - If the difference between a paired point in 
+//   the two files is less than this, it is considered the 
+//   "same"rms_sig_diff is used to determine if overall differences in a 
+//   vertical level are significant.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string field_name;
+//      double significant_difference;
+//      double rms_sig_diff;
+//      boolean do_sub_file1_bad_missing;
+//      double sub_file1_bad_missing;
+//      boolean do_sub_file2_bad_missing;
+//      double sub_file2_bad_missing;
+//   }
+//
+// 1D array - variable length.
+//
+
+field_comparison_info = {
+  {
+    field_name = "ICE_PROB",
+    significant_difference = 0.00001,
+    rms_sig_diff = 0.001,
+    do_sub_file1_bad_missing = FALSE,
+    sub_file1_bad_missing = 0,
+    do_sub_file2_bad_missing = FALSE,
+    sub_file2_bad_missing = 0
+  }
+  ,
+  {
+    field_name = "SLD",
+    significant_difference = 0.00001,
+    rms_sig_diff = 0.001,
+    do_sub_file1_bad_missing = FALSE,
+    sub_file1_bad_missing = 0,
+    do_sub_file2_bad_missing = FALSE,
+    sub_file2_bad_missing = 0
+  }
+  ,
+  {
+    field_name = "ICE_SEV",
+    significant_difference = 0.00001,
+    rms_sig_diff = 0.001,
+    do_sub_file1_bad_missing = FALSE,
+    sub_file1_bad_missing = 0,
+    do_sub_file2_bad_missing = FALSE,
+    sub_file2_bad_missing = 0
+  }
+};
+
+//======================================================================
+//
+// OUTPUT DATA.
+//
+//======================================================================
+ 
+///////////// encoding_type ///////////////////////////
+//
+// Set encoding type.
+//
+//
+// Type: enum
+// Options:
+//     ENCODING_ASIS
+//     ENCODING_INT8
+//     ENCODING_INT16
+//     ENCODING_FLOAT32
+//
+
+encoding_type = ENCODING_FLOAT32;
+
+///////////// compression_type ////////////////////////
+//
+// Set compression type.
+//
+//
+// Type: enum
+// Options:
+//     COMPRESSION_ASIS
+//     COMPRESSION_NONE
+//     COMPRESSION_RLE
+//     COMPRESSION_LZO
+//     COMPRESSION_ZLIB
+//     COMPRESSION_BZIP
+//     COMPRESSION_GZIP
+//
+
+compression_type = COMPRESSION_RLE;
+

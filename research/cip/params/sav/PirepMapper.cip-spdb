@@ -1,0 +1,148 @@
+/**********************************************************************
+ * TDRP params for PirepMapper
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: PirepMapper.
+//
+// r.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+// If set, debug messages will be printed.
+// Type: boolean
+//
+
+debug = DEBUG_NORM;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "cip-spdb";
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+ 
+///////////// triggerDir //////////////////////////////
+//
+// Directory to trigger input.
+// only used in realtime mode.
+// Type: string
+//
+
+triggerDir = "$(RAP_DATA_DIR)/spdb/pirep";
+
+///////////// inputDir ////////////////////////////////
+//
+// Directory for the spdb input.
+// only used in realtime mode.
+// Type: string
+//
+
+inputDir = "$(RAP_DATA_DIR)/spdb/pirep";
+
+///////////// modelDir ////////////////////////////////
+//
+// Directory for the model input .
+// only used in realtime mode.
+// Type: string
+//
+
+modelDir = "$(RAP_DATA_DIR)/spdb/pirep";
+
+///////////// heightFieldName /////////////////////////
+//
+// Field name of height field in model file.
+// Type: string
+//
+
+heightFieldName = "HGT";
+
+///////////// forecast_lead_secs //////////////////////
+//
+// Forecast lead seconds.
+// Default is 10800 seconds, or 3 hours.
+// Type: int
+//
+
+forecast_lead_secs = 10800;
+
+///////////// outputUrl ///////////////////////////////
+//
+// Output URL.
+// URL to use for storing results.
+// Type: string
+//
+
+outputUrl = "mdvp:://localhost::mdv/output";
+
+///////////// numHours ////////////////////////////////
+//
+// Number of hours to look for pirep files.
+// How many pirep files to process in a run.
+// Type: int
+//
+
+numHours = 2;
+
+///////////// mode ////////////////////////////////////
+//
+// Runtime mode - ARCHIVE or REALTIME.
+//
+// Type: enum
+// Options:
+//     ARCHIVE
+//     REALTIME
+//
+
+mode = ARCHIVE;
+
+///////////// inputType ///////////////////////////////
+//
+// Input data type - NETCDF or SPDB.
+// Default is NETCDF.
+//
+// Type: enum
+// Options:
+//     SPDB
+//     NETCDF
+//
+
+inputType = SPDB;
+
+///////////// sleep_secs_for_realtime_mode ////////////
+//
+// maximum age of valid input data.
+// The units are seconds.
+// Type: int
+//
+
+sleep_secs_for_realtime_mode = 900;
+

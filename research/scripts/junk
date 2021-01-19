@@ -1,0 +1,39 @@
+timing for Grib2toMdv
+
+real	0m4.425s
+user	0m4.024s
+sys	0m0.376s
+timing for Hybrid2Pressure
+
+real	0m14.805s
+user	0m14.200s
+sys	0m0.564s
+timing for MdvDeriveModel
+
+real	0m17.597s
+user	0m16.972s
+sys	0m0.564s
+timing for fip_algo
+
+real	0m5.348s
+user	0m5.060s
+sys	0m0.272s
+timing for pressure2flight
+
+real	0m5.784s
+user	0m5.556s
+sys	0m0.208s
+timing for IcingCategory
+
+real	0m3.414s
+user	0m3.088s
+sys	0m0.316s
+timing for MdvtoGrib2
+
+real	0m1.394s
+user	0m1.184s
+sys	0m0.204s
+
+real	0m52.769s
+user	0m50.084s
+sys	0m2.508s

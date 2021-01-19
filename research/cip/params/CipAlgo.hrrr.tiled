@@ -1,0 +1,952 @@
+/**********************************************************************
+ * TDRP params for CipAlgo
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: cip_algo_WRF-RR.
+//
+// high level parameters for cip_algo_WRF-RR.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+// The options are DEBUG_OFF, DEBUG_NORM and DEBUG_VERBOSE. If set, 
+//   debug messages will be printed appropriately.
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug = DEBUG_NORM;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "test";
+
+///////////// run_mode ////////////////////////////////
+//
+// Operating mode.
+// If set to ARCHIVE, -start and -end MUST be included on the command 
+//   line.
+//
+// Type: enum
+// Options:
+//     REALTIME
+//     ARCHIVE
+//     RUNTIME
+//     GRIDPOINT
+//
+
+run_mode = RUNTIME;
+
+///////////// start_time //////////////////////////////
+//
+// Start time.
+// run time is in the form <YYYY MM DD HH MM SS>.
+// Type: string
+//
+
+start_time = "2005 01 19 18 00 00";
+
+///////////// end_time ////////////////////////////////
+//
+// Run time.
+// run time is in the form <YYYY MM DD HH MM SS>.
+// Type: string
+//
+
+end_time = "2005 01 19 18 00 00";
+
+///////////// run_time ////////////////////////////////
+//
+// Run time.
+// run time is in the form <YYYY MM DD HH MM SS>.
+// Type: string
+//
+
+run_time = "2005 01 19 18 00 00";
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+ 
+///////////// trigger_url /////////////////////////////
+//
+// Trigger URL.
+// This is the URL to use to trigger processing.
+// Type: string
+//
+
+trigger_url = "/d1/cunning/data/64-bit_mdv/cip/mdv/model/hrrr_pres";
+
+///////////// trigger_max_valid_age ///////////////////
+//
+// Trigger maximum valida age.
+// units are seconds.
+// Type: int
+//
+
+trigger_max_valid_age = 1800;
+
+//======================================================================
+//
+// MODEL INPUT NOTE.
+//
+// CipAlgo can be configured to run by setting its model input from a 
+//   single or two input URLs. For two model inputs, it is critical that 
+//   the keys are different names. Otherwise, set up is straightforward. 
+//   For a single input, use the derived_model_info struct and set the 
+//   model_info struct key to an empty string. Use the field names in the 
+//   model_info struct to define the primitive field names in the source 
+//   MDV file.
+//
+//======================================================================
+
+///////////// model_info //////////////////////////////
+//
+// This structure contains infomation to configure reading the primitive 
+//   model output.
+//      url: the location of the MDV input
+//      max_valid_age: number of seconds to search for valid data given the 
+//   run time.
+//      height_field_name: MDV field name of height used in the url.
+//      temp_field_name: MDV field name of temperature used in the url.
+//      vert_vel_field_name: MDV field name of vertical velocity used in the 
+//   url.
+//      clwmr_field_name: MDV field name of cloud water mixing ratio used in 
+//   the url.
+//      rwmr_field_name: MDV field name of rain water mixing ratio used in 
+//   the url.
+//      icmr_field_name: MDV field name of ice mixing ratio used in the url.
+//      snmr_field_name: MDV field name of snow mixing ratio used in the 
+//   url.
+//      grmr_field_name: MDV field name of graupel mixing ratio used in the 
+//   url.
+//
+// When getting all the model data, set key to an empty string.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string key;
+//      string url;
+//      int max_valid_age;
+//      string height_field_name;
+//      string temp_field_name;
+//      string vert_vel_field_name;
+//      string clwmr_field_name;
+//      string rwmr_field_name;
+//      string icmr_field_name;
+//      string snmr_field_name;
+//      string grmr_field_name;
+//   }
+//
+//
+
+model_info = {
+    key = "MODEL ",
+    url = "/d1/cunning/data/64-bit_mdv/cip/mdv/model/hrrr_pres",
+    max_valid_age = 10800,
+    height_field_name = "HGT",
+    temp_field_name = "TMP",
+    vert_vel_field_name = "VVEL",
+    clwmr_field_name = "CLWMR",
+    rwmr_field_name = "RWMR",
+    icmr_field_name = "ICMR",
+    snmr_field_name = "SNMR",
+    grmr_field_name = "GRMR"
+};
+
+///////////// derived_model_info //////////////////////
+//
+// This structure contains infomation to configure reading the derived 
+//   model output
+// .    url: the location of the MDV input
+//      max_valid_age: number of seconds to search for valid data given the 
+//   run time.
+//      rh_field_name: MDV field name of relative humidity used in the url.
+//      theta_e_field_name: MDV field name of potential temperature used in 
+//   the url.
+//      ice_cond_field_name: MDV field name of ice condensate used in the 
+//   url.
+//      liq_cond_field_name: MDV field name of liquid condensate used in the 
+//   url.
+//      press_field_name: MDV field name of pressure used in the url.
+//
+// Set press_field_name to an empty string, and the vlevel coordinate 
+//   system will be used for pressure values.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string key;
+//      string url;
+//      int max_valid_age;
+//      string rh_field_name;
+//      string theta_e_field_name;
+//      string ice_cond_field_name;
+//      string liq_cond_field_name;
+//      string press_field_name;
+//   }
+//
+//
+
+derived_model_info = {
+    key = "DERIVED_MODEL",
+    url = "/d1/cunning/data/64-bit_mdv/cip/mdv/model/derived_hrrr_pres",
+    max_valid_age = 10800,
+    rh_field_name = "RH",
+    theta_e_field_name = "THETA_E",
+    ice_cond_field_name = "ICE_COND",
+    liq_cond_field_name = "LIQ_COND",
+    press_field_name = ""
+};
+
+///////////// pirep_info //////////////////////////////
+//
+// This structure contains infomation to configure reading the mapped 
+//   pireps
+// .	url: the location of the MDV input
+// 	max_valid_age: number of seconds to search for valid data given the 
+//   run time.
+// 	interest_field_name: MDV field name of pirep-based interest used in 
+//   the url.
+// 	weight_field_name: MDV field name of weight of pirep-based interest 
+//   used in the url.
+//
+// Type: struct
+//   typedef struct {
+//      string key;
+//      string url;
+//      int max_valid_age;
+//      string interest_field_name;
+//      string weight_field_name;
+//   }
+//
+//
+
+pirep_info = { "PIREP", "/d1/cunning/data/64-bit_mdv/cip/mdv/pirep_mapper", 7600, "PIREP_INTEREST", "PIREP_WEIGHT" };
+
+///////////// metar_info //////////////////////////////
+//
+// This structure contains infomation to configure reading the mapped 
+//   metars.
+// .	url: the location of the MDV input
+// 	max_valid_age: number of seconds to search for valid data given the 
+//   run time.
+// 	cbh_field_name: MDV field name of cloud base height used in the url.
+// 	cld_cvr_field_name: MDV field name of cloud cover used in the url.
+// 	cc_dist_field_name: MDV field name of distance to cloud cover used 
+//   in the url.
+// 	zl_dist_field_name: MDV field name of distance to freezing drizzle 
+//   used in the url.
+// 	zr_dist_field_name: MDV field name of distance to freezing rain used 
+//   in the url.
+// 	ip_dist_field_name: MDV field name of distance to ice pellets used 
+//   in the url.
+// 	rn_dist_field_name: MDV field name of distance to rain used in the 
+//   url.
+// 	sn_dist_field_name: MDV field name of distance to snow used in the 
+//   url.
+// 	dz_dist_field_name: MDV field name of distance to drizzle used in 
+//   the url.
+//
+// Type: struct
+//   typedef struct {
+//      string key;
+//      string url;
+//      int max_valid_age;
+//      string cbh_field_name;
+//      string cld_cvr_field_name;
+//      string cc_dist_field_name;
+//      string zl_dist_field_name;
+//      string zr_dist_field_name;
+//      string ip_dist_field_name;
+//      string rn_dist_field_name;
+//      string sn_dist_field_name;
+//      string dz_dist_field_name;
+//   }
+//
+//
+
+metar_info = { "METAR", "/d1/cunning/data/64-bit_mdv/cip/mdv/metar_blend", 7200, "CLD_BASE_HGT", "CLOUD_COVER", "DIST_TO_CC", "DIST_TO_ZL", "DIST_TO_ZR", "DIST_TO_IP", "DIST_TO_RN", "DIST_TO_SN", "DIST_TO_DZ" };
+
+
+///////////// max_SKC_influence ///////////////////////
+//
+// Maximum distance to clear clouds due to SKC metar.
+// Units are km.
+// Type: float
+//
+
+max_SKC_influence = 50;
+
+
+///////////// radar_info //////////////////////////////
+//
+// This structure contains infomation to configure reading the radar 
+//   data.
+// .	url: the location of the MDV input
+// 	max_valid_age: number of seconds to search for valid data given the 
+//   run time.
+// 	dbz_25pctl_field_name: MDV field name of 25th percentile of DBz used 
+//   in the url.
+// 	dbz_75pctl_field_name: MDV field name of 75th percentile of DBz used 
+//   in the url.
+//
+// Type: struct
+//   typedef struct {
+//      string key;
+//      string url;
+//      int max_valid_age;
+//      string dbz_25pctl_field_name;
+//      string dbz_75pctl_field_name;
+//   }
+//
+//
+
+radar_info = { "RADAR", "/d1/cunning/data/64-bit_mdv/cip/mdv/radar", 1800, "LCREF", "LCREF" };
+
+///////////// satellite_info //////////////////////////
+//
+// This structure contains infomation to configure reading the satellite 
+//   data.
+// .	url: the location of the MDV input
+// 	max_valid_age: number of seconds to search for valid data given the 
+//   run time.
+// 	norm_albedo_field_name: MDV field name of normalized albedo used in 
+//   the url.
+// 	shortwave_ir_field_name: MDV field name of shortwave infrared used 
+//   in the url.
+// 	infrared_field_name: MDV field name of infrared used in the url.
+// 	sw_sub_lw_mask_field_name: MDV field name of SWIR-LWIR mask used in 
+//   the url.
+// 	sun_zenith_field_name: MDV field name of sun's zenith angle used in 
+//   the url.
+// 	sw_refl_field_name: MDV field name of shortwave reflectance used in 
+//   the url.
+// 	sat_ice_idx_field_name: MDV field name of satellite icing index used 
+//   in the url.
+//
+// Type: struct
+//   typedef struct {
+//      string key;
+//      string url;
+//      int max_valid_age;
+//      string norm_albedo_field_name;
+//      string shortwave_ir_field_name;
+//      string infrared_field_name;
+//      string sw_sub_lw_mask_field_name;
+//      string sun_zenith_field_name;
+//      string sw_refl_field_name;
+//      string sat_ice_idx_field_name;
+//   }
+//
+//
+
+satellite_info = { "SATELLITE", "/d1/cunning/data/64-bit_mdv/cip/mdv/satellite/conus", 7200, "NORM_ALBEDO", "SW_IR", "IR", "IR2_IR4", "SUN_ZENITH", "SW_REFL", "SAT_ICE_IDX" };
+
+///////////// sat_grid_shape //////////////////////////
+//
+// Shape to use for sampling the satellite grid.
+// The options are SAT_GRID_RECTANGLE and SAT_GRID_CIRCLE.
+//
+// Type: enum
+// Options:
+//     SAT_GRID_RECTANGLE
+//     SAT_GRID_CIRCLE
+//
+
+sat_grid_shape = SAT_GRID_RECTANGLE;
+
+///////////// sat_grid_rect_width /////////////////////
+//
+// Satellite Grid Rectangle Width in grid points.
+// This is only used if sat_grid_shape is equal to SAT_GRID_RECTANGLE.
+// Type: int
+//
+
+sat_grid_rect_width = 3;
+
+///////////// sat_grid_rect_height ////////////////////
+//
+// Satellite Grid Rectangle Height in grid points.
+// This is only used if sat_grid_shape is equal to SAT_GRID_RECTANGLE.
+// Type: int
+//
+
+sat_grid_rect_height = 3;
+
+///////////// sat_grid_circle_rad /////////////////////
+//
+// Satellite Grid Circle Radius in grid points.
+// This is only used if sat_grid_shape is equal to SAT_GRID_CIRCLE.
+// Type: int
+//
+
+sat_grid_circle_rad = 5;
+
+///////////// lightning_info //////////////////////////
+//
+// This structure contains infomation to configure reading the lightning 
+//   data.
+// .	url: the location of the MDV input
+// 	max_valid_age: number of seconds to search for valid data given the 
+//   run time.
+// 	lgt_dist_field_name: MDV field name of distance to closest strike 
+//   used in the url.
+// 	strike_cnt_field_name: MDV field name of number of strikes in grid 
+//   box used in the url.
+//
+// Type: struct
+//   typedef struct {
+//      string key;
+//      string url;
+//      int max_valid_age;
+//      string lgt_dist_field_name;
+//      string strike_cnt_field_name;
+//   }
+//
+//
+
+lightning_info = { "LIGHTNING", "/d1/cunning/data/64-bit_mdv/cip/mdv/lightning", 1800, "Ltg_Distance", "Ltg_Strikes" };
+
+///////////// topography_url //////////////////////////
+//
+// Topography URL.
+// Type: string
+//
+
+topography_url = "/d1/cunning/data/64-bit_mdv/cip/static/topo.mdv";
+
+///////////// topography_field_name ///////////////////
+//
+// Topography field name.
+// Type: string
+//
+
+topography_field_name = "HGT";
+
+///////////// vertical_grid_type //////////////////////
+//
+// Type of vertical grid of the model.
+// The only supported vertical grid types are VERTICAL_GRID_PRESSURE and 
+//   VERTICAL_GRID_HYBRID.
+//
+// Type: enum
+// Options:
+//     VERTICAL_GRID_PRESSURE
+//     VERTICAL_GRID_HYBRID
+//
+
+vertical_grid_type = VERTICAL_GRID_PRESSURE;
+
+//======================================================================
+//
+// OUTPUT DATA.
+//
+//======================================================================
+ 
+///////////// encoding_type ///////////////////////////
+//
+// Set encoding type.
+//
+// Type: enum
+// Options:
+//     ENCODING_ASIS
+//     ENCODING_INT8
+//     ENCODING_INT16
+//     ENCODING_FLOAT32
+//
+
+encoding_type = ENCODING_INT8;
+
+///////////// compression_type ////////////////////////
+//
+// Set compression type.
+//
+// Type: enum
+// Options:
+//     COMPRESSION_ASIS
+//     COMPRESSION_NONE
+//     COMPRESSION_RLE
+//     COMPRESSION_LZO
+//     COMPRESSION_ZLIB
+//     COMPRESSION_BZIP
+//     COMPRESSION_GZIP
+//
+
+compression_type = COMPRESSION_GZIP;
+
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+// URL to use for storing results.
+// Type: string
+//
+
+output_url = "/d1/cunning/data/64-bit_mdv/cip/mdv/cip/pressure";
+
+///////////// write_ldata /////////////////////////////
+//
+// Flag to turn on writing ldata information.
+// The default is true.
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// output_projection ///////////////////////
+//
+// Projection of output grid.
+// FLAT - (x,y) Cartesian data in km from a given origin. LATLON - 
+//   lat/lon grid with constant grid spacing. LAMBERT - Lambert conformal 
+//   projection. MODEL - use the same grid as the model data. MODEL only 
+//   works for model data on Lambert and Stereographic projections.
+//
+// Type: enum
+// Options:
+//     OUTPUT_PROJ_FLAT
+//     OUTPUT_PROJ_LATLON
+//     OUTPUT_PROJ_LAMBERT
+//     OUTPUT_PROJ_STEREOGRAPHIC
+//     OUTPUT_PROJ_MERCATOR
+//     OUTPUT_PROJ_MODEL
+//
+
+output_projection = OUTPUT_PROJ_MODEL;
+
+///////////// output_origin ///////////////////////////
+//
+// Origin of output grid.
+// Used with OUTPUT_PROJ_FLAT, OUTPUT_PROJ_LAMBERT, 
+//   OUTPUT_PROJ_STEREOGRAPHIC.
+//
+// Type: struct
+//   typedef struct {
+//      double lat;
+//      double lon;
+//   }
+//
+//
+
+output_origin = { 40, -104 };
+
+///////////// lambert_lat1 ////////////////////////////
+//
+// lat 1 value for Lambert conformal projection.
+// Type: double
+//
+
+lambert_lat1 = 10;
+
+///////////// lambert_lat2 ////////////////////////////
+//
+// lat 2 value for Lambert conformal projection.
+// Type: double
+//
+
+lambert_lat2 = 60;
+
+///////////// stereographic_tangent_lat ///////////////
+//
+// Tangent latitude for stereographic projection.
+// Type: double
+//
+
+stereographic_tangent_lat = 60;
+
+///////////// stereographic_tangent_lon ///////////////
+//
+// Tangent longitude for stereographic projection.
+// Type: double
+//
+
+stereographic_tangent_lon = 0;
+
+///////////// output_grid /////////////////////////////
+//
+// Output grid parameters.
+// The grid params for the output grid.
+//
+// Type: struct
+//   typedef struct {
+//      int nx;
+//      int ny;
+//      double minx;
+//      double miny;
+//      double dx;
+//      double dy;
+//   }
+//
+//
+
+output_grid = { 300, 300, -149.5, -149.5, 1, 1 };
+
+//======================================================================
+//
+// PROCESS I/O DIAGNOSTICS.
+//
+// Parameters describing the output location of process diagnostics.
+//
+//======================================================================
+ 
+///////////// diagnostic_mode /////////////////////////
+//
+// diagnostic flag.
+// Diagnostic flag.
+// Type: boolean
+//
+
+diagnostic_mode = FALSE;
+
+///////////// add_input_fields ////////////////////////
+//
+// flag to indicate that model inputs are requested to to be included in 
+//   the diagnostic output.
+// Type: boolean
+//
+
+add_input_fields = TRUE;
+
+///////////// write_precip_types //////////////////////
+//
+// flag to turn on writing of precip. type fields.
+// Type: boolean
+//
+
+write_precip_types = TRUE;
+
+///////////// write_cloud_layer ///////////////////////
+//
+// flag to turn on writing of cloud layer fields.
+// Type: boolean
+//
+
+write_cloud_layer = TRUE;
+
+///////////// write_probability ///////////////////////
+//
+// flag to turn on writing of icing probability fields.
+// Type: boolean
+//
+
+write_probability = TRUE;
+
+///////////// write_sld ///////////////////////////////
+//
+// flag to turn on writing of icing fields.
+// Type: boolean
+//
+
+write_sld = TRUE;
+
+///////////// write_severity //////////////////////////
+//
+// flag to turn on writing of severity fields.
+// Type: boolean
+//
+
+write_severity = TRUE;
+
+///////////// write_interest_maps /////////////////////
+//
+// flag to turn on writing of interest map fields.
+// Type: boolean
+//
+
+write_interest_maps = TRUE;
+
+///////////// diagnostic_url //////////////////////////
+//
+// Diagnostic URL.
+// URL to use for diagnostic results.
+// Type: string
+//
+
+diagnostic_url = "mdvp:://localhost::mdv/cip/diagnostic/tile";
+
+///////////// model_type //////////////////////////////
+//
+// The NWP model used to run on CIP.
+// The options are MODEL_TYPE_RUC and MODEL_TYPE_WRFRR.
+//
+// Type: enum
+// Options:
+//     MODEL_TYPE_RUC
+//     MODEL_TYPE_WRFRR
+//
+
+model_type = MODEL_TYPE_WRFRR;
+
+//======================================================================
+//
+// CLOUD MODEL PARAMETERS.
+//
+// Parameters used for the cloud model calculations.
+//
+//======================================================================
+ 
+///////////// satellite_percentile_steps //////////////
+//
+// Start, Stop, and Step size for iterating over satellite cloud temps.
+// These are used when finding percentiles of satellite temperatures and 
+//   then tying that to cloud top temperatures.  Start value should be 
+//   lower than stop value, and step should be negative to insure that .
+//
+// Type: struct
+//   typedef struct {
+//      int start_percentile;
+//      int stop_percentile;
+//      int step_percentile;
+//   }
+//
+//
+
+satellite_percentile_steps = { 90, 10, -10 };
+
+///////////// satellite_ctt_percentile_min ////////////
+//
+// If the model temp at tropopause is greater than this % satellite 
+//   temp, cloud 'goes above' the tropopause, and this % satellite temp 
+//   will be used as the CTT at the tropopause.
+// Type: int
+//
+
+satellite_ctt_percentile_min = 95;
+
+//======================================================================
+//
+// ICING PROBABILITY PARAMETERS.
+//
+// Parameters used for the icing probability calculations.
+//
+//======================================================================
+ 
+///////////// potential_calc_params /////////////////
+//
+// Parameters for the icing potential calculator.
+//
+// Type: struct
+//   typedef struct {
+//      string scenario_list;
+//      string convection_imaps_weights;
+//      string no_precip_imaps_weights;
+//      string only_snow_imaps_weights;
+//      string not_below_warm_nose_imaps_weights;
+//      string below_warm_nose_imaps_weights;
+//   }
+//
+//
+
+potential_calc_params = { 
+						"potential_convection, potential_no_precip, potential_only_snow, potential_not_below_warm_nose, potential_below_warm_nose",
+                            "icethtmp_map,1",
+                            "icetemp_map,1,ctt_map,1,icerh_map,1",
+                            "icetemp_map,1,ctt_map,1,icerh_map,1,fzrar75_map,.6",
+                            "icetemp_map,1,ctt_map,1,icerh_map,1",
+                            "bwntemp_map,1,fzrar75_map,0.2"
+ };
+
+//======================================================================
+//
+// SLD POTENTIAL PARAMETERS.
+//
+// Parameters used to for the SLD potential calculations.
+//
+//======================================================================
+ 
+///////////// sld_calc_params /////////////////////////
+//
+// Parameters for the SLD potential calculator.
+//
+// Type: struct
+//   typedef struct {
+//      string scenario_list;
+//      string convection_imaps_weights;
+//      string no_precip_imaps_weights;
+//      string only_snow_imaps_weights;
+//      string not_below_warm_nose_imaps_weights;
+//      string below_warm_nose_imaps_weights;
+//      string no_warm_nose_fz_precip_imaps_weights;
+//      string no_warm_nose_no_fz_precip_imaps_weights;
+//   }
+//
+//
+
+sld_calc_params = { "sld_convection, sld_upper_clouds, sld_no_precip, sld_only_snow, sld_no_warm_nose_fz_precip, sld_no_warm_nose_no_fz_precip, sld_not_below_warm_nose, sld_below_warm_nose",
+                    "icethtmp_map,1",
+                    "",
+                    "",
+		    "",
+                    "icetemp_map,1,fzrar75_map,0.2",
+                    "bwntemp_map,1,fzrar75_map,0.2",
+                    "icetemp_map,0.25,fzrar75_map,0.2",
+                    "icetemp_map,1"
+};
+
+//======================================================================
+//
+// ICING SEVERITY PARAMETERS.
+//
+// Parameters used to for the icing severity calculations.
+//
+//======================================================================
+ 
+///////////// severity_calc_params ////////////////////
+//
+// Parameters for the icing severity calculator.
+//
+// Type: struct
+//   typedef struct {
+//      string scenario_list;
+//      string convection_imaps_weights;
+//      string classic_precip_below_warm_nose_imaps_weights;
+//      string classic_precip_not_below_warm_nose_imaps_weights;
+//      string only_snow_imaps_weights;
+//      string cold_rain_imaps_weights;
+//      string warm_precip_imaps_weights;
+//      string warm_precip_cold_ctt_imaps_weights;
+//      string no_precip_imaps_weights;
+//   }
+//
+//
+
+severity_calc_params = { 
+  "severity_convection, severity_classic_precip_below_warm_nose, severity_classic_precip_not_below_warm_nose,"
+  "severity_no_precip, severity_only_snow, severity_cold_rain, severity_warm_precip,"
+  "severity_warm_precip_cold_ctt",
+
+  "lightdist_map,3.5,rdiff_map,2.0,nstrikes_map,5.0,convtemp_map,3.0,sangle_map,3.0",
+  "bwntemp_map,3.0,fzrar75_map,4.0,dzfzra_map,3.0,bwnctt_map,3.0,vvsnlayer_map,2.5",
+  "twpp_map,3.0,vv_map,3.5",
+  "twpp_map,3.0,dzas_map,3.5,vv_map,3.5",
+  "twpp_map,3.0,dzcr_map,3.5,vv_map,3.5",
+  "twpp_map,3.0,dzwr_map,3.0,vv_map,3.0,dq_map,2.0",
+  "twpp_map,3.0,dzcr_map,3.5,vv_map,3.5",
+  "twpp_map,3.0,dznopcp_map,3.5,vv_map,4.0"
+};
+
+///////////// severity_category_mins //////////////////
+//
+// Minimum values for severity to be categorized as HEAVY, MODERATE, 
+//   LIGHT, or TRACE.
+// Check these values against pressure2flight where this is also 
+//   calculated to be consistent.
+//
+// Type: struct
+//   typedef struct {
+//      float heavy;
+//      float moderate;
+//      float light;
+//      float trace;
+//   }
+//
+//
+
+severity_category_mins = { 0.7, 0.375, 0.175, 0.001 };
+
+//======================================================================
+//
+// INTEREST MAP PARAMETERS.
+//
+// Parameters used to define the interest maps. A string is used to 
+//   define an interest map. The string contains three compontents, which 
+//   are the name, dimensionality of the map, and the map definition. The 
+//   name must be unique as it is used a key in a hash map. The 
+//   dimensionality is an integer value [2,3]. The map definition is a set 
+//   of x-y pairs delimited with ',' and '}'. An example string definition 
+//   is: delta_theta_e_map, 2, {{1.0, 0.0},{4.0, 1.0}}.
+//
+//======================================================================
+ 
+///////////// interest_map_list ///////////////////////
+//
+// Interest map list.
+// A string is used to define an interest map. The string contains three 
+//   compontents, which are the name, dimensionality of the map, and the 
+//   map definition. The name must be unique as it is used a key in a hash 
+//   map. The dimensionality is an integer value [2,3]. The map definition 
+//   is a set of x-y pairs delimited with ',' and '}'. An example string 
+//   definition is: delta_theta_e_map, 2, {{1.0, 0.0},{4.0, 1.0}}.
+// Type: string
+// 1D array - variable length.
+//
+
+interest_map_list = { 
+  "allsnowr25_map, 2, {{5.000000, 0.000000},{25.000000, 1.000000}}",
+"bwnctt_map, 2, {{223.15, 0.800000},{233.15, 0.744598},{243.15, 0.578393},{253.15, 0.301385},{261.15, 0.000000}}",
+"bwntemp_map, 2, {{269.15, 1.00},{270.1500, 0.866026},{271.1500, 0.707108},{272.1500, 0.500002},{273.1500, 0.001235},{273.1501, 0.000000}}",
+"c2mc4_map, 2, {{-20.0000, 0.000000},{-19.9000, -0.400000},{13.0000, -0.400000},{20.0000, 1.000000}}",
+"cond_map, 2, {{0.003999, 0.000000},{0.004000, 0.020000},{0.200000, 1.000000}}",
+"convtemp_map, 2, {{243.15, 0.00},{265.15, 1.00},{269.15, 1.00},{270.15, 0.87},{271.15, 0.71},{272.15, 0.50},{272.65, 0.35},{273.15, 0.00}}",
+"cr25_map, 2, {{10.000000, 0.000000},{30.000000, 1.000000}}",
+"ctmt_map, 2, {{-2.010000, 0.000000},{-1.210000, 1.000000},{-2.000000, 1.000000},{6.000000, 1.000000},{6.010000, 0.995000},{8.000000, 0.000000},{8.010000, 0.000000}}",
+"ctt_map, 2, {{223.15, 0.20},{233.15, 0.26},{243.15, 0.42},{253.15, 0.70},{261.15, 1.00},{280.15, 1.00},{280.16, 0.20}}",
+"ctt_damp_map, 2, {{223.15, 0.20},{233.15, 0.26},{243.15, 0.42},{253.15, 0.70},{261.15, 1.00},{280.15, 1.00},{280.16, 0.00}}",
+"dqdte_map, 2, {{0.000000, 1.000000},{4.000000, 0.000000}}", 
+"dq_map, 2, {{0.000000, 0.000000},{1.000000, 1.000000}}", 
+"dzas_map, 2, {{914.000000, 0.000000},{2743.000000, 1.000000}}", 
+"dzcbz_map, 2, {{305.000000, 1.000000},{1525.000000, 0.000000}}", 
+"dzcr_map, 2, {{1525.000000, 0.000000},{4267.000000, 1.000000}}", 
+"dzctz_map, 2, {{610.000000, 1.000000},{3048.000000, 0.000000}}", 
+"dzfzra_map, 2, {{30.00, 0.00},{30.01, 1.00}}", 
+"dznopcp_map, 2, {{0.000000, 0.000000},{1828.000000, 1.000000}}", 
+"dzwr_map, 2, {{0.000000, 0.000000},{1828.000000, 1.000000}}", 
+"fzrar75_map, 2, {{15.000000, 0.000000},{35.000000, 1.000000}}",
+"g10visdamp_map, 2, {{25.000000, 1.000000},{55.000000, 0.000000}}",
+"g10vis_map, 2, {{25.000000, 0.000000},{68.000000, 1.000000}}",
+"g12visdamp_map, 2, {{30.000000, 1.000000},{65.000000, 0.000000}}",
+"g12vis_map, 2, {{30.000000, 0.000000},{80.000000, 1.000000}}",
+"icerh_map, 2, {{0.50, 0.00000},{0.79, 0.09666},{0.80, 0.10000},{0.81, 0.11159},{0.83, 0.17143},{0.86, 0.29625},{0.89, 0.47044},{0.93, 0.79374},{0.95, 1.00000}}",
+"icetemp_map, 2, {{248.15, 0.000000},{265.15, 1.000000},{269.15, 1.000000},{270.15, 0.866026},{271.15, 0.707108},{272.15, 0.500002},{273.15, 0.001235},{273.1501, 0.000000}}",
+"icethtmp_map, 2, {{243.1500, 0.000000},{265.1500, 1.000000},{269.1500, 1.000000},{270.1500, 0.866026},{271.1500, 0.707108},{272.1500, 0.500002},{273.1500, 0.001235},{273.1501, 0.000000}}",
+"icevv_map, 2, {{-0.500000, 1.000000},{0.000000, 0.000000},{0.250000, 0.000000},{1.000000, -1.000000}}",
+"lightdist_map, 2, {{15.000000, 1.000000},{25.000000, 0.500000},{26.000000, 0.000000}}",
+"nstrikes_map, 2, {{0.00, 0.000000},{0.50, 0.223607},{1.00, 0.316228},{2.00, 0.447214},{4.00, 0.632456},{6.00, 0.774597},{8.00, 0.894427},{10.00, 1.000000}}",
+"p1_map, 2, {{0.000000, 0.000000},{0.200000, 0.200000},{0.400000, 0.400000},{0.600000, 0.600000},{0.800000, 0.800000},{1.000000, 1.000000}}",
+"p3_map, 2, {{0.000000, 0.000000},{0.200000, 0.200000},{0.400000, 0.400000},{0.600000, 0.600000},{0.800000, 0.800000},{1.000000, 1.000000}}",
+"rdiff_map, 2, {{0.000000, 0.000000},{20.000000, 1.000000}}",
+"rh_map, 2, {{0.700000, 0.000000},{1.000000, 1.000000}}",
+"sangle_map, 2, {{0.258, 0.000000},{0.342, 1.000000}}",
+"temp_damp_map, 2, {{248.1500, 0.000000},{249.1500, 0.277349},{250.1500, 0.392232},{253.1500, 0.620173},{256.1500, 0.784464},{258.1500, 0.877058},{261.1500, 1.000000},{268.1500, 1.000000},{273.1501, 0.000000}}",
+"twpp_map, 2, {{0.000000, 0.000000},{1000.000000, 1.000000}}",
+"twpw_map, 2, {{0.000000, 0.000000},{500.000000, 1.000000}}",
+"vv_map, 2, {{-0.500000, 1.000000},{0.000000, 0.000000}}",
+"vvsnlayer_map, 2, {{-0.500000, 1.000000},{0.000000, 0.000000}}",
+"wmpcpr25_map, 2, {{10.000000, 0.000000},{20.000000, 0.500000}}",
+"non_bl_tot_cond_map, 2, {{0.15, 0.0}, {0.2, 1.0}}", 
+"bl_tot_cond_map, 2, {{0.45, 0.0},{0.5, 1.0}}", 
+"layer_top_temp_map, 2, {{259.15, 0.0}, {261.15, 1.0}, {263.15, 0.0}}", 
+"rain_water_mixing_ratio_map, 2, {{0.00001, 0.0}, {0.00005, 1.0}}"
+};
+

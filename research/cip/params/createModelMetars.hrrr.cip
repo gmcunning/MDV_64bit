@@ -1,0 +1,384 @@
+/**********************************************************************
+ * TDRP params for createModelMetars
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: createModelMetars.
+//
+// createModelMetars maps RUC output on hybrid levels to pressurelevels. 
+//   The mapping technique is the same as the one used for RUC 
+//   post-processing, as it is a re-coding of the Fortran subroutine HB2P 
+//   in hy2pkg_40.code, written by Stan Benjamin at GSD.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug_mode //////////////////////////////
+//
+// Debug option.
+// The options are DEBUG_OFF, DEBUG_NORM and DEBUG_VERBOSE. If set, 
+//   debug messages will be printed appropriately.
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug_mode = DEBUG_NORM;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "cip";
+
+///////////// mode ////////////////////////////////////
+//
+// Process running mode.
+// Can be either ARCHIVE, REALTIME, or FILELIST.
+//
+// Type: enum
+// Options:
+//     ARCHIVE
+//     REALTIME
+//     FILELIST
+//
+
+mode = FILELIST;
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+ 
+///////////// input_url ///////////////////////////////
+//
+// Input URL.
+// URL to use for input data.
+// Type: string
+//
+
+input_url = "";
+
+///////////// max_valid_age ///////////////////////////
+//
+// maximum age of valid of data.
+// The units are seconds.
+// Type: int
+//
+
+max_valid_age = 0;
+
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+// URL to use for storing results.
+// Type: string
+//
+
+output_url = "/d1/cunning/data/64-bit_mdv/cip/mdv/model_metars";
+
+///////////// write_as_forecast ///////////////////////
+//
+// Set to TRUE to write data files with forecast naming convention.
+// Default is FALSE which may cause output file to be overwritten on 
+//   successive model runs.
+// Type: boolean
+//
+
+write_as_forecast = FALSE;
+
+///////////// write_ldata /////////////////////////////
+//
+// Local data info file flag.
+// TRUE to write ldata file.
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// encoding_type ///////////////////////////
+//
+// Set encoding type.
+//
+// Type: enum
+// Options:
+//     ENCODING_ASIS
+//     ENCODING_INT8
+//     ENCODING_INT16
+//     ENCODING_FLOAT32
+//
+
+encoding_type = ENCODING_INT8;
+
+///////////// compression_type ////////////////////////
+//
+// Set compression type.
+//
+// Type: enum
+// Options:
+//     COMPRESSION_ASIS
+//     COMPRESSION_NONE
+//     COMPRESSION_RLE
+//     COMPRESSION_LZO
+//     COMPRESSION_ZLIB
+//     COMPRESSION_BZIP
+//     COMPRESSION_GZIP
+//
+
+compression_type = COMPRESSION_BZIP;
+
+
+//======================================================================
+//
+// Mandatory Input Fields.
+//
+//======================================================================
+ 
+///////////// topo_file ///////////////////////////////
+//
+// path to topography file.
+// TOPO file path.
+// Type: string
+//
+
+topo_file = "/d1/cunning/data/64-bit_mdv/cip/static/topo.mdv";
+
+///////////// topo_field //////////////////////////////
+//
+// name to topography field.
+// TOPO field name.
+// Type: string
+//
+
+topo_field = "HGT";
+
+///////////// model_field_names ///////////////////////
+//
+// List of input fields represented by their MDV field names.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string height;
+//      string cw_mr;
+//      string snow_mr;
+//      string ice_mr;
+//      string rw_mr;
+//      string graupel_mr;
+//      string tmp;
+//      string ncpcp;
+//   }
+//
+//
+
+model_field_names = {
+    height = "HGT",
+    cw_mr = "CLWMR",
+    snow_mr = "SNMR",
+    ice_mr = "ICMR",
+    rw_mr = "RWMR",
+    graupel_mr = "GRMR",
+    tmp = "TMP",
+    ncpcp = "APCP1Hr"
+};
+
+
+//======================================================================
+//
+// Algorithm parameters.
+//
+//======================================================================
+ 
+///////////// precip_dist_grid_shape //////////////////
+//
+// Shape to use for sampling the model grid for finding distance to 
+//   precip.
+//
+// The options are GRID_RECTANGLE and GRID_CIRCLE.
+//
+//
+// Type: enum
+// Options:
+//     GRID_RECTANGLE
+//     GRID_CIRCLE
+//
+
+precip_dist_grid_shape = GRID_CIRCLE;
+
+///////////// precip_dist_grid_rect_width /////////////
+//
+// Precip Distance Grid Rectangle Width in grid points.
+//
+// This is only used if precip_dist_grid_shape is equal to 
+//   GRID_RECTANGLE.
+//
+//
+// Type: int
+//
+
+precip_dist_grid_rect_width = 5;
+
+///////////// precip_dist_grid_rect_height ////////////
+//
+// Precip Distance Grid Rectangle Height in grid points.
+//
+// This is only used if precip_dist_grid_shape is equal to 
+//   GRID_RECTANGLE.
+//
+//
+// Type: int
+//
+
+precip_dist_grid_rect_height = 5;
+
+///////////// precip_dist_grid_circle_rad /////////////
+//
+// Precip Distance Grid Circle Radius in grid points.
+//
+// This is only used if precip_dist_grid_shape is equal to GRID_CIRCLE.
+//
+//
+// Type: int
+//
+
+precip_dist_grid_circle_rad = 3;
+
+///////////// cloud_cover_grid_shape //////////////////
+//
+// Shape to use for sampling the model grid for determining cloud 
+//   coverage fraction and cbz.
+//
+// The options are GRID_RECTANGLE and GRID_CIRCLE.
+//
+//
+// Type: enum
+// Options:
+//     GRID_RECTANGLE
+//     GRID_CIRCLE
+//
+
+cloud_cover_grid_shape = GRID_CIRCLE;
+
+///////////// cloud_cover_grid_rect_width /////////////
+//
+// Cloud Cover Grid Rectangle Width in grid points.
+//
+// This is only used if cloud_cover_grid_shape is equal to 
+//   GRID_RECTANGLE.
+//
+//
+// Type: int
+//
+
+cloud_cover_grid_rect_width = 5;
+
+///////////// cloud_cover_grid_rect_height ////////////
+//
+// Cloud Cover Grid Rectangle Height in grid points.
+//
+// This is only used if cloud_cover_grid_shape is equal to 
+//   GRID_RECTANGLE.
+//
+//
+// Type: int
+//
+
+cloud_cover_grid_rect_height = 5;
+
+///////////// cloud_cover_grid_circle_rad /////////////
+//
+// Cloud Cover Grid Circle Radius in grid points.
+//
+// This is only used if cloud_cover_grid_shape is equal to GRID_CIRCLE.
+//
+//
+// Type: int
+//
+
+cloud_cover_grid_circle_rad = 3;
+
+///////////// distanceThresh //////////////////////////
+//
+// Percentage of points containing a precip type to output distance to 
+//   precip data.
+// Type: float
+//
+
+distanceThresh = 0.2;
+
+///////////// mr_thresh ///////////////////////////////
+//
+// Threshold for mixing ratio values.
+// Type: float
+//
+
+mr_thresh = 1e-07;
+
+///////////// temp_thresh /////////////////////////////
+//
+// Threshold for temperature values.
+// Type: float
+//
+
+temp_thresh = 274.15;
+
+///////////// rain_thresh /////////////////////////////
+//
+// Threshold for rain rate values.
+// Type: float
+//
+
+rain_thresh = 3;
+
+///////////// cbz_thresh //////////////////////////////
+//
+// Threshold for mixing ratio values when finding cloud base height.
+// Type: float
+//
+
+cbz_thresh = 0;
+
+///////////// use_hybrid_level_model //////////////////
+//
+// Use a model file that is on hybrid vertical levels.
+// TRUE to use hybrid files, FALSE to use pressure.
+// Type: boolean
+//
+
+use_hybrid_level_model = TRUE;
+
+
+///////////// minLayersForCloud ///////////////////////
+//
+// Number of contiguous layers of checkForCloud == TRUE, before we 
+//   decide we have found the cloud base (when checked from ground up).
+//
+//
+// Type: int
+//
+
+minLayersForCloud = 2;
+

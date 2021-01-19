@@ -1,0 +1,1011 @@
+/**********************************************************************
+ * TDRP params for ./MdvDeriveModel
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: MdvDeriveModel.
+//
+// Calculates derived model fields.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug_mode //////////////////////////////
+//
+// Debug option.
+//
+// The options are DEBUG_OFF, DEBUG_NORM and DEBUG_VERBOSE. If set, 
+//   debug messages will be printed appropriately.
+//
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug_mode = DEBUG_VERBOSE;
+
+//======================================================================
+//
+// PROCESS PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+//
+// Used for registration with procmap.
+//
+//
+// Type: string
+//
+
+instance = "wrf_rr_ncep";
+
+///////////// run_mode ////////////////////////////////
+//
+// Operating mode.
+//
+// If set to ARCHIVE, -start and -end MUST be included on the command 
+//   line.
+//
+//
+// Type: enum
+// Options:
+//     REALTIME
+//     ARCHIVE
+//     FILELIST
+//
+
+run_mode = REALTIME;
+
+//======================================================================
+//
+// PROCESS INPUT PARAMETERS.
+//
+// Parameters describing the input locations.
+//
+//======================================================================
+ 
+///////////// input_url ///////////////////////////////
+//
+// Input URL.
+//
+//
+// Type: string
+//
+
+input_url = "mdvp:://localhost:port:directory";
+
+///////////// max_valid_age ///////////////////////////
+//
+// Input URL maximum valid age in seconds.
+//
+//
+// Type: int
+//
+
+max_valid_age = 1800;
+
+///////////// topography_url //////////////////////////
+//
+// Topography URL.
+//
+//
+// Type: string
+//
+
+topography_url = "/d1/cunning/data/64-bit_mdv/cip/static/topo.mdv";
+
+///////////// topography_field_name ///////////////////
+//
+// Topography field name.
+//
+//
+// Type: string
+//
+
+topography_field_name = "HGT";
+
+///////////// input_fields ////////////////////////////
+//
+// Input fields with MDV name.
+//
+// Not all of these fields need to be in your input file.
+//
+//
+// Type: struct
+//   typedef struct {
+//      data_field_t data_field;
+//        Options:
+//          HEIGHT_FIELD
+//          TEMP_FIELD
+//          SPECH_FIELD
+//          VVEL_FIELD
+//          CWMR_FIELD
+//          RWMR_FIELD
+//          ICMR_FIELD
+//          SNMR_FIELD
+//          GRMR_FIELD
+//          CAPE_FIELD
+//          CIN_FIELD
+//          PRESSURE_FIELD
+//          ACPCP_1HR_FIELD
+//          ACPCP_2HR_FIELD
+//          ACPCP_3HR_FIELD
+//          NCPCP_1HR_FIELD
+//          NCPCP_2HR_FIELD
+//          NCPCP_3HR_FIELD
+//          DEW_PT_FIELD
+//          LIFTED_COND_TEMP_FIELD
+//          EQUIV_POT_FIELD
+//          WET_BULB_FIELD
+//          SLW_FIELD
+//          MODEL_PRECIP_FIELD
+//          ICE_COND_FIELD
+//          LIQ_COND_FIELD
+//          PRECIP_COND_FIELD
+//          TOT_WATER_PATH_FIELD
+//          TOT_FREEZING_WATER_PATH_FIELD
+//          K_INDEX_FIELD
+//          LIFTED_INDEX_FIELD
+//          TOTAL_TOTALS_FIELD
+//          REL_HUM_FIELD
+//          NUM_RAIN_FIELD
+//          NUM_CLOUD_FIELD
+//          MVD_CLOUD_FIELD
+//          MVD_RAIN_FIELD
+//          D_MAX_FIELD
+//          APPENDIX_OC_FIELD
+//          TROPOPAUSE_TEMP_FIELD
+//          TROPOPAUSE_HEIGHT_FIELD
+//          TROPOPAUSE_PRES_FIELD
+//          TROPOPAUSE_POT_TEMP_FIELD
+//          CWMR_MASS_FIELD
+//          RWMR_MASS_FIELD
+//          ICMR_MASS_FIELD
+//          SNMR_MASS_FIELD
+//          GRMR_MASS_FIELD
+//      string mdv_name;
+//   }
+//
+// 1D array - variable length.
+//
+
+input_fields = {
+  {
+    data_field = HEIGHT_FIELD,
+    mdv_name = "HGT"
+  },
+  {
+    data_field = PRESSURE_FIELD,
+    mdv_name = "PRES"
+  },
+  {
+    data_field = TEMP_FIELD,
+    mdv_name = "TMP"
+  },
+  {
+    data_field = SPECH_FIELD,
+    mdv_name = "MIXR"
+  },
+  {
+    data_field = VVEL_FIELD,
+    mdv_name = "VVEL"
+  },
+  {
+    data_field = CWMR_FIELD,
+    mdv_name = "CLWMR"
+  },
+  {
+    data_field = RWMR_FIELD,
+    mdv_name = "RWMR"
+  },
+  {
+    data_field = ICMR_FIELD,
+    mdv_name = "ICMR"
+  },
+  {
+    data_field = SNMR_FIELD,
+    mdv_name = "SNMR"
+  },
+  {
+    data_field = GRMR_FIELD,
+    mdv_name = "GRMR"
+  },
+  {
+    data_field = CAPE_FIELD,
+    mdv_name = "CAPE"
+  },
+  {
+    data_field = CIN_FIELD,
+    mdv_name = "CIN"
+  },
+  {
+    data_field = ACPCP_1HR_FIELD,
+    mdv_name = "APCP1Hr"
+  },
+  {
+    data_field = NCPCP_1HR_FIELD,
+    mdv_name = "APCP1Hr"
+  },
+   {
+    data_field = APCP_1HR_FIELD,
+    mdv_name = "APCP1Hr"
+  }};
+
+correct_zero_fields = {
+};
+
+//======================================================================
+//
+// PROCESS OUTPUT PARAMETERS.
+//
+// Parameters describing the output locations.
+//
+//======================================================================
+ 
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+//
+//
+// Type: string
+//
+
+output_url = "/d1/cunning/data/64-bit_mdv/cip/mdv/model/derived_hrrr_pres";
+
+///////////// output_fields ///////////////////////////
+//
+// Output fields with MDV short name, long name, and encoding.
+//
+//
+// Type: struct
+//   typedef struct {
+//      data_field_t data_field;
+//        Options:
+//          HEIGHT_FIELD
+//          TEMP_FIELD
+//          SPECH_FIELD
+//          VVEL_FIELD
+//          CWMR_FIELD
+//          RWMR_FIELD
+//          ICMR_FIELD
+//          SNMR_FIELD
+//          GRMR_FIELD
+//          CAPE_FIELD
+//          CIN_FIELD
+//          PRESSURE_FIELD
+//          ACPCP_1HR_FIELD
+//          ACPCP_2HR_FIELD
+//          ACPCP_3HR_FIELD
+//          NCPCP_1HR_FIELD
+//          NCPCP_2HR_FIELD
+//          NCPCP_3HR_FIELD
+//          DEW_PT_FIELD
+//          LIFTED_COND_TEMP_FIELD
+//          EQUIV_POT_FIELD
+//          WET_BULB_FIELD
+//          SLW_FIELD
+//          MODEL_PRECIP_FIELD
+//          ICE_COND_FIELD
+//          LIQ_COND_FIELD
+//          PRECIP_COND_FIELD
+//          TOT_WATER_PATH_FIELD
+//          TOT_FREEZING_WATER_PATH_FIELD
+//          K_INDEX_FIELD
+//          LIFTED_INDEX_FIELD
+//          TOTAL_TOTALS_FIELD
+//          REL_HUM_FIELD
+//          NUM_RAIN_FIELD
+//          NUM_CLOUD_FIELD
+//          MVD_CLOUD_FIELD
+//          MVD_RAIN_FIELD
+//          D_MAX_FIELD
+//          APPENDIX_OC_FIELD
+//          TROPOPAUSE_TEMP_FIELD
+//          TROPOPAUSE_HEIGHT_FIELD
+//          TROPOPAUSE_PRES_FIELD
+//          TROPOPAUSE_POT_TEMP_FIELD
+//          CWMR_MASS_FIELD
+//          RWMR_MASS_FIELD
+//          ICMR_MASS_FIELD
+//          SNMR_MASS_FIELD
+//          GRMR_MASS_FIELD
+//      string mdv_short_name;
+//      string mdv_long_name;
+//      encoding_type_t encoding;
+//        Options:
+//          ENCODING_ASIS
+//          ENCODING_INT8
+//          ENCODING_INT16
+//          ENCODING_FLOAT32
+//   }
+//
+// 1D array - variable length.
+//
+
+output_fields = {
+  {
+    data_field = DEW_PT_FIELD,
+    mdv_short_name = "DEW_PT_TEMP",
+    mdv_long_name = "dew point temperature",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = LIFTED_COND_TEMP_FIELD,
+    mdv_short_name = "LCL_TEMP",
+    mdv_long_name = "lifted condensation level temperature",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = EQUIV_POT_FIELD,
+    mdv_short_name = "THETA_E",
+    mdv_long_name = "equivalent potential temperature",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = WET_BULB_FIELD,
+    mdv_short_name = "WET_BULB_TEMP",
+    mdv_long_name = "wet bulb temperature",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = SLW_FIELD,
+    mdv_short_name = "SLW",
+    mdv_long_name = "super cooled liquid water",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = MODEL_PRECIP_FIELD,
+    mdv_short_name = "MODEL_PRECIP",
+    mdv_long_name = "model precipitation",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = ICE_COND_FIELD,
+    mdv_short_name = "ICE_COND",
+    mdv_long_name = "ice condensate",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = LIQ_COND_FIELD,
+    mdv_short_name = "LIQ_COND",
+    mdv_long_name = "liquid water condensate",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = PRECIP_COND_FIELD,
+    mdv_short_name = "PRECIP_COND",
+    mdv_long_name = "precipitable condensate",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = TOT_FREEZING_WATER_PATH_FIELD,
+    mdv_short_name = "TOT_WATER_PATH",
+    mdv_long_name = "total freezing water path",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = K_INDEX_FIELD,
+    mdv_short_name = "K_INDEX",
+    mdv_long_name = "k index",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = LIFTED_INDEX_FIELD,
+    mdv_short_name = "LIFTED_INDEX",
+    mdv_long_name = "lifted index",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = TOTAL_TOTALS_FIELD,
+    mdv_short_name = "TOTAL_TOTALS",
+    mdv_long_name = "total totals",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = REL_HUM_FIELD,
+    mdv_short_name = "RH",
+    mdv_long_name = "relative humidity",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = ACPCP_1HR_FIELD,
+    mdv_short_name = "ACPCP1Hr",
+    mdv_long_name = "1-Hr Accumulated Convective Precipitation (derived)",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = WX_TYPE_FIP_FIELD,
+    mdv_short_name = "WX_TYPE",
+    mdv_long_name = "FIP Weather Type",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = SURFACE_PRECIP_FIP_FIELD,
+    mdv_short_name = "SURF_PRECIP",
+    mdv_long_name = "Surface Precipitation Type (FIP Method)",
+    encoding = ENCODING_INT8
+  },
+  // Pass through fields
+  {
+    data_field = HEIGHT_FIELD,
+    mdv_short_name = "HGT",
+    mdv_long_name = "Geopotential Height",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = PRESSURE_FIELD,
+    mdv_short_name = "PRES",
+    mdv_long_name = "Pressure",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = TEMP_FIELD,
+    mdv_short_name = "TMP",
+    mdv_long_name = "Temperature",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = SPECH_FIELD,
+    mdv_short_name = "MIXR",
+    mdv_long_name = "Specific Humidity",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = VVEL_FIELD,
+    mdv_short_name = "VVEL",
+    mdv_long_name = "Vertical Velocity",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = CWMR_FIELD,
+    mdv_short_name = "CLWMR",
+    mdv_long_name = "Cloud Water Mixing Ratio",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = RWMR_FIELD,
+    mdv_short_name = "RWMR",
+    mdv_long_name = "Rain Water Mixing Ratio",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = ICMR_FIELD,
+    mdv_short_name = "ICMR",
+    mdv_long_name = "Ice Water Mixing Ratio",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = SNMR_FIELD,
+    mdv_short_name = "SNMR",
+    mdv_long_name = "Snow Mixing Ratio",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = GRMR_FIELD,
+    mdv_short_name = "GRMR",
+    mdv_long_name = "Graupel Mixing Ratio",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = CAPE_FIELD,
+    mdv_short_name = "CAPE",
+    mdv_long_name = "Convective Available Potential Energy",
+    encoding = ENCODING_INT8
+  },
+  {
+    data_field = CIN_FIELD,
+    mdv_short_name = "CIN",
+    mdv_long_name = "Convective precipitation",
+    encoding = ENCODING_INT8
+  }};
+
+///////////// write_ldata /////////////////////////////
+//
+// Flag to turn on writing ldata information.
+//
+// The default is true.
+//
+//
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// write_as_forecast ///////////////////////
+//
+// Flag to turn on writing files out in the RAL forecast directory 
+//   structure.
+//
+// The default is false.
+//
+//
+// Type: boolean
+//
+
+write_as_forecast = TRUE;
+
+///////////// compression_type ////////////////////////
+//
+// Set compression type.
+//
+//
+// Type: enum
+// Options:
+//     COMPRESSION_ASIS
+//     COMPRESSION_NONE
+//     COMPRESSION_RLE
+//     COMPRESSION_LZO
+//     COMPRESSION_ZLIB
+//     COMPRESSION_BZIP
+//     COMPRESSION_GZIP
+//
+
+compression_type = COMPRESSION_GZIP;
+
+//======================================================================
+//
+// DERIVED FIELD PARAMETERS.
+//
+// Parameters describing the behavior for specific derivations.
+//
+//======================================================================
+
+//======================================================================
+//
+// PRECIP CONDENSATE PARAMETERS.
+//
+// These parameters only pertain to precipitation condensate
+//   calculations.
+//
+//======================================================================
+
+///////////// precip_condensate_num_levels ////////////
+//
+// The number of levels to sum over when calculating precipitable
+//   condensate.
+//
+// The starting level is at or above the surface height.  Only levels
+//   with valid data are counted.  If not enough valid levels are found,
+//   the output is set to missing.
+//
+//
+// Type: int
+//
+
+precip_condensate_num_levels = 3;
+
+//======================================================================
+//
+// WATER VAPOR MIXING RATIO PARAMETERS.
+//
+// These parameters only pertain to Water Vapor Mixing Ratio
+//   calculations.
+//
+//======================================================================
+
+///////////// wvmixr_methods //////////////////////////
+//
+// Preferred order of methods to calculate water vapor mixing ratio.
+//
+// The options are WVMIXR_BY_DEWPT and WVMIXR_BY_SPECH. The methods will
+//   be attempted in the order they are listed.
+//
+//
+// Type: enum
+// Options:
+//     WVMIXR_BY_DEWPT
+//     WVMIXR_BY_SPECH
+// 1D array - variable length.
+//
+
+wvmixr_methods = {
+ WVMIXR_BY_DEWPT,
+ WVMIXR_BY_SPECH
+};
+
+
+//======================================================================
+//
+// TROPOPAUSE PARAMETERS.
+//
+// These parameters only pertain to tropopause calculations.
+//
+//======================================================================
+
+///////////// tropopause_min_pressure /////////////////
+//
+// Minimum pressure bound when searching for tropopause.
+//
+// The units are mb.
+//
+//
+// Type: float
+//
+
+tropopause_min_pressure = 75;
+
+///////////// tropopause_max_pressure /////////////////
+//
+// Maximum pressure bound when searching for tropopause.
+//
+// The units are mb.
+//
+//
+// Type: float
+//
+
+tropopause_max_pressure = 550;
+
+///////////// tropopause_methods //////////////////////
+//
+// Preferred order of methods to calculate tropopause variables.
+//
+// The options are TROPOPAUSE_BY_TEMP and TROPOPAUSE_BY_PRESSURE. The
+//   methods will be attempted in the order they are listed.
+//
+//
+// Type: enum
+// Options:
+//     TROPOPAUSE_BY_TEMP
+//     TROPOPAUSE_BY_PRESSURE
+//     TROPOPAUSE_BY_OTHER
+// 1D array - variable length.
+//
+
+tropopause_methods = {
+ TROPOPAUSE_BY_TEMP,
+ TROPOPAUSE_BY_PRESSURE,
+ TROPOPAUSE_BY_OTHER
+};
+
+//======================================================================
+//
+// TOTAL CONDENSATE PARAMETERS.
+//
+// These parameters only pertain to Total Condensate calculations.
+//
+//======================================================================
+
+///////////// tot_cond_methods ////////////////////////
+//
+// Preferred order of methods to calculate total condensate.
+//
+// The options are TOT_COND_BY_MR and TOT_COND_BY_COND. The methods will
+//   be attempted in the order they are listed.
+//
+//
+// Type: enum
+// Options:
+//     TOT_COND_BY_MR
+//     TOT_COND_BY_COND
+// 1D array - variable length.
+//
+
+tot_cond_methods = {
+ TOT_COND_BY_MR,
+ TOT_COND_BY_COND
+};
+
+//======================================================================
+//
+// MVD PARAMETERS.
+//
+// These parameters only pertain to MVD (Median Volume Diameter)
+//   calculations.
+//
+//======================================================================
+
+///////////// mvd_mask_by_temperature /////////////////
+//
+// Flag to activate masking rain and cloud MVD fields. Set any non-zero
+//   values, where temerature is above freezing, to zero.
+//
+// The default is false.
+//
+//
+// Type: boolean
+//
+
+mvd_mask_by_temperature = TRUE;
+
+///////////// mvd_const_rain_num_concentration ////////
+//
+// Constant rain droplet concentration value.
+//
+// The units are N/m^3.
+//
+// Minimum val: 100
+//
+// Type: float
+//
+
+mvd_const_rain_num_concentration = 100000;
+
+///////////// mvd_const_cloud_num_concentration ///////
+//
+// Constant cloud water droplet concentration value.
+//
+// The units are N/m^3.
+//
+// Minimum val: 1e+06
+//
+// Type: float
+//
+
+mvd_const_cloud_num_concentration = 2.5e+08;
+
+///////////// mvd_min_cloud_mu ////////////////////////
+//
+// Minimu cloud mu value.
+//
+// The units are ?. Should not be adjusted without reason.
+//
+// Minimum val: 1
+// Maximum val: 100
+//
+// Type: float
+//
+
+mvd_min_cloud_mu = 15;
+
+///////////// mvd_min_clwmr ///////////////////////////
+//
+// Minimum cloud water mixing ratio value.
+//
+// The units are kg/m^3.
+//
+//
+// Type: float
+//
+
+mvd_min_clwmr = 1e-06;
+
+///////////// mvd_min_rwmr ////////////////////////////
+//
+// Minimum rain water mixing ratio value.
+//
+// The units are kg/m^3.
+//
+//
+// Type: float
+//
+
+mvd_min_rwmr = 1e-06;
+
+//======================================================================
+//
+// DMAX PARAMETERS.
+//
+// These parameters only pertain to DMAX (Max Drop Size)  calculations.
+//
+//======================================================================
+
+///////////// dmax_min_q //////////////////////////////
+//
+// Minimum q value for Appendix O/C calculation.
+//
+// The units are kg/m^3.
+//
+//
+// Type: float
+//
+
+dmax_min_q = 1e-12;
+
+///////////// dmax_min_n //////////////////////////////
+//
+// Minimum n value - skip d max calculation if num rain is below.
+//
+// The units are 1/m^3.
+//
+//
+// Type: float
+//
+
+dmax_min_n = 1e-06;
+
+///////////// dmax_freezing_rain_min //////////////////
+//
+// Minimum d value to determine freezing rain.
+//
+//
+// Type: float
+//
+
+dmax_freezing_rain_min = 0.0005;
+
+///////////// dmax_freezing_drizzle_min ///////////////
+//
+// Minimum d value to determine freezing drizzle.
+//
+//
+// Type: float
+//
+
+dmax_freezing_drizzle_min = 0.0001;
+
+///////////// dmax_min_concentration //////////////////
+//
+// Minimum concentration value for Appendix O/C calculation.
+//
+// The units are kg/m^3.
+//
+//
+// Type: float
+//
+
+dmax_min_concentration = 0.001;
+
+///////////// dmax_mu_shape ///////////////////////////
+//
+// Mu shape value for Appendix O/C calculation.
+//
+//
+// Type: float
+//
+
+dmax_mu_shape = 0;
+
+///////////// dmax_bmr ////////////////////////////////
+//
+// bmR value for Appendix O/C calculation.
+//
+//
+// Type: float
+//
+
+dmax_bmr = 3;
+
+///////////// dmax_percentile /////////////////////////
+//
+// Percentile for calculating D-Max with that approach.
+//
+// Between 0 and 1.
+//
+//
+// Type: float
+//
+
+dmax_percentile = 0.99;
+
+///////////// dmax_temperature_threshold //////////////
+//
+// D max is not calculated for temperatures above this value.
+//
+// Defaults to 273.15 K (0 C).
+//
+//
+// Type: float
+//
+
+dmax_temperature_threshold = 273.15;
+
+//======================================================================
+//
+// Pressure to Height PARAMETERS.
+//
+// These parameters are used to estimate pressure to height.
+//
+//======================================================================
+
+///////////// std_atmos_file //////////////////////////
+//
+// Path to standard atmosphere table file.
+//
+//
+// Type: string
+//
+
+std_atmos_file = "/home/hiwc_dev/stdAtmosTempProfile.csv";
+
+///////////// sa_flight_level_header_name /////////////
+//
+// Standard atmosphere flight level header name.
+//
+// This is the name used in the first line of the table defined in
+//   std_atmos_file.
+//
+//
+// Type: string
+//
+
+sa_flight_level_header_name = "Flight Level (100s of ft)";
+
+///////////// sa_pressure_header_name /////////////////
+//
+// Standard atmosphere pressure header name.
+//
+// This is the name used in the first line of the table defined in
+//   std_atmos_file.
+//
+//
+// Type: string
+//
+
+sa_pressure_header_name = "Pressure (mb)";
+
+//======================================================================
+//
+// SURFACE PRECIP PARAMETERS.
+//
+// These parameters only pertain to MVD calculations.
+//
+//======================================================================
+
+//======================================================================
+//
+// PRECIPITATION TYPE ALGORITHM PARAMETERS.
+//
+// Parameters controling the calculation of WxTypeFIP.
+//
+//======================================================================
+
+///////////// precip_type_algo ////////////////////////
+//
+// Parameters for WX_TYPE_FIP.
+//
+//
+// Type: struct
+//   typedef struct {
+//      float min_conv_prcp_for_convection;
+//      float min_cape_for_convection;
+//      float min_cin_for_convection;
+//      float max_lifted_index_for_convection;
+//      float min_pressure_for_cloud;
+//      float min_wet_bulb_temp_for_cloud;
+//      float max_wet_bulb_temp_for_cloud;
+//      float min_cloud_top_pressure;
+//      float min_cloud_top_altitude;
+//      float min_cloud_top_rh;
+//      float max_wet_bulb_altitude;
+//      float cold_temperature_dz_min;
+//      float tcold_area_precip_max;
+//      float wet_bulb_area_pellet_max;
+//   }
+//
+//
+
+precip_type_algo = {
+    min_conv_prcp_for_convection = 10,
+    min_cape_for_convection = 1000,
+    min_cin_for_convection = -100,
+    max_lifted_index_for_convection = 0,
+    min_pressure_for_cloud = 15000,
+    min_wet_bulb_temp_for_cloud = 200,
+    max_wet_bulb_temp_for_cloud = 1000,
+    min_cloud_top_pressure = 30000,
+    min_cloud_top_altitude = 700,
+    min_cloud_top_rh = 90,
+    max_wet_bulb_altitude = 1500,
+    cold_temperature_dz_min = 265.15,
+    tcold_area_precip_max = 350,
+    wet_bulb_area_pellet_max = -2500
+};
+
+///////////// surface_levels //////////////////////////
+//
+// How many model levels of WX_TYPE_FIP to look at when determining
+//   SURFACE_PRECIP_FIP.
+//
+//
+// Type: int
+//
+
+surface_levels = 2;
+
+
+
