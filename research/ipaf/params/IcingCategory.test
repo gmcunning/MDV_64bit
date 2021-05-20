@@ -1,0 +1,216 @@
+/**********************************************************************
+ * TDRP params for IcingCategory
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: IcingCategory.
+//
+// IcingCategory is used to assign icing severity categories based on 
+//   continuous (i.e., 0.0-1.0) estimates of icing severity. .
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug ///////////////////////////////////
+//
+// Debug option.
+// If set, debug messages will be printed with the appropriate level of 
+//   detail.
+// Type: boolean
+//
+
+debug = TRUE;
+
+//======================================================================
+//
+// PROCESS CONTROL PARAMETERS.
+//
+//======================================================================
+ 
+///////////// run_mode ////////////////////////////////
+//
+// Process running mode.
+// Can be either ARCHIVE, REALTIME or FILELIST.
+//
+// Type: enum
+// Options:
+//     ARCHIVE
+//     REALTIME
+//     FILELIST
+//
+
+run_mode = REALTIME;
+
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "grib2";
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+ 
+///////////// input_url ///////////////////////////////
+//
+// input URL.
+// For data on local disk, this can just be the directory containing the 
+//   input MDV data files.  For data retrieved from a server, it is the 
+//   URL for the server.  A server URL looks like the following:
+// 	mdvp://host:port:directory_path
+// This URL specifies a DsMdvServer process running on the specified 
+//   host and using the specified port.  The data would reside on the 
+//   specified host under $RAP_DATA_DIR/directory_path.
+// Type: string
+//
+
+input_url = "mdvp:://localhost::mdv/fip/flight";
+
+///////////// max_valid_age ///////////////////////////
+//
+// maximum age of valid input data.
+// The units are seconds.
+// Type: int
+//
+
+max_valid_age = 3600;
+
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+// For data on local disk, this can just be the directory containing the 
+//   input MDV data files.  For data retrieved from a server, it is the 
+//   URL for the server.  A server URL looks like the following:
+// 	mdvp://host:port:directory_path
+// This URL specifies a DsMdvServer process running on the specified 
+//   host and using the specified port.  The data would reside on the 
+//   specified host under $RAP_DATA_DIR/directory_path.
+// Type: string
+//
+
+output_url = "$(FIP_CAT_MDV_DIR)";
+
+///////////// use_mdv_field_name //////////////////////
+//
+// Flag indicating whether to use the mdv_field_name or the 
+//   mdv_field_num to identify the output fields.
+// Type: boolean
+//
+
+use_mdv_field_name = TRUE;
+
+///////////// write_ldata /////////////////////////////
+//
+// Flag to turn on writing ldata information.
+// The default is true.
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// write_as_forecast ///////////////////////
+//
+// Flag to turn on writing files out in the RAL forecast directory 
+//   structure.
+// The default is false.
+// Type: boolean
+//
+
+write_as_forecast = TRUE;
+
+///////////// icing_field /////////////////////////////
+//
+// Icing Probability Field.
+//
+// Type: struct
+//   typedef struct {
+//      string mdv_field_name;
+//      int mdv_field_num;
+//   }
+//
+//
+
+icing_field = { "ICE_PROB", 0 };
+
+///////////// sld_field ///////////////////////////////
+//
+// SLD Field.
+//
+// Type: struct
+//   typedef struct {
+//      string mdv_field_name;
+//      int mdv_field_num;
+//   }
+//
+//
+
+sld_field = { "SLD", 0 };
+
+///////////// severity_field //////////////////////////
+//
+// Icing Severity Field.
+// This severity will be mapped to icing categories, ranging from 0 to 
+//   4.
+//
+// Type: struct
+//   typedef struct {
+//      string mdv_field_name;
+//      int mdv_field_num;
+//   }
+//
+//
+
+severity_field = { "ICE_SEV", 0 };
+
+///////////// data_set_info ///////////////////////////
+//
+// Dataset information string.
+// This parameter sets data_set_info in the master header.
+// Type: string
+//
+
+data_set_info = "1 = trace, 2 = light, 3 = moderate, 4 = heavy";
+
+///////////// severity_category_map ///////////////////
+//
+// The thresholds to map from continuous icing severity values to icing 
+//   severity categories.
+// Current mapping is:
+// 	1 = light    (0.25 - 0.425)
+// 	2 = moderate (0.425 - 0.75)
+// 	3 = N/A
+// 	4 = trace    (0.0 - 0.25)
+// 	5 = heavy    (0.75 - 1.0).
+//
+// Type: struct
+//   typedef struct {
+//      float threshold_value;
+//      int category_number;
+//   }
+//
+// 1D array - variable length.
+//
+
+severity_category_map = {
+  {0.0, 0},
+  { 0.175, 4},
+  { 0.375, 1},
+  { 0.7, 2},
+  { 1, 5}
+};
+

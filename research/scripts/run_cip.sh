@@ -4,8 +4,9 @@
 exec_dir=/home/cunning/exec/bin
 param_dir=/home/cunning/git/MDV_64bit/research/cip/params
 data_dir=/d1/cunning/data/64-bit_mdv/cip
+raw_data_dir=/d1/cunning/data/64-bit_mdv/raw
 
-g2m_m_infile=$data_dir/raw/20201117_i14_f003_HRRR-NCEP_wrfnat.grb2
+g2m_m_infile=$raw_data_dir/20201117_i14_f003_HRRR-NCEP_wrfnat.grb2
 g2m_m_param=$param_dir/Grib2toMdv.hrrr-nat_ncep
 g2m_app=$exec_dir/Grib2toMdv
 
@@ -17,15 +18,15 @@ m2m_infile=$data_dir/mdv/model/hrrr_pres/20201117/g_140000/20201117_g_140000_f_0
 m2m_param=$param_dir/MdvDeriveModel.hrrr
 m2m_app=$exec_dir/MdvDeriveModel
 
-gn2m_vis_infile=$data_dir/raw/OR_ABI-L1b-RadF-M6C02_G16_s20203221650149_e20203221659457_c20203221659506.nc
+gn2m_vis_infile=$raw_data_dir/OR_ABI-L1b-RadF-M6C02_G16_s20203221650149_e20203221659457_c20203221659506.nc
 gn2m_vis_param=$param_dir/GoesRnetCDF2Mdv.vis
 gn2m_app=$exec_dir/GoesRnetCDF2Mdv
 
-gn2m_lwir_infile=$data_dir/raw/OR_ABI-L1b-RadF-M6C14_G16_s20203221650149_e20203221659457_c20203221659538.nc
+gn2m_lwir_infile=$raw_data_dir/OR_ABI-L1b-RadF-M6C14_G16_s20203221650149_e20203221659457_c20203221659538.nc
 gn2m_lwir_param=$param_dir/GoesRnetCDF2Mdv.lwir
 gn2m_app=$exec_dir/GoesRnetCDF2Mdv
 
-gn2m_swir_infile=$data_dir/raw/OR_ABI-L1b-RadF-M6C07_G16_s20203221650149_e20203221659469_c20203221659523.nc
+gn2m_swir_infile=$raw_data_dir/OR_ABI-L1b-RadF-M6C07_G16_s20203221650149_e20203221659469_c20203221659523.nc
 gn2m_swir_param=$param_dir/GoesRnetCDF2Mdv.swir
 gn2m_app=$exec_dir/GoesRnetCDF2Mdv
 
@@ -39,7 +40,7 @@ sd_app=$exec_dir/satDerive
 g2m_r_infile=$data_dir/raw/MRMS_170640.grib2
 g2m_r_param=$param_dir/Grib2toMdv.hrrr.mrms.full
 
-mc2s_infile="$data_dir/raw/20201117_1600.metar.csv $data_dir/raw/20201117_1700.metar.csv"
+mc2s_infile="$raw_data_dir/20201117_1600.metar.csv $raw_data_dir/20201117_1700.metar.csv"
 mc2s_param=$param_dir/MetarCsv2Spdb.hrrr.cip-spdb.full
 mc2s_app=$exec_dir/MetarCsv2Spdb
 
@@ -53,14 +54,14 @@ cmm_app=$exec_dir/createModelMetars
 mb_param=$param_dir/MdvBlender.hrrr.cip.full
 mb_app=$exec_dir/MdvBlender
 
-pc2s_infile="$data_dir/raw/20201117_1600.pirep.csv $data_dir/raw/20201117_1700.pirep.csv"
+pc2s_infile="$raw_data_dir/20201117_1600.pirep.csv $raw_data_dir/20201117_1700.pirep.csv"
 pc2s_param=$param_dir/PirepCsv2Spdb.hrrr.cip.full
 pc2s_app=$exec_dir/PirepCsv2Spdb
 
 pm_param=$param_dir/PirepMapper.hrrr.cip-spdb.full
 pm_app=$exec_dir/PirepMapper
 
-ls_infile="$data_dir/raw/2020111716.nldn $data_dir/raw/2020111717.nldn"
+ls_infile="$raw_data_dir/2020111716.nldn $raw_data_dir/2020111717.nldn"
 ls_param=$param_dir/Ltg2Spdb.nldn-bin
 ls_app=$exec_dir/Ltg2Spdb
 

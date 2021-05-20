@@ -1,0 +1,1434 @@
+MDV64_CHUNK_INFO_LEN   : 1024
+MDV64_INFO_LEN         : 2048
+MDV64_LONG_FIELD_LEN   : 256
+MDV64_MAX_PROJ_PARAMS  : 16
+MDV64_MAX_VLEVELS      : 2048
+MDV64_NAME_LEN         : 512
+MDV64_SHORT_FIELD_LEN  : 128
+MDV64_TRANSFORM_LEN    : 64
+MDV64_UNITS_LEN        : 64
+MDV64_N_COORD_LABELS   : 3
+MDV64_COORD_UNITS_LEN  : 64
+MDV64_PROJ4_STR_LEN    : 256
+MDV32_CHUNK_INFO_LEN   : 480
+MDV32_INFO_LEN         : 512
+MDV32_LONG_FIELD_LEN   : 64
+MDV32_MAX_PROJ_PARAMS  : 8
+MDV32_MAX_VLEVELS      : 122
+MDV32_NAME_LEN         : 128
+MDV32_SHORT_FIELD_LEN  : 16
+MDV32_TRANSFORM_LEN    : 16
+MDV32_UNITS_LEN        : 16
+MDV32_N_COORD_LABELS   : 3
+MDV32_COORD_UNITS_LEN  : 32
+sizeof(master_header_64_t) : 3416
+sizeof(field_header_64_t)  : 1360
+sizeof(vlevel_header_64_t) : 17424
+sizeof(chunk_header_64_t)  : 1088
+sizeof(master_header_32_t) : 1024
+sizeof(field_header_32_t)  : 416
+sizeof(vlevel_header_32_t) : 1024
+sizeof(chunk_header_32_t)  : 512
+64-bit-words(master_header_64_t) : 427
+64-bit-words(field_header_64_t)  : 170
+64-bit-words(vlevel_header_64_t) : 2178
+64-bit-words(chunk_header_64_t)  : 136
+64-bit-words(master_header_32_t) : 128
+64-bit-words(field_header_32_t)  : 52
+64-bit-words(vlevel_header_32_t) : 128
+64-bit-words(chunk_header_32_t)  : 64
+================== URL ================
+  urlStr: .
+  isValid: 1
+  protocol: 
+  datatype: 
+  translator: 
+  paramFile: 
+  host: localhost
+  port: -1
+  file: .
+  args: 
+  nArgs: 0
+  nArgPairs: 0
+  computed urlStr: .
+  useProxy: 0
+  useTunnel: 0
+  useHttp: 0
+  forwardingPort: -1
+  forwardingHost: 
+  httpHeader: 
+-------------------------------
+-------------------------------
+=======================================
+Mdvx read request
+-----------------
+  Encoding type: ENCODING_ASIS
+  Compression type: COMPRESSION_ASIS
+  Scaling type: SCALING_ROUNDED
+  Composite?: 0
+  FillMissing?: 0
+  FieldFileHeaders?: 1
+  Read path: /d1/cunning/data/64-bit_mdv/fip/wrf-rr/cvs-ral/debug/mdv/fip_pres/20201117/g_140000/f_00010800.mdv
+  Read32BitHeaders?: false
+  Read path url: /d1/cunning/data/64-bit_mdv/fip/wrf-rr/cvs-ral/debug/mdv/fip_pres/20201117/g_140000/f_00010800.mdv
+Mdvx::readAllHeaders - reading file: /d1/cunning/data/64-bit_mdv/fip/wrf-rr/cvs-ral/debug/mdv/fip_pres/20201117/g_140000/f_00010800.mdv
+========== Reading 32-bit master header ==========
+
+Master header - 32-bit
+----------------------
+
+record_len1:          1016
+struct_id:            14142
+revision_number:      1
+
+time_gen:             2020/11/17 14:00:00
+user_time:            not set
+time_begin:           2020/11/17 17:00:00
+time_end:             2020/11/17 17:00:00
+time_centroid:        2020/11/17 17:00:00
+time_expire:          2020/11/17 17:00:00
+time_written:         2021/03/02 16:46:44
+epoch:                0
+forecast_time:        2020/11/17 17:00:00
+forecast_delta:       10800
+num_data_times:       1
+index_number:         0
+data_dimension:       0
+data_collection_type: Forecast
+user_data:            0
+native_vlevel_type:   Pressure (units mb)
+vlevel_type:          Pressure (units mb)
+vlevel_included:      true
+grid_orientation:     ORIENT_SN_WE
+data_ordering:        ORDER_XYZ
+n_fields:             4
+max_nx:               451
+max_ny:               337
+max_nz:               39
+n_chunks:             0
+field_hdr_offset:     1024
+vlevel_hdr_offset:    2688
+chunk_hdr_offset:     6784
+field_grids_differ:   false
+user_data_si32[0]:    0
+user_data_si32[1]:    0
+user_data_si32[2]:    0
+user_data_si32[3]:    0
+user_data_si32[4]:    0
+user_data_si32[5]:    0
+user_data_si32[6]:    0
+user_data_si32[7]:    0
+
+user_data_fl32[0]:    0
+user_data_fl32[1]:    0
+user_data_fl32[2]:    0
+user_data_fl32[3]:    0
+user_data_fl32[4]:    0
+user_data_fl32[5]:    0
+sensor_lon:           0
+sensor_lat:           0
+sensor_alt:           0
+
+data_set_info:
+Produced by FIP
+
+data_set_name:        Forecast Icing Product
+data_set_source:      
+
+record_len2:          1016
+
+
+==================================================
+========== Reading 32-bit field header ==========
+
+Field header - 32-bit
+---------------------
+
+field_name_long:        geopotential height
+field_name:             HGT
+units:                  gpm
+transform:              none
+
+record_len1:            408
+struct_id:              14143
+
+field_code:             7
+user_time1:             not set
+forecast_delta:         10800
+user_time2:             not set
+user_time3:             not set
+forecast_time:          2020/11/17 17:00:00
+user_time4:             not set
+nx:                     451
+ny:                     337
+nz:                     39
+proj_type:              Lambert Conformal
+encoding_type:          ENCODING_INT8 (CHAR/BYTE)
+data_element_nbytes:    1
+field_data_offset:      6788
+volume_size:            271220
+user_data_si32[0]:      0
+user_data_si32[1]:      0
+user_data_si32[2]:      0
+user_data_si32[3]:      0
+user_data_si32[4]:      0
+user_data_si32[5]:      0
+user_data_si32[6]:      0
+user_data_si32[7]:      0
+user_data_si32[8]:      0
+user_data_si32[9]:      0
+compression_type:       COMPRESSION_GZIP
+requested_compression:  COMPRESSION_NONE
+transform_type:         DATA_TRANSFORM_NONE - Depicts an area or volume in space
+scaling_type:           SCALING_DYNAMIC
+
+native_vlevel_type:     Pressure (units mb)
+vlevel_type:            Pressure (units mb)
+dz_constant:            1
+data_dimension:         3
+
+zoom_clipped:           0
+zoom_no_overlap:        0
+
+proj_origin_lon:        -95
+proj_origin_lat:        25
+proj_rotation:          0
+proj_param[0]:          25
+proj_param[1]:          25
+proj_param[2]:          0
+proj_param[3]:          0
+proj_param[4]:          0
+proj_param[5]:          0
+proj_param[6]:          0
+proj_param[7]:          0
+vert_reference:         0
+
+grid_dx:                13.545
+grid_dy:                13.545
+grid_dz:                -25
+grid_minx:              -3332.16
+grid_miny:              -588.893
+grid_minz:              1000
+scale:                  84.2989
+bias:                   -630.026
+bad_data_value:         0
+missing_data_value:     0
+proj_rotation:          0
+user_data_fl32[0]:      0
+user_data_fl32[1]:      0
+user_data_fl32[2]:      0
+user_data_fl32[3]:      0
+min_value:              -292.83
+max_value:              20781.9
+min_value_orig_vol:     -292.83
+max_value_orig_vol:     20781.9
+record_len2:            408
+
+
+=================================================
+========== Reading 32-bit field header ==========
+
+Field header - 32-bit
+---------------------
+
+field_name_long:        icing probability
+field_name:             ICE_PROB
+units:                  pot
+transform:              none
+
+record_len1:            408
+struct_id:              14143
+
+field_code:             186
+user_time1:             not set
+forecast_delta:         10800
+user_time2:             not set
+user_time3:             not set
+forecast_time:          2020/11/17 17:00:00
+user_time4:             not set
+nx:                     451
+ny:                     337
+nz:                     39
+proj_type:              Lambert Conformal
+encoding_type:          ENCODING_INT8 (CHAR/BYTE)
+data_element_nbytes:    1
+field_data_offset:      278016
+volume_size:            591958
+user_data_si32[0]:      0
+user_data_si32[1]:      0
+user_data_si32[2]:      0
+user_data_si32[3]:      0
+user_data_si32[4]:      0
+user_data_si32[5]:      0
+user_data_si32[6]:      0
+user_data_si32[7]:      0
+user_data_si32[8]:      0
+user_data_si32[9]:      0
+compression_type:       COMPRESSION_GZIP
+requested_compression:  COMPRESSION_NONE
+transform_type:         DATA_TRANSFORM_NONE - Depicts an area or volume in space
+scaling_type:           SCALING_DYNAMIC
+
+native_vlevel_type:     Pressure (units mb)
+vlevel_type:            Pressure (units mb)
+dz_constant:            1
+data_dimension:         3
+
+zoom_clipped:           0
+zoom_no_overlap:        0
+
+proj_origin_lon:        -95
+proj_origin_lat:        25
+proj_rotation:          0
+proj_param[0]:          25
+proj_param[1]:          25
+proj_param[2]:          0
+proj_param[3]:          0
+proj_param[4]:          0
+proj_param[5]:          0
+proj_param[6]:          0
+proj_param[7]:          0
+vert_reference:         0
+
+grid_dx:                13.545
+grid_dy:                13.545
+grid_dz:                -25
+grid_minx:              -3332.16
+grid_miny:              -588.893
+grid_minz:              1000
+scale:                  0.002964
+bias:                   -0.011856
+bad_data_value:         0
+missing_data_value:     0
+proj_rotation:          0
+user_data_fl32[0]:      0
+user_data_fl32[1]:      0
+user_data_fl32[2]:      0
+user_data_fl32[3]:      0
+min_value:              0
+max_value:              0.741
+min_value_orig_vol:     0
+max_value_orig_vol:     0.741
+record_len2:            408
+
+
+=================================================
+========== Reading 32-bit field header ==========
+
+Field header - 32-bit
+---------------------
+
+field_name_long:        supercooled large droplet potential 
+field_name:             SLD
+units:                  pot
+transform:              none
+
+record_len1:            408
+struct_id:              14143
+
+field_code:             236
+user_time1:             not set
+forecast_delta:         10800
+user_time2:             not set
+user_time3:             not set
+forecast_time:          2020/11/17 17:00:00
+user_time4:             not set
+nx:                     451
+ny:                     337
+nz:                     39
+proj_type:              Lambert Conformal
+encoding_type:          ENCODING_INT8 (CHAR/BYTE)
+data_element_nbytes:    1
+field_data_offset:      869982
+volume_size:            43432
+user_data_si32[0]:      0
+user_data_si32[1]:      0
+user_data_si32[2]:      0
+user_data_si32[3]:      0
+user_data_si32[4]:      0
+user_data_si32[5]:      0
+user_data_si32[6]:      0
+user_data_si32[7]:      0
+user_data_si32[8]:      0
+user_data_si32[9]:      0
+compression_type:       COMPRESSION_GZIP
+requested_compression:  COMPRESSION_NONE
+transform_type:         DATA_TRANSFORM_NONE - Depicts an area or volume in space
+scaling_type:           SCALING_DYNAMIC
+
+native_vlevel_type:     Pressure (units mb)
+vlevel_type:            Pressure (units mb)
+dz_constant:            1
+data_dimension:         3
+
+zoom_clipped:           0
+zoom_no_overlap:        0
+
+proj_origin_lon:        -95
+proj_origin_lat:        25
+proj_rotation:          0
+proj_param[0]:          25
+proj_param[1]:          25
+proj_param[2]:          0
+proj_param[3]:          0
+proj_param[4]:          0
+proj_param[5]:          0
+proj_param[6]:          0
+proj_param[7]:          0
+vert_reference:         0
+
+grid_dx:                13.545
+grid_dy:                13.545
+grid_dz:                -25
+grid_minx:              -3332.16
+grid_miny:              -588.893
+grid_minz:              1000
+scale:                  0.004
+bias:                   -0.016
+bad_data_value:         0
+missing_data_value:     0
+proj_rotation:          0
+user_data_fl32[0]:      0
+user_data_fl32[1]:      0
+user_data_fl32[2]:      0
+user_data_fl32[3]:      0
+min_value:              0
+max_value:              1
+min_value_orig_vol:     0
+max_value_orig_vol:     1
+record_len2:            408
+
+
+=================================================
+========== Reading 32-bit field header ==========
+
+Field header - 32-bit
+---------------------
+
+field_name_long:        Icing Severity
+field_name:             ICE_SEV
+units:                  N/A
+transform:              none
+
+record_len1:            408
+struct_id:              14143
+
+field_code:             0
+user_time1:             not set
+forecast_delta:         10800
+user_time2:             not set
+user_time3:             not set
+forecast_time:          2020/11/17 17:00:00
+user_time4:             not set
+nx:                     451
+ny:                     337
+nz:                     39
+proj_type:              Lambert Conformal
+encoding_type:          ENCODING_INT8 (CHAR/BYTE)
+data_element_nbytes:    1
+field_data_offset:      913422
+volume_size:            578713
+user_data_si32[0]:      0
+user_data_si32[1]:      0
+user_data_si32[2]:      0
+user_data_si32[3]:      0
+user_data_si32[4]:      0
+user_data_si32[5]:      0
+user_data_si32[6]:      0
+user_data_si32[7]:      0
+user_data_si32[8]:      0
+user_data_si32[9]:      0
+compression_type:       COMPRESSION_GZIP
+requested_compression:  COMPRESSION_NONE
+transform_type:         DATA_TRANSFORM_NONE - Depicts an area or volume in space
+scaling_type:           SCALING_DYNAMIC
+
+native_vlevel_type:     Pressure (units mb)
+vlevel_type:            Pressure (units mb)
+dz_constant:            1
+data_dimension:         3
+
+zoom_clipped:           0
+zoom_no_overlap:        0
+
+proj_origin_lon:        -95
+proj_origin_lat:        25
+proj_rotation:          0
+proj_param[0]:          25
+proj_param[1]:          25
+proj_param[2]:          0
+proj_param[3]:          0
+proj_param[4]:          0
+proj_param[5]:          0
+proj_param[6]:          0
+proj_param[7]:          0
+vert_reference:         0
+
+grid_dx:                13.545
+grid_dy:                13.545
+grid_dz:                -25
+grid_minx:              -3332.16
+grid_miny:              -588.893
+grid_minz:              1000
+scale:                  0.00385742
+bias:                   -0.0154297
+bad_data_value:         0
+missing_data_value:     0
+proj_rotation:          0
+user_data_fl32[0]:      0
+user_data_fl32[1]:      0
+user_data_fl32[2]:      0
+user_data_fl32[3]:      0
+min_value:              0
+max_value:              0.964354
+min_value_orig_vol:     0
+max_value_orig_vol:     0.964354
+record_len2:            408
+
+
+=================================================
+========== Reading 32-bit field header ==========
+Vlevel_header for field: HGT
+------------------------
+32-bit version
+record_len1:             1016
+struct_id:               14144
+vlevel type              Pressure (units mb)
+vlevel[  0]:             1000
+vlevel[  1]:             975
+vlevel[  2]:             950
+vlevel[  3]:             925
+vlevel[  4]:             900
+vlevel[  5]:             875
+vlevel[  6]:             850
+vlevel[  7]:             825
+vlevel[  8]:             800
+vlevel[  9]:             775
+vlevel[ 10]:             750
+vlevel[ 11]:             725
+vlevel[ 12]:             700
+vlevel[ 13]:             675
+vlevel[ 14]:             650
+vlevel[ 15]:             625
+vlevel[ 16]:             600
+vlevel[ 17]:             575
+vlevel[ 18]:             550
+vlevel[ 19]:             525
+vlevel[ 20]:             500
+vlevel[ 21]:             475
+vlevel[ 22]:             450
+vlevel[ 23]:             425
+vlevel[ 24]:             400
+vlevel[ 25]:             375
+vlevel[ 26]:             350
+vlevel[ 27]:             325
+vlevel[ 28]:             300
+vlevel[ 29]:             275
+vlevel[ 30]:             250
+vlevel[ 31]:             225
+vlevel[ 32]:             200
+vlevel[ 33]:             175
+vlevel[ 34]:             150
+vlevel[ 35]:             125
+vlevel[ 36]:             100
+vlevel[ 37]:             75
+vlevel[ 38]:             50
+record_len2:             1016
+
+=================================================
+========== Reading 32-bit field header ==========
+Vlevel_header for field: ICE_PROB
+------------------------
+32-bit version
+record_len1:             1016
+struct_id:               14144
+vlevel type              Pressure (units mb)
+vlevel[  0]:             1000
+vlevel[  1]:             975
+vlevel[  2]:             950
+vlevel[  3]:             925
+vlevel[  4]:             900
+vlevel[  5]:             875
+vlevel[  6]:             850
+vlevel[  7]:             825
+vlevel[  8]:             800
+vlevel[  9]:             775
+vlevel[ 10]:             750
+vlevel[ 11]:             725
+vlevel[ 12]:             700
+vlevel[ 13]:             675
+vlevel[ 14]:             650
+vlevel[ 15]:             625
+vlevel[ 16]:             600
+vlevel[ 17]:             575
+vlevel[ 18]:             550
+vlevel[ 19]:             525
+vlevel[ 20]:             500
+vlevel[ 21]:             475
+vlevel[ 22]:             450
+vlevel[ 23]:             425
+vlevel[ 24]:             400
+vlevel[ 25]:             375
+vlevel[ 26]:             350
+vlevel[ 27]:             325
+vlevel[ 28]:             300
+vlevel[ 29]:             275
+vlevel[ 30]:             250
+vlevel[ 31]:             225
+vlevel[ 32]:             200
+vlevel[ 33]:             175
+vlevel[ 34]:             150
+vlevel[ 35]:             125
+vlevel[ 36]:             100
+vlevel[ 37]:             75
+vlevel[ 38]:             50
+record_len2:             1016
+
+=================================================
+========== Reading 32-bit field header ==========
+Vlevel_header for field: SLD
+------------------------
+32-bit version
+record_len1:             1016
+struct_id:               14144
+vlevel type              Pressure (units mb)
+vlevel[  0]:             1000
+vlevel[  1]:             975
+vlevel[  2]:             950
+vlevel[  3]:             925
+vlevel[  4]:             900
+vlevel[  5]:             875
+vlevel[  6]:             850
+vlevel[  7]:             825
+vlevel[  8]:             800
+vlevel[  9]:             775
+vlevel[ 10]:             750
+vlevel[ 11]:             725
+vlevel[ 12]:             700
+vlevel[ 13]:             675
+vlevel[ 14]:             650
+vlevel[ 15]:             625
+vlevel[ 16]:             600
+vlevel[ 17]:             575
+vlevel[ 18]:             550
+vlevel[ 19]:             525
+vlevel[ 20]:             500
+vlevel[ 21]:             475
+vlevel[ 22]:             450
+vlevel[ 23]:             425
+vlevel[ 24]:             400
+vlevel[ 25]:             375
+vlevel[ 26]:             350
+vlevel[ 27]:             325
+vlevel[ 28]:             300
+vlevel[ 29]:             275
+vlevel[ 30]:             250
+vlevel[ 31]:             225
+vlevel[ 32]:             200
+vlevel[ 33]:             175
+vlevel[ 34]:             150
+vlevel[ 35]:             125
+vlevel[ 36]:             100
+vlevel[ 37]:             75
+vlevel[ 38]:             50
+record_len2:             1016
+
+=================================================
+========== Reading 32-bit field header ==========
+Vlevel_header for field: ICE_SEV
+------------------------
+32-bit version
+record_len1:             1016
+struct_id:               14144
+vlevel type              Pressure (units mb)
+vlevel[  0]:             1000
+vlevel[  1]:             975
+vlevel[  2]:             950
+vlevel[  3]:             925
+vlevel[  4]:             900
+vlevel[  5]:             875
+vlevel[  6]:             850
+vlevel[  7]:             825
+vlevel[  8]:             800
+vlevel[  9]:             775
+vlevel[ 10]:             750
+vlevel[ 11]:             725
+vlevel[ 12]:             700
+vlevel[ 13]:             675
+vlevel[ 14]:             650
+vlevel[ 15]:             625
+vlevel[ 16]:             600
+vlevel[ 17]:             575
+vlevel[ 18]:             550
+vlevel[ 19]:             525
+vlevel[ 20]:             500
+vlevel[ 21]:             475
+vlevel[ 22]:             450
+vlevel[ 23]:             425
+vlevel[ 24]:             400
+vlevel[ 25]:             375
+vlevel[ 26]:             350
+vlevel[ 27]:             325
+vlevel[ 28]:             300
+vlevel[ 29]:             275
+vlevel[ 30]:             250
+vlevel[ 31]:             225
+vlevel[ 32]:             200
+vlevel[ 33]:             175
+vlevel[ 34]:             150
+vlevel[ 35]:             125
+vlevel[ 36]:             100
+vlevel[ 37]:             75
+vlevel[ 38]:             50
+record_len2:             1016
+
+=================================================
+Read file path: /d1/cunning/data/64-bit_mdv/fip/wrf-rr/cvs-ral/debug/mdv/fip_pres/20201117/g_140000/f_00010800.mdv
+Read file path: /d1/cunning/data/64-bit_mdv/fip/wrf-rr/cvs-ral/debug/mdv/fip_pres/20201117/g_140000/f_00010800.mdv
+
+File path: /d1/cunning/data/64-bit_mdv/fip/wrf-rr/cvs-ral/debug/mdv/fip_pres/20201117/g_140000/f_00010800.mdv
+
+-------------------------------
+MDV format states
+  Internal format: FORMAT_MDV
+  Read     format: FORMAT_MDV
+  Write    format: FORMAT_NCF
+-------------------------------
+
+
+Master header
+-------------
+
+record_len1:          3408
+struct_id:            14152
+revision_number:      2
+
+time_gen:             2020/11/17 14:00:00
+user_time:            not set
+time_begin:           2020/11/17 17:00:00
+time_end:             2020/11/17 17:00:00
+time_centroid:        2020/11/17 17:00:00
+time_expire:          2020/11/17 17:00:00
+time_written:         2021/03/02 16:46:44
+epoch:                0
+forecast_time:        2020/11/17 17:00:00
+forecast_delta:       10800
+num_data_times:       1
+index_number:         0
+data_dimension:       0
+data_collection_type: Forecast
+user_data:            0
+native_vlevel_type:   Pressure (units mb)
+vlevel_type:          Pressure (units mb)
+vlevel_included:      true
+grid_orientation:     ORIENT_SN_WE
+data_ordering:        ORDER_XYZ
+n_fields:             4
+max_nx:               451
+max_ny:               337
+max_nz:               39
+n_chunks:             0
+field_hdr_offset:     1024
+vlevel_hdr_offset:    2688
+chunk_hdr_offset:     6784
+field_grids_differ:   false
+user_data_si32[0]:    0
+user_data_si32[1]:    0
+user_data_si32[2]:    0
+user_data_si32[3]:    0
+user_data_si32[4]:    0
+user_data_si32[5]:    0
+user_data_si32[6]:    0
+user_data_si32[7]:    0
+
+user_data_fl32[0]:    0
+user_data_fl32[1]:    0
+user_data_fl32[2]:    0
+user_data_fl32[3]:    0
+user_data_fl32[4]:    0
+user_data_fl32[5]:    0
+sensor_lon:           0
+sensor_lat:           0
+sensor_alt:           0
+
+data_set_info:
+Produced by FIP
+
+data_set_name:        Forecast Icing Product
+data_set_source:      
+
+record_len2:          3408
+
+
+
+Field header
+------------
+
+field_name_long:        geopotential height
+field_name:             HGT
+units:                  gpm
+transform:              none
+
+record_len1:            1352
+struct_id:              14153
+
+field_code:             7
+user_time1:             not set
+forecast_delta:         10800
+user_time2:             not set
+user_time3:             not set
+forecast_time:          2020/11/17 17:00:00
+user_time4:             not set
+nx:                     451
+ny:                     337
+nz:                     39
+proj_type:              Lambert Conformal
+encoding_type:          ENCODING_INT8 (CHAR/BYTE)
+data_element_nbytes:    1
+field_data_offset:      6788
+volume_size:            271220
+user_data_si32[0]:      0
+user_data_si32[1]:      0
+user_data_si32[2]:      0
+user_data_si32[3]:      0
+user_data_si32[4]:      0
+user_data_si32[5]:      0
+user_data_si32[6]:      0
+user_data_si32[7]:      0
+user_data_si32[8]:      0
+user_data_si32[9]:      0
+compression_type:       COMPRESSION_GZIP
+requested_compression:  COMPRESSION_NONE
+transform_type:         DATA_TRANSFORM_NONE - Depicts an area or volume in space
+scaling_type:           SCALING_DYNAMIC
+
+native_vlevel_type:     Pressure (units mb)
+vlevel_type:            Pressure (units mb)
+dz_constant:            1
+data_dimension:         3
+
+zoom_clipped:           0
+zoom_no_overlap:        0
+
+proj_origin_lon:        -95
+proj_origin_lat:        25
+proj_rotation:          0
+proj_param[0]:          8.05306e+08
+proj_param[1]:          0
+proj_param[2]:          0
+proj_param[3]:          0
+proj_param[4]:          0
+proj_param[5]:          0
+proj_param[6]:          0
+proj_param[7]:          0
+proj_param[8]:          0
+proj_param[9]:          0
+proj_param[10]:         0
+proj_param[11]:         0
+proj_param[12]:         0
+proj_param[13]:         0
+proj_param[14]:         0
+proj_param[15]:         0
+proj4_str:              
+vert_reference:         0
+
+grid_dx:                13.545
+grid_dy:                13.545
+grid_dz:                -25
+grid_minx:              -3332.1553
+grid_miny:              -588.89276
+grid_minz:              1000
+scale:                  84.2989
+bias:                   -630.026
+bad_data_value:         0
+missing_data_value:     0
+proj_rotation:          0
+user_data_fl32[0]:      0
+user_data_fl32[1]:      0
+user_data_fl32[2]:      0
+user_data_fl32[3]:      0
+min_value:              -292.83
+max_value:              20781.9
+min_value_orig_vol:     -292.83
+max_value_orig_vol:     20781.9
+record_len2:            1352
+
+
+Vlevel_header for field: HGT
+------------------------
+64-bit version
+record_len1:             17416
+struct_id:               14154
+vlevel type              Pressure (units mb)
+vlevel[  0]:             1000
+vlevel[  1]:             975
+vlevel[  2]:             950
+vlevel[  3]:             925
+vlevel[  4]:             900
+vlevel[  5]:             875
+vlevel[  6]:             850
+vlevel[  7]:             825
+vlevel[  8]:             800
+vlevel[  9]:             775
+vlevel[ 10]:             750
+vlevel[ 11]:             725
+vlevel[ 12]:             700
+vlevel[ 13]:             675
+vlevel[ 14]:             650
+vlevel[ 15]:             625
+vlevel[ 16]:             600
+vlevel[ 17]:             575
+vlevel[ 18]:             550
+vlevel[ 19]:             525
+vlevel[ 20]:             500
+vlevel[ 21]:             475
+vlevel[ 22]:             450
+vlevel[ 23]:             425
+vlevel[ 24]:             400
+vlevel[ 25]:             375
+vlevel[ 26]:             350
+vlevel[ 27]:             325
+vlevel[ 28]:             300
+vlevel[ 29]:             275
+vlevel[ 30]:             250
+vlevel[ 31]:             225
+vlevel[ 32]:             200
+vlevel[ 33]:             175
+vlevel[ 34]:             150
+vlevel[ 35]:             125
+vlevel[ 36]:             100
+vlevel[ 37]:             75
+vlevel[ 38]:             50
+record_len2:             17416
+
+Projection: Lambert Conformal
+-----------
+  Projection: PROJ_LAMBERT_CONF
+  origin_lon (deg): -95
+  origin_lat (deg): 25
+  lat1 (deg)      : 8.05306e+08
+  lat2 (deg)      : 0
+
+Grid:
+----
+  nx, ny, nz: 451, 337, 39
+  minx, miny, minz: -3332.16, -588.893, 1000
+  maxx, maxy: 2763.09, 3962.23
+  dx, dy, dz: 13.545, 13.545, -25
+  sensor_x, sensor_y, sensor_z: 0, 0, 0
+  sensor_lat, sensor_lon: 0, 0
+  proj origin latitude: 25
+  proj origin longitude: -95
+  grid origin latitude: 25
+  grid origin longitude: -95
+  minLat, minLon: nan, nan
+  maxLat, maxLon: nan, nan
+  dz_constant: false
+  x units: km
+  y units: km
+  z units: mb
+
+
+Field header
+------------
+
+field_name_long:        icing probability
+field_name:             ICE_PROB
+units:                  pot
+transform:              none
+
+record_len1:            1352
+struct_id:              14153
+
+field_code:             186
+user_time1:             not set
+forecast_delta:         10800
+user_time2:             not set
+user_time3:             not set
+forecast_time:          2020/11/17 17:00:00
+user_time4:             not set
+nx:                     451
+ny:                     337
+nz:                     39
+proj_type:              Lambert Conformal
+encoding_type:          ENCODING_INT8 (CHAR/BYTE)
+data_element_nbytes:    1
+field_data_offset:      278016
+volume_size:            591958
+user_data_si32[0]:      0
+user_data_si32[1]:      0
+user_data_si32[2]:      0
+user_data_si32[3]:      0
+user_data_si32[4]:      0
+user_data_si32[5]:      0
+user_data_si32[6]:      0
+user_data_si32[7]:      0
+user_data_si32[8]:      0
+user_data_si32[9]:      0
+compression_type:       COMPRESSION_GZIP
+requested_compression:  COMPRESSION_NONE
+transform_type:         DATA_TRANSFORM_NONE - Depicts an area or volume in space
+scaling_type:           SCALING_DYNAMIC
+
+native_vlevel_type:     Pressure (units mb)
+vlevel_type:            Pressure (units mb)
+dz_constant:            1
+data_dimension:         3
+
+zoom_clipped:           0
+zoom_no_overlap:        0
+
+proj_origin_lon:        -95
+proj_origin_lat:        25
+proj_rotation:          0
+proj_param[0]:          8.05306e+08
+proj_param[1]:          0
+proj_param[2]:          0
+proj_param[3]:          0
+proj_param[4]:          0
+proj_param[5]:          0
+proj_param[6]:          0
+proj_param[7]:          0
+proj_param[8]:          0
+proj_param[9]:          0
+proj_param[10]:         0
+proj_param[11]:         0
+proj_param[12]:         0
+proj_param[13]:         0
+proj_param[14]:         0
+proj_param[15]:         0
+proj4_str:              
+vert_reference:         0
+
+grid_dx:                13.545
+grid_dy:                13.545
+grid_dz:                -25
+grid_minx:              -3332.1553
+grid_miny:              -588.89276
+grid_minz:              1000
+scale:                  0.002964
+bias:                   -0.011856
+bad_data_value:         0
+missing_data_value:     0
+proj_rotation:          0
+user_data_fl32[0]:      0
+user_data_fl32[1]:      0
+user_data_fl32[2]:      0
+user_data_fl32[3]:      0
+min_value:              0
+max_value:              0.741
+min_value_orig_vol:     0
+max_value_orig_vol:     0.741
+record_len2:            1352
+
+
+Vlevel_header for field: ICE_PROB
+------------------------
+64-bit version
+record_len1:             17416
+struct_id:               14154
+vlevel type              Pressure (units mb)
+vlevel[  0]:             1000
+vlevel[  1]:             975
+vlevel[  2]:             950
+vlevel[  3]:             925
+vlevel[  4]:             900
+vlevel[  5]:             875
+vlevel[  6]:             850
+vlevel[  7]:             825
+vlevel[  8]:             800
+vlevel[  9]:             775
+vlevel[ 10]:             750
+vlevel[ 11]:             725
+vlevel[ 12]:             700
+vlevel[ 13]:             675
+vlevel[ 14]:             650
+vlevel[ 15]:             625
+vlevel[ 16]:             600
+vlevel[ 17]:             575
+vlevel[ 18]:             550
+vlevel[ 19]:             525
+vlevel[ 20]:             500
+vlevel[ 21]:             475
+vlevel[ 22]:             450
+vlevel[ 23]:             425
+vlevel[ 24]:             400
+vlevel[ 25]:             375
+vlevel[ 26]:             350
+vlevel[ 27]:             325
+vlevel[ 28]:             300
+vlevel[ 29]:             275
+vlevel[ 30]:             250
+vlevel[ 31]:             225
+vlevel[ 32]:             200
+vlevel[ 33]:             175
+vlevel[ 34]:             150
+vlevel[ 35]:             125
+vlevel[ 36]:             100
+vlevel[ 37]:             75
+vlevel[ 38]:             50
+record_len2:             17416
+
+Projection: Lambert Conformal
+-----------
+  Projection: PROJ_LAMBERT_CONF
+  origin_lon (deg): -95
+  origin_lat (deg): 25
+  lat1 (deg)      : 8.05306e+08
+  lat2 (deg)      : 0
+
+Grid:
+----
+  nx, ny, nz: 451, 337, 39
+  minx, miny, minz: -3332.16, -588.893, 1000
+  maxx, maxy: 2763.09, 3962.23
+  dx, dy, dz: 13.545, 13.545, -25
+  sensor_x, sensor_y, sensor_z: 0, 0, 0
+  sensor_lat, sensor_lon: 0, 0
+  proj origin latitude: 25
+  proj origin longitude: -95
+  grid origin latitude: 25
+  grid origin longitude: -95
+  minLat, minLon: nan, nan
+  maxLat, maxLon: nan, nan
+  dz_constant: false
+  x units: km
+  y units: km
+  z units: mb
+
+
+Field header
+------------
+
+field_name_long:        supercooled large droplet potential 
+field_name:             SLD
+units:                  pot
+transform:              none
+
+record_len1:            1352
+struct_id:              14153
+
+field_code:             236
+user_time1:             not set
+forecast_delta:         10800
+user_time2:             not set
+user_time3:             not set
+forecast_time:          2020/11/17 17:00:00
+user_time4:             not set
+nx:                     451
+ny:                     337
+nz:                     39
+proj_type:              Lambert Conformal
+encoding_type:          ENCODING_INT8 (CHAR/BYTE)
+data_element_nbytes:    1
+field_data_offset:      869982
+volume_size:            43432
+user_data_si32[0]:      0
+user_data_si32[1]:      0
+user_data_si32[2]:      0
+user_data_si32[3]:      0
+user_data_si32[4]:      0
+user_data_si32[5]:      0
+user_data_si32[6]:      0
+user_data_si32[7]:      0
+user_data_si32[8]:      0
+user_data_si32[9]:      0
+compression_type:       COMPRESSION_GZIP
+requested_compression:  COMPRESSION_NONE
+transform_type:         DATA_TRANSFORM_NONE - Depicts an area or volume in space
+scaling_type:           SCALING_DYNAMIC
+
+native_vlevel_type:     Pressure (units mb)
+vlevel_type:            Pressure (units mb)
+dz_constant:            1
+data_dimension:         3
+
+zoom_clipped:           0
+zoom_no_overlap:        0
+
+proj_origin_lon:        -95
+proj_origin_lat:        25
+proj_rotation:          0
+proj_param[0]:          8.05306e+08
+proj_param[1]:          0
+proj_param[2]:          0
+proj_param[3]:          0
+proj_param[4]:          0
+proj_param[5]:          0
+proj_param[6]:          0
+proj_param[7]:          0
+proj_param[8]:          0
+proj_param[9]:          0
+proj_param[10]:         0
+proj_param[11]:         0
+proj_param[12]:         0
+proj_param[13]:         0
+proj_param[14]:         0
+proj_param[15]:         0
+proj4_str:              
+vert_reference:         0
+
+grid_dx:                13.545
+grid_dy:                13.545
+grid_dz:                -25
+grid_minx:              -3332.1553
+grid_miny:              -588.89276
+grid_minz:              1000
+scale:                  0.004
+bias:                   -0.016
+bad_data_value:         0
+missing_data_value:     0
+proj_rotation:          0
+user_data_fl32[0]:      0
+user_data_fl32[1]:      0
+user_data_fl32[2]:      0
+user_data_fl32[3]:      0
+min_value:              0
+max_value:              1
+min_value_orig_vol:     0
+max_value_orig_vol:     1
+record_len2:            1352
+
+
+Vlevel_header for field: SLD
+------------------------
+64-bit version
+record_len1:             17416
+struct_id:               14154
+vlevel type              Pressure (units mb)
+vlevel[  0]:             1000
+vlevel[  1]:             975
+vlevel[  2]:             950
+vlevel[  3]:             925
+vlevel[  4]:             900
+vlevel[  5]:             875
+vlevel[  6]:             850
+vlevel[  7]:             825
+vlevel[  8]:             800
+vlevel[  9]:             775
+vlevel[ 10]:             750
+vlevel[ 11]:             725
+vlevel[ 12]:             700
+vlevel[ 13]:             675
+vlevel[ 14]:             650
+vlevel[ 15]:             625
+vlevel[ 16]:             600
+vlevel[ 17]:             575
+vlevel[ 18]:             550
+vlevel[ 19]:             525
+vlevel[ 20]:             500
+vlevel[ 21]:             475
+vlevel[ 22]:             450
+vlevel[ 23]:             425
+vlevel[ 24]:             400
+vlevel[ 25]:             375
+vlevel[ 26]:             350
+vlevel[ 27]:             325
+vlevel[ 28]:             300
+vlevel[ 29]:             275
+vlevel[ 30]:             250
+vlevel[ 31]:             225
+vlevel[ 32]:             200
+vlevel[ 33]:             175
+vlevel[ 34]:             150
+vlevel[ 35]:             125
+vlevel[ 36]:             100
+vlevel[ 37]:             75
+vlevel[ 38]:             50
+record_len2:             17416
+
+Projection: Lambert Conformal
+-----------
+  Projection: PROJ_LAMBERT_CONF
+  origin_lon (deg): -95
+  origin_lat (deg): 25
+  lat1 (deg)      : 8.05306e+08
+  lat2 (deg)      : 0
+
+Grid:
+----
+  nx, ny, nz: 451, 337, 39
+  minx, miny, minz: -3332.16, -588.893, 1000
+  maxx, maxy: 2763.09, 3962.23
+  dx, dy, dz: 13.545, 13.545, -25
+  sensor_x, sensor_y, sensor_z: 0, 0, 0
+  sensor_lat, sensor_lon: 0, 0
+  proj origin latitude: 25
+  proj origin longitude: -95
+  grid origin latitude: 25
+  grid origin longitude: -95
+  minLat, minLon: nan, nan
+  maxLat, maxLon: nan, nan
+  dz_constant: false
+  x units: km
+  y units: km
+  z units: mb
+
+
+Field header
+------------
+
+field_name_long:        Icing Severity
+field_name:             ICE_SEV
+units:                  N/A
+transform:              none
+
+record_len1:            1352
+struct_id:              14153
+
+field_code:             0
+user_time1:             not set
+forecast_delta:         10800
+user_time2:             not set
+user_time3:             not set
+forecast_time:          2020/11/17 17:00:00
+user_time4:             not set
+nx:                     451
+ny:                     337
+nz:                     39
+proj_type:              Lambert Conformal
+encoding_type:          ENCODING_INT8 (CHAR/BYTE)
+data_element_nbytes:    1
+field_data_offset:      913422
+volume_size:            578713
+user_data_si32[0]:      0
+user_data_si32[1]:      0
+user_data_si32[2]:      0
+user_data_si32[3]:      0
+user_data_si32[4]:      0
+user_data_si32[5]:      0
+user_data_si32[6]:      0
+user_data_si32[7]:      0
+user_data_si32[8]:      0
+user_data_si32[9]:      0
+compression_type:       COMPRESSION_GZIP
+requested_compression:  COMPRESSION_NONE
+transform_type:         DATA_TRANSFORM_NONE - Depicts an area or volume in space
+scaling_type:           SCALING_DYNAMIC
+
+native_vlevel_type:     Pressure (units mb)
+vlevel_type:            Pressure (units mb)
+dz_constant:            1
+data_dimension:         3
+
+zoom_clipped:           0
+zoom_no_overlap:        0
+
+proj_origin_lon:        -95
+proj_origin_lat:        25
+proj_rotation:          0
+proj_param[0]:          8.05306e+08
+proj_param[1]:          0
+proj_param[2]:          0
+proj_param[3]:          0
+proj_param[4]:          0
+proj_param[5]:          0
+proj_param[6]:          0
+proj_param[7]:          0
+proj_param[8]:          0
+proj_param[9]:          0
+proj_param[10]:         0
+proj_param[11]:         0
+proj_param[12]:         0
+proj_param[13]:         0
+proj_param[14]:         0
+proj_param[15]:         0
+proj4_str:              
+vert_reference:         0
+
+grid_dx:                13.545
+grid_dy:                13.545
+grid_dz:                -25
+grid_minx:              -3332.1553
+grid_miny:              -588.89276
+grid_minz:              1000
+scale:                  0.00385742
+bias:                   -0.0154297
+bad_data_value:         0
+missing_data_value:     0
+proj_rotation:          0
+user_data_fl32[0]:      0
+user_data_fl32[1]:      0
+user_data_fl32[2]:      0
+user_data_fl32[3]:      0
+min_value:              0
+max_value:              0.964354
+min_value_orig_vol:     0
+max_value_orig_vol:     0.964354
+record_len2:            1352
+
+
+Vlevel_header for field: ICE_SEV
+------------------------
+64-bit version
+record_len1:             17416
+struct_id:               14154
+vlevel type              Pressure (units mb)
+vlevel[  0]:             1000
+vlevel[  1]:             975
+vlevel[  2]:             950
+vlevel[  3]:             925
+vlevel[  4]:             900
+vlevel[  5]:             875
+vlevel[  6]:             850
+vlevel[  7]:             825
+vlevel[  8]:             800
+vlevel[  9]:             775
+vlevel[ 10]:             750
+vlevel[ 11]:             725
+vlevel[ 12]:             700
+vlevel[ 13]:             675
+vlevel[ 14]:             650
+vlevel[ 15]:             625
+vlevel[ 16]:             600
+vlevel[ 17]:             575
+vlevel[ 18]:             550
+vlevel[ 19]:             525
+vlevel[ 20]:             500
+vlevel[ 21]:             475
+vlevel[ 22]:             450
+vlevel[ 23]:             425
+vlevel[ 24]:             400
+vlevel[ 25]:             375
+vlevel[ 26]:             350
+vlevel[ 27]:             325
+vlevel[ 28]:             300
+vlevel[ 29]:             275
+vlevel[ 30]:             250
+vlevel[ 31]:             225
+vlevel[ 32]:             200
+vlevel[ 33]:             175
+vlevel[ 34]:             150
+vlevel[ 35]:             125
+vlevel[ 36]:             100
+vlevel[ 37]:             75
+vlevel[ 38]:             50
+record_len2:             17416
+
+Projection: Lambert Conformal
+-----------
+  Projection: PROJ_LAMBERT_CONF
+  origin_lon (deg): -95
+  origin_lat (deg): 25
+  lat1 (deg)      : 8.05306e+08
+  lat2 (deg)      : 0
+
+Grid:
+----
+  nx, ny, nz: 451, 337, 39
+  minx, miny, minz: -3332.16, -588.893, 1000
+  maxx, maxy: 2763.09, 3962.23
+  dx, dy, dz: 13.545, 13.545, -25
+  sensor_x, sensor_y, sensor_z: 0, 0, 0
+  sensor_lat, sensor_lon: 0, 0
+  proj origin latitude: 25
+  proj origin longitude: -95
+  grid origin latitude: 25
+  grid origin longitude: -95
+  minLat, minLon: nan, nan
+  maxLat, maxLon: nan, nan
+  dz_constant: false
+  x units: km
+  y units: km
+  z units: mb
+

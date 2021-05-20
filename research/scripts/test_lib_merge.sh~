@@ -1,0 +1,242 @@
+#!/usr/bin/env bash
+
+# simple script to build the libraries and applications for CIP and FIP for the MDV 64-bit test
+
+
+
+
+
+# argument #1 is build type
+if [ -z "$1" ]; then
+  echo "usage: build_apps.sh [debug|opt] [lrose|cvs]"
+  echo "need to supply build type: debug or opt"
+  echo "need to supply mdv source: lrose or cvs"
+  exit 1
+fi
+
+if [ "$1" = "debug" ]; then
+  build_type=debug
+elif [ "$1" = "opt" ]; then
+  build_type=opt
+else
+  echo "build type is wrong"
+  echo "usage: build_apps.sh [debug|opt]"
+  exit 1
+fi
+
+#argument #2 is MDV source
+if [ -z "$2" ]; then
+  echo "usage: build_apps.sh [debug|opt] [lrose|cvs]"
+  echo "need to supply MDV source: lrose or cvs"
+  exit 1
+fi
+
+mdv_source_lrose="lrose-core"
+mdv_source_cvs="cvs-ral"
+if [ "$2" = "lrose" ]; then
+  mdv_source=$mdv_source_lrose
+elif [ "$2" = "cvs" ]; then
+  mdv_source=$mdv_source_cvs
+else
+  echo 'MDV source is wrong'
+  echo 'usage: build_apps.sh [debug|opt] [lrose|cvs]'
+  exit 1
+fi
+
+# paths to source
+cvs_lib_src="/home/cunning/cvs/libs"
+git_lib_src="/home/cunning/git/MDV_64bit"
+
+# build commands
+lib_build="make clean_all $build_type install"
+app_build="make clean_all $build_type install"
+
+
+# remove libs and apps before new build
+/bin/rm -r "$RAP_BIN_DIR"
+/bin/rm -r "$RAP_LIB_DIR"
+/bin/rm -r "$RAP_INC_DIR"
+
+cd $cvs_lib_src/dataport || exit
+make install_include || exit
+cd $cvs_lib_src/didss || exit
+make install_include || exit
+cd $cvs_lib_src/euclid || exit
+make install_include || exit
+cd $cvs_lib_src/grib2 || exit
+make install_include || exit
+cd $cvs_lib_src/physics || exit
+make  install_include || exit
+cd $cvs_lib_src/Radx || exit
+make  install_include || exit
+cd $cvs_lib_src/radar || exit
+make install_include || exit
+cd $cvs_lib_src/rapmath || exit
+make install_include || exit
+cd $cvs_lib_src/symprod || exit
+make install_include || exit
+cd $cvs_lib_src/tdrp || exit
+make install_include || exit
+
+cd /home/cunning/git/ral-ifi-libs/icing || exit
+make  install_include || exit
+cd /home/cunning/git/ral-goesR/libs/GoesRNc  || exit
+make install_include || exit
+
+if [ "$mdv_source" = "$mdv_source_lrose" ]; then
+  cd $git_lib_src/Fmq || exit
+  make install_include || exit
+  cd $git_lib_src/dsdata || exit
+  make install_include || exit
+  cd $git_lib_src/toolsa || exit
+  make install_include || exit
+  cd $git_lib_src/rapformats || exit
+  make install_include || exit
+  cd $git_lib_src/Ncxx || exit
+  make install_include || exit
+  cd $git_lib_src/Mdv || exit
+  make install_include || exit
+  cd $git_lib_src/Spdb || exit
+  make install_include || exit
+  cd $git_lib_src/dsserver  || exit
+  make install_include || exit
+else
+  cd $cvs_lib_src/Fmq || exit
+  make install_include || exit
+  cd $cvs_lib_src/dsdata || exit
+  make install_include || exit
+  cd $cvs_lib_src/toolsa || exit
+  make install_include || exit
+  cd $cvs_lib_src/rapformats || exit
+  make install_include || exit
+  cd $cvs_lib_src/Ncxx || exit
+  make install_include || exit
+  cd $cvs_lib_src/Mdv || exit
+  make install_include || exit
+  cd $cvs_lib_src/Spdb || exit
+  make install_include || exit
+  cd $cvs_lib_src/dsserver  || exit
+  make install_include || exit
+fi
+
+
+
+
+cd $cvs_lib_src/dataport || exit
+$lib_build || exit
+cd $cvs_lib_src/didss || exit
+$lib_build || exit
+cd $cvs_lib_src/euclid || exit
+$lib_build || exit
+cd $cvs_lib_src/grib2 || exit
+$lib_build || exit
+cd $cvs_lib_src/physics || exit
+$lib_build || exit
+cd $cvs_lib_src/Radx || exit
+$lib_build || exit
+cd $cvs_lib_src/radar || exit
+$lib_build || exit
+cd $cvs_lib_src/rapmath || exit
+$lib_build || exit
+cd $cvs_lib_src/symprod || exit
+$lib_build || exit
+cd $cvs_lib_src/tdrp || exit
+$lib_build || exit
+
+cd /home/cunning/git/ral-ifi-libs/icing || exit
+$lib_build || exit
+cd /home/cunning/git/ral-goesR/libs/GoesRNc  || exit
+$lib_build || exit
+
+if [ "$mdv_source" = "$mdv_source_lrose" ]; then
+  cd $git_lib_src/Fmq || exit
+  $lib_build || exit
+  cd $git_lib_src/dsdata || exit
+  $lib_build || exit
+  cd $git_lib_src/toolsa || exit
+  $lib_build || exit
+  cd $git_lib_src/rapformats || exit
+  $lib_build || exit
+  cd $git_lib_src/Ncxx || exit
+  $lib_build || exit
+  cd $git_lib_src/Mdv || exit
+  $lib_build || exit
+  cd $git_lib_src/Spdb || exit
+  $lib_build || exit
+  cd $git_lib_src/dsserver  || exit
+  $lib_build || exit
+else
+  cd $cvs_lib_src/Fmq || exit
+  $lib_build || exit
+  cd $cvs_lib_src/dsdata || exit
+  $lib_build || exit
+  cd $cvs_lib_src/toolsa || exit
+  $lib_build || exit
+  cd $cvs_lib_src/rapformats || exit
+  $lib_build || exit
+  cd $cvs_lib_src/Ncxx || exit
+  $lib_build || exit
+  cd $cvs_lib_src/Mdv || exit
+  $lib_build || exit
+  cd $cvs_lib_src/Spdb || exit
+  $lib_build || exit
+  cd $cvs_lib_src/dsserver  || exit
+  $lib_build || exit
+fi
+
+# build and install tdrp_gen, so it is available for building other applications
+cd /home/cunning/cvs/apps/tdrp/src || exit
+$app_build || exit
+
+
+if [ "$mdv_source" = "$mdv_source_lrose" ]; then
+  cd /home/cunning/git/MDV_64bit/PrintMdv || exit
+else
+  cd /home/cunning/cvs/apps/mdv_utils/src/PrintMdv || exit
+fi
+$app_build || exit
+
+
+
+
+cd /home/cunning/cvs/apps/awc/src/LtgSpdb2Mdv || exit
+$app_build || exit
+cd /home/cunning/cvs/apps/ingest/src/Grib2toMdv || exit
+$app_build || exit
+cd /home/cunning/cvs/apps/ingest/src/Ltg2Spdb || exit
+$app_build || exit
+cd /home/cunning/cvs/apps/rucApps/src/Hybrid2Pressure || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/MdvDeriveModel || exit
+$app_build || exit
+cd /home/cunning/git/ral-goesR/apps/GoesRnetCDF2Mdv  || exit
+$app_build || exit
+cd /home/cunning/cvs/apps/mdv_utils/src/MdvCombine || exit
+$app_build || exit
+cd /home/cunning/cvs/apps/mdv_utils/src/MdvBlender || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/MetarCsv2Spdb || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/MetarMapper || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/createModelMetars || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/PirepCsv2Spdb || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/satDerive || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/PirepMapper || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/CipAlgo || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/fip_algo || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/pressure2flight || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi-apps/IcingCategory || exit
+$app_build || exit
+cd /home/cunning/cvs/apps/mdv_utils/src/MdvtoGrib2 || exit
+$app_build || exit
+
+ls -l "$RAP_LIB_DIR"
+ls -l "$RAP_BIN_DIR"

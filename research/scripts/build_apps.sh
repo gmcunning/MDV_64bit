@@ -41,7 +41,9 @@ fi
 
 # paths to source
 cvs_lib_src="/home/cunning/cvs/libs"
-git_lib_src="/home/cunning/git/MDV_64bit"
+git_ral_ds_io_src="/home/cunning/git/ral-libs-ds-io"
+git_ral_ds_tools_src="/home/cunning/git/ral-libs-ds-tools"
+git_ral_ds_infra_src="/home/cunning/git/ral-libs-ds-infra"
 
 # build commands
 lib_build="make clean_all $build_type install"
@@ -74,27 +76,27 @@ make install_include || exit
 cd $cvs_lib_src/tdrp || exit
 make install_include || exit
 
-cd /home/cunning/git/ral-ifi-libs/icing || exit
+cd /home/cunning/git/ral-ifi/libs/icing || exit
 make  install_include || exit
 cd /home/cunning/git/ral-goesR/libs/GoesRNc  || exit
 make install_include || exit
 
 if [ "$mdv_source" = "$mdv_source_lrose" ]; then
-  cd $git_lib_src/Fmq || exit
+  cd $git_ral_ds_infra_src/Fmq || exit
   make install_include || exit
-  cd $git_lib_src/dsdata || exit
+  cd $git_ral_ds_infra_src/dsdata || exit
   make install_include || exit
-  cd $git_lib_src/toolsa || exit
+  cd $git_ral_ds_tools_src/toolsa || exit
   make install_include || exit
-  cd $git_lib_src/rapformats || exit
+  cd $git_ral_ds_io_src/rapformats || exit
   make install_include || exit
-  cd $git_lib_src/Ncxx || exit
+  cd $git_ral_ds_io_src/Ncxx || exit
   make install_include || exit
-  cd $git_lib_src/Mdv || exit
+  cd $git_ral_ds_io_src/Mdv || exit
   make install_include || exit
-  cd $git_lib_src/Spdb || exit
+  cd $git_ral_ds_io_src/Spdb || exit
   make install_include || exit
-  cd $git_lib_src/dsserver  || exit
+  cd $git_ral_ds_infra_src/dsserver  || exit
   make install_include || exit
 else
   cd $cvs_lib_src/Fmq || exit
@@ -139,27 +141,27 @@ $lib_build || exit
 cd $cvs_lib_src/tdrp || exit
 $lib_build || exit
 
-cd /home/cunning/git/ral-ifi-libs/icing || exit
+cd /home/cunning/git/ral-ifi/libs/icing || exit
 $lib_build || exit
 cd /home/cunning/git/ral-goesR/libs/GoesRNc  || exit
 $lib_build || exit
 
 if [ "$mdv_source" = "$mdv_source_lrose" ]; then
-  cd $git_lib_src/Fmq || exit
+  cd $git_ral_ds_infra_src/Fmq || exit
   $lib_build || exit
-  cd $git_lib_src/dsdata || exit
+  cd $git_ral_ds_infra_src/dsdata || exit
   $lib_build || exit
-  cd $git_lib_src/toolsa || exit
+  cd $git_ral_ds_tools_src/toolsa || exit
   $lib_build || exit
-  cd $git_lib_src/rapformats || exit
+  cd $git_ral_ds_io_src/rapformats || exit
   $lib_build || exit
-  cd $git_lib_src/Ncxx || exit
+  cd $git_ral_ds_io_src/Ncxx || exit
   $lib_build || exit
-  cd $git_lib_src/Mdv || exit
+  cd $git_ral_ds_io_src/Mdv || exit
   $lib_build || exit
-  cd $git_lib_src/Spdb || exit
+  cd $git_ral_ds_io_src/Spdb || exit
   $lib_build || exit
-  cd $git_lib_src/dsserver  || exit
+  cd $git_ral_ds_infra_src/dsserver  || exit
   $lib_build || exit
 else
   cd $cvs_lib_src/Fmq || exit
@@ -203,33 +205,37 @@ cd /home/cunning/cvs/apps/ingest/src/Ltg2Spdb || exit
 $app_build || exit
 cd /home/cunning/cvs/apps/rucApps/src/Hybrid2Pressure || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/MdvDeriveModel || exit
+cd /home/cunning/git/ral-ifi/apps/MdvDeriveModel || exit
 $app_build || exit
 cd /home/cunning/git/ral-goesR/apps/GoesRnetCDF2Mdv  || exit
 $app_build || exit
 cd /home/cunning/cvs/apps/mdv_utils/src/MdvCombine || exit
 $app_build || exit
+#cd /home/cunning/cvs/apps/mdv_utils/src/Mdv2NetCDF || exit
+#$app_build || exit
 cd /home/cunning/cvs/apps/mdv_utils/src/MdvBlender || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/MetarCsv2Spdb || exit
+cd /home/cunning/git/ral-ifi/apps/MetarCsv2Spdb || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/MetarMapper || exit
+cd /home/cunning/git/ral-ifi/apps/MetarMapper || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/createModelMetars || exit
+cd /home/cunning/git/ral-ifi/apps/createModelMetars || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/PirepCsv2Spdb || exit
+cd /home/cunning/git/ral-ifi/apps/PirepCsv2Spdb || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/satDerive || exit
+cd /home/cunning/git/ral-ifi/apps/satDerive || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/PirepMapper || exit
+cd /home/cunning/git/ral-ifi/apps/PirepMapper || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/CipAlgo || exit
+cd /home/cunning/git/ral-ifi/apps/CipAlgo || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/fip_algo || exit
+cd /home/cunning/git/ral-ifi/apps/fip_algo || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/pressure2flight || exit
+cd /home/cunning/git/ral-ifi/apps/pressure2flight || exit
 $app_build || exit
-cd /home/cunning/git/ral-ifi-apps/IcingCategory || exit
+cd /home/cunning/git/ral-ifi/apps/IcingCategory || exit
+$app_build || exit
+cd /home/cunning/git/ral-ifi/apps/MrmsRegrid || exit
 $app_build || exit
 cd /home/cunning/cvs/apps/mdv_utils/src/MdvtoGrib2 || exit
 $app_build || exit

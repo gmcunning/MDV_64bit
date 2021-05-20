@@ -3,7 +3,7 @@
 # simple script to run the FIP process chain for the MDV 64-bit research
 
 # this is a usage statement
-general_usage="usage: build_apps.sh [debug|opt] [lrose|cvs] [hrrr|wrf-rr]"
+general_usage="usage: run_fip.sh [debug|opt] [lrose|cvs] [hrrr|wrf-rr]"
 
 # argument #1 is build type
 if [ -z "$1" ]; then
@@ -61,6 +61,7 @@ elif [ "$3" = "wrf-rr" ]; then
   model_type=$model_type_wrfrr
 else
   echo "$general_usage"
+  echo model type is $3
   echo "Model type is wrong. Options: [hrrr|wrf-rr]"
   exit 1
 fi
@@ -107,9 +108,9 @@ h2p_infile=$model_mdv_dir/$rel_path
 h2p_param=$param_dir/Hybrid2Pressure.test
 h2p_app=$RAP_BIN_DIR/Hybrid2Pressure
 
-m2m_infile=$pres_model_mdv_dir/$rel_path
-m2m_param=$param_dir/MdvDeriveModel.test
-m2m_app=$RAP_BIN_DIR/MdvDeriveModel
+mdm_infile=$pres_model_mdv_dir/$rel_path
+mdm_param=$param_dir/MdvDeriveModel.test
+mdm_app=$RAP_BIN_DIR/MdvDeriveModel
 
 fa_infile=$derv_model_mdv_dir/$rel_path
 fa_param=$param_dir/fip_algo.test
@@ -127,6 +128,10 @@ m2g_infile=$fip_cat_mdv_dir/$rel_path
 m2g_parm=$param_dir/MdvtoGrib2.test
 m2g_app=$RAP_BIN_DIR/MdvtoGrib2
 
+m2n_infile=$fip_pres_mdv_dir/$rel_path
+m2n_param=$param_dir/Mdv2NetCDF.test
+m2n_app=$RAP_BIN_DIR/Mdv2NetCDF
+
 # run Grib2toMdv
 $g2m_app -params "$g2m_param" -f $g2m_infile
 
@@ -134,7 +139,7 @@ $g2m_app -params "$g2m_param" -f $g2m_infile
 $h2p_app -params "$h2p_param" -if $h2p_infile
 
 # run MdvDeriveModel
-$m2m_app -params "$m2m_param" -if $m2m_infile
+$mdm_app -params "$mdm_param" -if $mdm_infile
 
 # run fip_algo
 $fa_app  -params "$fa_param" -if $fa_infile
@@ -147,3 +152,10 @@ $ic_app -params "$ic_param" -if $ic_infile
 
 # run MdvtoGrib2
 $m2g_app -params "$m2g_parm" -file $m2g_infile
+
+# run Mdv2NetCDF if mdv source is ral-cvs
+if [ $mdv_source = $mdv_source_cvs ]; then
+  echo $m2n_app -params "$m2n_param" -f $m2n_infile
+
+  $m2n_app -params "$m2n_param" -f $m2n_infile
+fi

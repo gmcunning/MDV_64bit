@@ -1,0 +1,620 @@
+/**********************************************************************
+ * TDRP params for ./fip_algo
+ **********************************************************************/
+
+//======================================================================
+//
+// Program name: fip_algo.
+//
+// ffip_algo is the Forecast Icing Potential (FIP) algorithm.
+//
+//======================================================================
+ 
+//======================================================================
+//
+// DEBUGGING PARAMETERS.
+//
+// Parameters controlling debug outputs.
+//
+//======================================================================
+ 
+///////////// debug_mode //////////////////////////////
+//
+// Debug option.
+// The options are DEBUG_OFF, DEBUG_NORM and DEBUG_VERBOSE. If set, 
+//   debug messages will be printed appropriately.
+//
+// Type: enum
+// Options:
+//     DEBUG_OFF
+//     DEBUG_NORM
+//     DEBUG_VERBOSE
+//
+
+debug_mode = DEBUG_NORM;
+
+//======================================================================
+//
+// PROCESS PARAMETERS.
+//
+//======================================================================
+ 
+///////////// instance ////////////////////////////////
+//
+// Process instance.
+// Used for registration with procmap.
+// Type: string
+//
+
+instance = "wrf-rr-ak";
+
+///////////// run_mode ////////////////////////////////
+//
+// Operating mode.
+// If set to ARCHIVE, -start and -end MUST be included on the command 
+//   line. If set to GRIDPOINT a file must be specified on the command 
+//   line with the -if option.
+//
+// Type: enum
+// Options:
+//     REALTIME
+//     ARCHIVE
+//     FILELIST
+//     GRIDPOINT
+//
+
+run_mode = REALTIME;
+
+//======================================================================
+//
+// PROCESS I/O PARAMETERS.
+//
+// Parameters describing the input and output locations.
+//
+//======================================================================
+
+///////////// trigger_url /////////////////////////////
+//
+// Trigger URL.
+//
+// This URL is the trigger source when operating in realtime mode. If
+//   trigger_url is an
+// empty string then the application will use model_input_url for the
+//   trigger.
+//
+//
+// Type: string
+//
+
+trigger_url = "mdvp:://localhost::$(RAP_DATA_DIR)/mdv/model/derived";
+
+///////////// model_input_url /////////////////////////
+//
+// NWP Model Input URL.
+//
+// This URL is the source of NWP model fields that appear in raw model
+//   file.
+//
+//
+// Type: string
+//
+
+model_input_url = "mdvp:://localhost::$(RAP_DATA_DIR)/mdv/model/wrf-rr-ak";
+
+///////////// derived_model_url ///////////////////////
+//
+// Derived NWP Model Input URL.
+//
+// This URL is the source of derived NWP model fields. If
+//   derived_model_input_url is an
+// empty string then the application will look for derived fields in
+//   model_input_url.
+//
+//
+// Type: string
+//
+
+derived_model_url = "mdvp:://localhost::$(RAP_DATA_DIR)/mdv/model/derived";
+
+///////////// max_valid_age ///////////////////////////
+//
+// Input URL maximum valid age in seconds.
+// Type: int
+//
+
+max_valid_age = 1800;
+
+///////////// write_ldata /////////////////////////////
+//
+// Flag to turn on writing ldata information.
+// The default is true.
+// Type: boolean
+//
+
+write_ldata = TRUE;
+
+///////////// write_as_forecast ///////////////////////
+//
+// Flag to turn on writing files out in the RAL forecast directory 
+//   structure.
+// The default is false.
+// Type: boolean
+//
+
+write_as_forecast = TRUE;
+
+///////////// output_url //////////////////////////////
+//
+// Output URL.
+// Type: string
+//
+
+output_url = "$(FIP_PRES_MDV_DIR)";
+
+///////////// topography_url //////////////////////////
+//
+// Topography URL.
+// Type: string
+//
+
+topography_url = "$(TOPO_FILE)";
+
+//======================================================================
+//
+// Input field descriptions.
+//
+// name          description            GRIB Name  GRIB num  units
+// height      Height                     HGT          7      gpm
+// pres        Pressure                   PRES         1      Pa
+// vert_vel    Vertical velocity          VVEL        39      Pa/s
+// cw_mr       Cloud water mixing ratio   CLWMR      153      kg/kg
+// rw_mr       Rain water mixing ratio    RWMR       170      kg/kg
+// icing_mr    Icing mixing ratio         ICMR       178      kg/kg
+// snow_mr     Snow mixing ratio          SNMR       171      kg/kg
+// graupel_mr  Graupel mixing ratio       GRMR       179      kg/kg
+// ncpcp       Large scale precipitation  NCPCP       62      kg/m^2
+// acpcp       Convective precipitation   ACPCP       63      kg/m^2
+// wvmr        Water vapor mixing ratio   MIXR        53      kg/kg
+// vpot        Virtual potential temp     VPTMP      189      K
+// temp        Temperature                TEMP        11      K
+// spc_hmdy    Specific humidity          SPFH        51      kg/kg.
+//
+//======================================================================
+ 
+
+///////////// input_field_names ///////////////////////
+//
+// List of NWP model input fields represented by their MDV field names.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string height;
+//      string pressure;
+//      string vertical_velocity;
+//      string temperature;
+//      string rain_water_mixing_ratio;
+//      string cape;
+//      string cin;
+//   }
+//
+//
+
+input_field_names = {
+  height = "HGT",
+  pressure = "PRES",
+  vertical_velocity = "VVEL",
+  temperature = "TMP",
+  rain_water_mixing_ratio = "RWMR",
+  cape = "CAPE",
+  cin = "CIN"
+};
+
+///////////// derived_field_names /////////////////////
+//
+// List of derived NWP model fields represented by their MDV field
+//   names.
+//
+//
+// Type: struct
+//   typedef struct {
+//      string wet_bulb_temperature;
+//      string equiv_potential_temperature;
+//      string relative_humidity;
+//      string liquid_condensate;
+//      string ice_condensate;
+//      string precip_condensate;
+//      string super_cooled_liquid_water;
+//      string model_precipitation;
+//      string convective_precipitation;
+//      string total_water_path;
+//      string lifted_index;
+//      string k_index;
+//      string total_totals;
+//   }
+//
+//
+
+derived_field_names = {
+  wet_bulb_temperature = "WET_BULB_TEMP",
+  equiv_potential_temperature = "THETA_E",
+  relative_humidity = "RH",
+  liquid_condensate = "LIQ_COND",
+  ice_condensate = "ICE_COND",
+  precip_condensate = "PRECIP_COND",
+  super_cooled_liquid_water = "SLW",
+  model_precipitation = "MODEL_PRECIP",
+  convective_precipitation = "ACPCP",
+  total_water_path = "TOT_WATER_PATH",
+  lifted_index = "LIFTED_INDEX",
+  k_index = "K_INDEX",
+  total_totals = "TOTAL_TOTALS"
+};
+
+
+///////////// vertical_grid_type //////////////////////
+//
+// Type of vertical grid of the model.
+// The only supported vertical grid types are VERTICAL_GRID_PRESSURE and 
+//   VERTICAL_GRID_HYBRID.
+//
+// Type: enum
+// Options:
+//     VERTICAL_GRID_PRESSURE
+//     VERTICAL_GRID_HYBRID
+//
+
+vertical_grid_type = VERTICAL_GRID_PRESSURE;
+
+//======================================================================
+//
+// PROCESS I/O DIAGNOSTICS.
+//
+// Parameters describing the output location of process diagnostics.
+//
+//======================================================================
+ 
+///////////// diagnostic_mode /////////////////////////
+//
+// diagnostic flag.
+// Diagnostic flag.
+// Type: boolean
+//
+
+diagnostic_mode = FALSE;
+
+///////////// add_input_fields ////////////////////////
+//
+// flag to indicate that model inputs are requested to to be included in 
+//   the diagnostic output.
+// Type: boolean
+//
+
+add_input_fields = TRUE;
+
+///////////// write_precip_types //////////////////////
+//
+// flag to turn on writng of precip. type fields.
+// Type: boolean
+//
+
+write_precip_types = TRUE;
+
+///////////// write_cloud_layer ///////////////////////
+//
+// flag to turn on writng of cloud layer fields.
+// Type: boolean
+//
+
+write_cloud_layer = TRUE;
+
+///////////// write_icing /////////////////////////////
+//
+// flag to turn on writng of icing fields.
+// Type: boolean
+//
+
+write_icing = TRUE;
+
+///////////// write_severity //////////////////////////
+//
+// flag to turn on writng of severity fields.
+// Type: boolean
+//
+
+write_severity = TRUE;
+
+///////////// diagnostic_url //////////////////////////
+//
+// Diagnostic URL.
+// URL to use for diagnostic results.
+// Type: string
+//
+
+diagnostic_url = "mdv/fip/diagnostic";
+
+//======================================================================
+//
+// PRECIPITATION TYPE ALGORITHM PARAMETERS.
+//
+// Parameters controling the calculation of precipation type atthe 
+//   surface.
+//
+//======================================================================
+ 
+///////////// precip_type_algo ////////////////////////
+//
+// Parameters for the precipitaion type algorithm.
+//
+// Type: struct
+//   typedef struct {
+//      float min_conv_prcp;
+//      float min_cape;
+//      float min_cin;
+//      float max_lifted_index;
+//      float min_pressure;
+//      float min_wet_bulb_temp;
+//      float max_wet_bulb_temp;
+//      float cloud_top_pressure;
+//      float cloud_top_altitude;
+//      float cloud_top_relative_humidity;
+//      float altitude;
+//      float cold_temperature;
+//      float tcold_area;
+//      float wet_buld_area;
+//      int surface_search_top;
+//      float min_precip_amount;
+//   }
+//
+//
+
+precip_type_algo = {
+    min_conv_prcp = 1,
+    min_cape = 1000,
+    min_cin = -100,
+    max_lifted_index = 0,
+    min_pressure = 15000,
+    min_wet_bulb_temp = 200,
+    max_wet_bulb_temp = 1000,
+    cloud_top_pressure = 30000,
+    cloud_top_altitude = 700,
+    cloud_top_relative_humidity = 90,
+    altitude = 1500,
+    cold_temperature = 265.15,
+    tcold_area = 350,
+    wet_buld_area = -2500,
+    surface_search_top = 2,
+    min_precip_amount = 0.2
+};
+
+//======================================================================
+//
+// CLOUD LAYERS ALGORITHM PARAMETERS.
+//
+// Parameters controling the calculation of cloud layers in the model 
+//   data.
+//
+//======================================================================
+ 
+///////////// cloud_layers_algo ///////////////////////
+//
+// Parameters for the cloud layers algorithm.
+//
+// Type: struct
+//   typedef struct {
+//      float min_base_altitude;
+//      float min_base_relative_humidity;
+//      float min_top_altitude;
+//      float min_top_relative_humidity;
+//      float min_ctz_map_val;
+//      float min_layer_relative_humidity;
+//      float outside_cloud_relative_humidity;
+//      float inside_cloud_relative_humidity;
+//      int max_dry_levels;
+//      float max_dendritic_temperature;
+//      float min_dendritic_temperature;
+//      float delta_thetaE;
+//      string ctz_map_weights;
+//      string delta_theta_e_map;
+//      string delta_rel_humidity_map;
+//      string delta_vert_velocity_map;
+//      string dq_rel_humidity_map;
+//      string dq_delta_theta_e_map;
+//   }
+//
+//
+
+cloud_layers_algo = {
+    min_base_altitude = 333,
+    min_base_relative_humidity = 80,
+    min_top_altitude = 500,
+    min_top_relative_humidity = 75,
+    min_ctz_map_val = 0.2,
+    min_layer_relative_humidity = 70,
+    outside_cloud_relative_humidity = 50,
+    inside_cloud_relative_humidity = 70,
+    max_dry_levels = 3,
+    max_dendritic_temperature = 260.15,
+    min_dendritic_temperature = 257.15,
+    delta_thetaE = 4,
+    ctz_map_weights = "{0.5, 0.2, 0.2, 0.1}",
+    delta_theta_e_map = "delta_theta_e_map, 2, {{1.0, 0.0},{4.0, 1.0}}",
+    delta_rel_humidity_map = "delta_rel_humidity_map, 2, {{-0.1, 1.0}, {0.0, 0.0}}",
+    delta_vert_velocity_map = "delta_vert_velocity_map, 2, {{0.0, 0.0}, {0.3, 1.0}}",
+    dq_rel_humidity_map = "dq_rel_humidity_map, 2, {{70.0, 0.0}, {100.0, 1.0}}",
+    dq_delta_theta_e_map = "dq_delta_theta_e_map, 2, {{0.0, 1.0},{4.0, 0.0}}"
+};
+
+//======================================================================
+//
+// ICING ALGORITHM PARAMETERS.
+//
+// Parameters controling the calculation of icing and super large 
+//   droplet potentials.
+//
+//======================================================================
+ 
+///////////// icing_algo //////////////////////////////
+//
+// Parameters for the icing potential algorithm.
+//
+// Type: struct
+//   typedef struct {
+//      string temperature_interest_map;
+//      string cloud_top_temperature_interest_map;
+//      string relative_humidity_interest_map;
+//      string warmnose_temperature_interest_map;
+//      string convective_temperature_interest_map;
+//      string vertical_velocity_interest_map;
+//      string non_bl_total_cond_interest_map;
+//      string bl_total_cond_interest_map;
+//      string layer_top_temp_interest_map;
+//      string rain_water_mixing_ratio_interest_map;
+//      string sld_interest_weights;
+//      float vert_velocity_interest_weight;
+//      float slw_interest_weight;
+//      float min_slw;
+//      float min_icing_potential;
+//      float model_precip_weight;
+//      float snow_surface_precip_factor;
+//      float warmnose_weight;
+//      float min_cloud_top_temp_interest;
+//      float min_cloud_top_temp_interest2;
+//      float temperature_interest_weight;
+//      float sld_min_cloud_top_temp;
+//      float min_warmnose_level;
+//      float aerosol_min_delta_theta_e;
+//      float aerosol_min_rh;
+//      float aerosol_max_rh;
+//      float aerosol_max_temp;
+//      float icing_probability_bias;
+//      float icing_probability_scale;
+//   }
+//
+//
+
+icing_algo = {
+    temperature_interest_map = "temperature_map, 2, {{248.15, 0.0}, {265.15, 1.0}, {269.15, 1.0}, {270.15, 0.8660}, {271.15, 0.7017}, {272.15, 0.5000}, {273.15, 0.0}}",
+    cloud_top_temperature_interest_map = "cloud_top_temperature_map, 2, {{223.001, 0.2}, {226.001, 0.205}, {229.001, 0.22}, {232.001, 0.2449}, {235.001, 0.2798}, {238.001, 0.3247}, {241.001, 0.3795 }, {244.001, 0.4443}, {247.001, 0.5191}, {250.001, 0.6039}, {253.001, 0.6986}, {256.001, 0.8034}, {259.001, 0.9180}, {261.0, 1.0}, {279.999, 1.0}, {280.0, 0.0}}",
+//    relative_humidity_interest_map = "relative_humidity_map, 2, {{30.0, 0.0}, {60.0, 0.0983}, {63.0, 0.1309}, {66.0, 0.1699}, {69.0, 0.2160}, {72.0, 0.2698}, {75.0, 0.3318}, {78.0, 0.4027}, {81.0, 0.4830}, {84.0, 0.5734}, {87.0, 0.6743}, {90.0, 0.7865}, {93.0, 0.9105}, {95.0, 1.0}}",
+    relative_humidity_interest_map = "relative_humidity_map, 2, {{50.0, 0.0}, {80.0, 0.1}, {83.0, 0.1715}, {86.0, 0.2963}, {89.0, 0.4705}, {92.0, 0.7023}, {95.0, 1.0}}",
+    warmnose_temperature_interest_map = "warmnose_temperature_map, 2, {{248.15, 0.0}, {265.15, 1.0}, {269.15, 1.0}, {270.15, 0.8660}, {271.15, 0.7017}, {272.15, 0.5000}, {273.15, 0.0}}",
+    convective_temperature_interest_map = "convective_temperature_map, 2, {{243.150, 0.0}, {265.15, 1.0}, {269.15, 1.0}, {270.15, 0.87}, {271.15, 0.71}, {272.15, 0.50}, {273.15, 0.0}}",
+    vertical_velocity_interest_map = "vertical_velocity_map, 2, {{-1.0, 1.0}, {-0.5, 1.0}, {0.0, 0.0}, {0.25, 0.0}, {1.0, -1.0}, {2.0, -1.0}}",
+    non_bl_total_cond_interest_map = "non_bl_tot_cond_map, 2, {{0.15, 0.0}, {0.2, 1.0}}",
+    bl_total_cond_interest_map = "bl_tot_cond_map, 2, {{0.45, 0.0},{0.5, 1.0}}",
+    layer_top_temp_interest_map = "layer_top_temp_map, 2, {{259.15, 0.0}, {261.15, 1.0}}",
+    rain_water_mixing_ratio_interest_map = "rain_water_mixing_ratio_map, 2, {{0.01, 0.0}, {0.05, 1.0}}",
+    sld_interest_weights = "{2.0, 1.0}",
+    vert_velocity_interest_weight = 0.25,
+    slw_interest_weight = 0.5,
+    min_slw = 1e-06,
+    min_icing_potential = 0.001,
+    model_precip_weight = 0.6,
+    snow_surface_precip_factor = 0.9,
+    warmnose_weight = 0.2,
+    min_cloud_top_temp_interest = 1,
+    min_cloud_top_temp_interest2 = 0.4,
+    temperature_interest_weight = 0.25,
+    sld_min_cloud_top_temp = 261,
+    min_warmnose_level = 2,
+    aerosol_min_delta_theta_e = 2,
+    aerosol_min_rh = 95,
+    aerosol_max_rh = 85,
+    aerosol_max_temp = 272.15,
+    icing_probability_bias = 0.84,
+    icing_probability_scale = -0.033
+};
+
+
+//======================================================================
+//
+// ICING SEVERITY CALCULATIONS PARAMETERS.
+//
+// Parameters controling the calculation of icing severity.
+//
+//======================================================================
+
+///////////// severity_algo ///////////////////////////
+//
+// Parameters for the icing severity algorithm.
+//
+// Type: struct
+//   typedef struct {
+//      float cold_precip_temp_thresh;
+//      float min_icing_potential;
+//      float min_icing_severity;
+//      float temp_adjust_weight;
+//      float ctt_adjust_weight;
+//      float cond_adjust_weight;
+//      float moisture_map_rel_humidity_weight;
+//      float moisture_map_liquid_cndst_weight;
+//      float moisture_map_ice_cndst_weight;
+//      string precip_below_warmnose_weights;
+//      string precip_above_warmnose_weights;
+//      string no_precip_weights;
+//      string snow_weights;
+//      string cold_rain_weights;
+//      string warm_precip_weights;
+//      string freezing_precip_weights;
+//      string convection_weights;
+//      string vert_velocity_interest_map;
+//      string relative_humidity_interest_map;
+//      string delta_q_interest_map;
+//      string temperature_interest_map;
+//      string temperature_damping_interest_map;
+//      string cloud_top_temperature_interest_map;
+//      string condensate_interest_map;
+//      string cloud_top_distance_interest_map;
+//      string cloud_base_distance_interest_map;
+//      string total_water_path_interest_map;
+//      string delta_z_interest_map;
+//      string precip_condensate_interest_map;
+//      string convective_qpf_interest_map;
+//      string cape_interest_map;
+//      string lifted_index_interest_map;
+//      string k_index_interest_map;
+//      string total_totals_interest_map;
+//      string convective_temperature_interest_map;
+//   }
+//
+//
+
+severity_algo = {
+    cold_precip_temp_thresh = 261.15,
+    min_icing_potential = 0.01,
+    min_icing_severity = 0.01,
+    temp_adjust_weight = 0.5,
+    ctt_adjust_weight = 0.2,
+    cond_adjust_weight = 0.15,
+    moisture_map_rel_humidity_weight = 0.5,
+    moisture_map_liquid_cndst_weight = 0.6,
+    moisture_map_ice_cndst_weight = 0.4,
+    precip_below_warmnose_weights = "{3.0, 4.0, 3.0, 3.0, 3.5, 2.5, 2.0}",
+    precip_above_warmnose_weights = "{3.0, 3.5, 4.0, 2.0}",
+    no_precip_weights = "{3.0, 3.5, 4.0, 4.0, 3.0}",
+    snow_weights = "{3.0, 3.5, 3.5, 4.0, 3.0}",
+    cold_rain_weights = "{3.0, 3.5, 3.5, 4.0, 2.0}",
+    warm_precip_weights = "{3.0, 3.0, 3.0, 3.5, 4.0, 2.0}",
+    freezing_precip_weights = "{3.0, 3.5, 3.5, 4.0, 2.0}",
+    convection_weights = "{4.0, 3.0, 5.0, 5.0, 2.0, 2.0}",
+    vert_velocity_interest_map = "vert_velocity_map, 2, {{-0.5, 1.0}, {0.0, 0.0}}",
+    relative_humidity_interest_map = "relative_humidity_map, 2, {{70.0, 0.0}, {100.0, 1.0}}",
+    delta_q_interest_map = "delta_q_map, 2, {{0.0, 0.0}, {1.0, 1.0}}",
+    temperature_interest_map = "temperature_map, 2, {{269.15, 1.0}, {273.15, 0.0}}",
+    temperature_damping_interest_map = "temperature_damping_map, 2, {{248.15, 1.0}, {248.65, 0.8039}, {249.15, 0.7226}, {251.15, 0.5196}, {253.15, 0.3798}, {255.15, 0.2662}, {257.15, 0.1679}, {259.15, 0.0801}, {261.15, 0.0}, {268.15, 0.0}, {273.15, 1.0}}",
+    cloud_top_temperature_interest_map = "cloud_top_temperature_map, 2, {{223.15, 0.8}, {233.15, 0.7446}, {243.15, 0.5784}, {253.15, 0.3014}, {261.15, 0.0}, {280.15, 0.0}, {280.151, 1.0}}",
+    condensate_interest_map = "condensate_map, 2, {{0.00399, 0.0}, {0.004, 0.0}, {0.2, 1.0}}",
+    cloud_top_distance_interest_map = "cloud_top_distance_map, 2, {{-0.001, 0.0}, {0.0, 1.0}, {609.6, 1.0}, {3048.0, 0.0}}",
+    cloud_base_distance_interest_map = "cloud_base_distance_map, 2, {{-0.001, 0.0}, {0.0, 1.0}, {304.8, 1.0}, {1524.0, 0.0}}",
+    total_water_path_interest_map = "total_water_path_map, 3, {{3, 0.0, 0.0}, {3, 1000.0, 1.0}, {4, 0.0, 0.0}, {4, 1000.0, 1.0}, {5, 0.0, 0.0}, {5, 1000.0, 1.0}, {6, 0.0, 0.0}, {6, 500.0,  1.0}, {7, 0.0, 0.0}, {7, 1000.0, 1.0}}",
+    delta_z_interest_map = "delta_z_map, 3, {{1, 0.0, 0.0}, {1, 1828.8, 1.0}, {2, 0.0, 0.0}, {2, 30.49999, 0.0}, {2, 30.5, 1.0}, {4, 914.4, 0.0}, {4, 2743.2, 1.0}, {5, 1524.0, 0.0}, {5, 4267.2, 1.0}, {6, 0.0, 0.0}, {6, 1828.8, 1.0}, {7, 1524.0, 0.0}, {7, 4267.2, 1.0}}",
+    precip_condensate_interest_map = "precip_condensate_map, 3, {{2, 0.05, 0.0}, {2, 0.2,  1.0}, {4, 0.05, 0.0}, {4, 0.25, 1.0}, {5, 0.05, 0.0}, {5, 0.2,  1.0}, {6, 0.05, 0.0}, {6, 0.15, 0.5}, {7, 0.05, 0.0}, {7, 0.15, 0.5}}",
+    convective_qpf_interest_map = "conv_qpf_map, 2, {{1.0, 0.0}, {3.0, 1.0}}",
+    cape_interest_map = "cape_map, 2, {{1000.0, 0.0}, {2500.0, 1.0}}",
+    lifted_index_interest_map = "lifted_index_map, 2, {{-10.0, 1.0}, {0.0, 0.0}}",
+    k_index_interest_map = "k_index_map, 2, {{20.0, 0.0}, {40.0, 1.0}}",
+    total_totals_interest_map = "total_totals_map, 2, {{20.0, 0.0}, {55.0, 1.0}}",
+    convective_temperature_interest_map = "convective_temp_map, 2, {{243.150, 0.0}, {265.15, 1.0}, {269.15, 1.0}, {270.15, 0.87}, {271.15, 0.71}, {272.15, 0.50}, {273.15, 0.0}}"
+};
+

@@ -1,0 +1,28 @@
+==125457== Callgrind, a call-graph generating cache profiler
+==125457== Copyright (C) 2002-2015, and GNU GPL'd, by Josef Weidendorfer et al.
+==125457== Using Valgrind-3.12.0.SVN and LibVEX; rerun with -h for copyright info
+==125457== Command: /home/cunning/git/ral-ifi-apps/IcingCategory/IcingCategory -params /home/cunning/git/MDV_64bit/research/fip/params/IcingCategory.hrrr.grib2 -if /d1/cunning/data/64-bit_mdv/fip/mdv/fip_hrrr_flight/20201103/g_150000/20201103_g_150000_f_00010800.mdv.cf.nc
+==125457== Parent PID: 99660
+==125457== 
+==125457== For interactive control, run 'callgrind_control -h'.
+==125457== brk segment overflow in thread #1: can't grow to 0x4a27000
+==125457== (see section Limitations in user manual)
+==125457== brk segment overflow in thread #1: can't grow to 0x4bda000
+==125457== (see section Limitations in user manual)
+==125457== brk segment overflow in thread #1: can't grow to 0x4c28000
+==125457== (see section Limitations in user manual)
+==125457== brk segment overflow in thread #1: can't grow to 0x4ca8000
+==125457== (see section Limitations in user manual)
+==125457== brk segment overflow in thread #1: can't grow to 0x4cfe000
+==125457== (see section Limitations in user manual)
+==125457== brk segment overflow in thread #1: can't grow to 0x4ca7000
+==125457== (see section Limitations in user manual)
+==125457== brk segment overflow in thread #1: can't grow to 0x4cdc000
+==125457== (see section Limitations in user manual)
+==125457== brk segment overflow in thread #1: can't grow to 0x4d06000
+==125457== (see section Limitations in user manual)
+==125457== 
+==125457== Events    : Ir
+==125457== Collected : 476581604660
+==125457== 
+==125457== I   refs:      476,581,604,660
