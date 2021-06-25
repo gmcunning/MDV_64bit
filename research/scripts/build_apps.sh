@@ -199,6 +199,8 @@ $app_build || exit
 
 cd /home/cunning/cvs/apps/awc/src/LtgSpdb2Mdv || exit
 $app_build || exit
+cd /home/cunning/cvs/apps/ingest/src/GoesRGLM2Spdb || exit
+$app_build || exit
 cd /home/cunning/cvs/apps/ingest/src/Grib2toMdv || exit
 $app_build || exit
 cd /home/cunning/cvs/apps/ingest/src/Ltg2Spdb || exit
